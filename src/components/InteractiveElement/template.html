@@ -1,0 +1,39 @@
+<style>
+  :host(:hover) {
+    --overlay-opacity: var(--hover-overlay-opacity);
+  }
+  :host(:focus-within) {
+    --overlay-opacity: var(--focus-overlay-opacity);
+  }
+
+  @keyframes ripple-transform-animation {
+    from {
+      transform: translate(var(--ripple-start-x), var(--ripple-start-y)) scale(0.5);
+    }
+    to {
+      transform: translate(0, 0) scale(1);
+    }
+  }
+  @keyframes ripple-opacity-animation {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: var(--pressed-overlay-opacity);
+    }
+  }
+  @keyframes ripple-opacity-out-animation {
+    from {
+      opacity: var(--pressed-overlay-opacity);
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  :host {
+    --ripple-in-animation: ripple-transform-animation ease 225ms forwards, ripple-opacity-animation ease 75ms forwards;
+    --ripple-out-animation: ripple-opacity-out-animation ease 150ms forwards;
+  }
+</style>
+
+<md-overlay></md-overlay>

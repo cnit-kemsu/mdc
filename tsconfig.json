@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "outDir": "./dist/",
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "ES2019",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+
+    "lib": ["es2020", "es2019", "es2018", "DOM"],
+
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@src/*": ["./src/*"],
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+
+}
