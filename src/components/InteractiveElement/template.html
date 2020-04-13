@@ -5,8 +5,11 @@
   :host(:focus-within) {
     --overlay-opacity: var(--focus-overlay-opacity);
   }
+  /* :host(:active) {
+    --overlay-opacity: 0;
+  } */
 
-  @keyframes ripple-transform-animation {
+  @keyframes ripple-transform {
     from {
       transform: translate(var(--ripple-start-x), var(--ripple-start-y)) scale(0.5);
     }
@@ -14,25 +17,30 @@
       transform: translate(0, 0) scale(1);
     }
   }
-  @keyframes ripple-opacity-animation {
+  @keyframes ripple-fadein {
     from {
       opacity: 0;
     }
     to {
-      opacity: var(--pressed-overlay-opacity);
+      opacity: var(--ripple-end-opacity);
     }
   }
-  @keyframes ripple-opacity-out-animation {
+  @keyframes ripple-fadeout {
     from {
-      opacity: var(--pressed-overlay-opacity);
+      opacity: var(--ripple-end-opacity);
     }
     to {
-      opacity: 0;
+      opacity: var(--focus-overlay-opacity);
     }
   }
   :host {
-    --ripple-in-animation: ripple-transform-animation ease 225ms forwards, ripple-opacity-animation ease 75ms forwards;
-    --ripple-out-animation: ripple-opacity-out-animation ease 150ms forwards;
+    --overlay-opacity: 0;
+    --ripple-fadein-animation: ripple-transform ease 225ms forwards, ripple-fadein ease 75ms forwards;
+    --ripple-fadeout-animation: ripple-fadeout ease 150ms forwards;
+    /* --ripple-end-opacity: calc((var(--pressed-overlay-opacity) - var(--focus-overlay-opacity)) / (1 - var(--focus-overlay-opacity))); */
+    --ripple-end-opacity: var(--pressed-overlay-opacity);
+
+    --visibility: visible;
   }
 </style>
 

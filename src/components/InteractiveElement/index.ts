@@ -14,7 +14,8 @@ export default class InteractiveElement extends HTMLElement {
   };
 
   private fadeinTimeout: any;
-  private isActive: boolean = false;
+  private fadeoutTimeout: any;
+  private isPressed: boolean = false;
 
   constructor() {
     super();
@@ -33,17 +34,22 @@ export default class InteractiveElement extends HTMLElement {
   }
 
   private playRippleFadeoutAnimation() {
-    this.style.setProperty('--ripple-animation', 'var(--ripple-out-animation)');
+    this.style.setProperty('--ripple-animation', 'var(--ripple-fadeout-animation)');
+    this.fadeoutTimeout = setTimeout(() => {
+      this.style.setProperty('--visibility', 'visible');
+      this.style.removeProperty('--ripple-animation');
+    }, 150);
   }
 
   private onFadeinTimeoutExpires() {
     this.fadeinTimeout = undefined;
-    if (this.isActive) return;
+    if (this.isPressed) return;
     this.playRippleFadeoutAnimation();
   }
 
   private playRippleFadeinAnimation() {
-    this.style.setProperty('--ripple-animation', 'var(--ripple-in-animation)');
+    this.style.setProperty('--visibility', 'hidden');
+    this.style.setProperty('--ripple-animation', 'var(--ripple-fadein-animation)');
     this.fadeinTimeout = setTimeout(this.onFadeinTimeoutExpires, 225);
   }
 
@@ -63,7 +69,12 @@ export default class InteractiveElement extends HTMLElement {
     this.style.setProperty('--ripple-start-x', event.clientX - (offsetLeft + clientWidth / 2) + 'px');
     this.style.setProperty('--ripple-start-y', event.clientY - (offsetTop + clientHeight / 2) + 'px');
 
-    this.isActive = true;
+    if (this.fadeoutTimeout !== undefined) {
+      clearTimeout(this.fadeoutTimeout);
+      this.fadeoutTimeout = undefined;
+    }
+
+    this.isPressed = true;
     if (this.fadeinTimeout !== undefined) {
       clearTimeout(this.fadeinTimeout);
       this.style.removeProperty('--ripple-animation');
@@ -72,7 +83,7 @@ export default class InteractiveElement extends HTMLElement {
   }
 
   onMouseup() {
-    this.isActive = false;
+    this.isPressed = false;
     if (this.fadeinTimeout === undefined) this.playRippleFadeoutAnimation();
   }
 }
