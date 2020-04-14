@@ -34,15 +34,14 @@
     --overlay-color: var(--primary-color);
     --hover-overlay-opacity: 0.04;
     --focus-overlay-opacity: 0.12;
-    --pressed-overlay-opacity: 0.08;
+    --pressed-overlay-opacity: 0.12;
   }
   :host([outlined]) {
 
     height: 34px;
     padding-left: 15px;
     padding-right: 15px;
-    /* border: 1px solid rgba(0,0,0,0.2); */
-    border: 1px solid var(--primary-color);
+    border: 1px solid rgba(0,0,0,0.2);
   }
   :host([raised]) {
     padding-left: 16px;
@@ -53,16 +52,7 @@
     --overlay-color: white;
     --hover-overlay-opacity: 0.08;
     --focus-overlay-opacity: 0.24;
-    --pressed-overlay-opacity: 0.24;
-
-    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0,0,0,.12);
-  }
-
-  :host([raised]:hover) {
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0,0,0,.12);
-  }
-  :host([raised]:active) {
-    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0,0,0,.12);
+    --pressed-overlay-opacity: 0.32;
   }
 
   div {

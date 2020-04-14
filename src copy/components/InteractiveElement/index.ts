@@ -31,8 +31,6 @@ export default class InteractiveElement extends HTMLElement {
 
     this.addEventListener('mousedown', this.onMousedown);
     this.addEventListener('mouseup', this.onMouseup);
-
-    this.addEventListener('click', () => console.log('111'));
   }
 
   private playRippleFadeoutAnimation() {
@@ -40,7 +38,6 @@ export default class InteractiveElement extends HTMLElement {
     this.fadeoutTimeout = setTimeout(() => {
       this.style.setProperty('--visibility', 'visible');
       this.style.removeProperty('--ripple-animation');
-      this.style.removeProperty('--overlay-opacity');
     }, 150);
   }
 
@@ -76,10 +73,6 @@ export default class InteractiveElement extends HTMLElement {
       clearTimeout(this.fadeoutTimeout);
       this.fadeoutTimeout = undefined;
     }
-
-    const style = window.getComputedStyle(this);
-    //console.log(style.getPropertyValue('--overlay-opacity'));
-    this.style.setProperty('--overlay-opacity', style.getPropertyValue('--overlay-opacity'));
 
     this.isPressed = true;
     if (this.fadeinTimeout !== undefined) {

@@ -8,10 +8,13 @@
 
       body {
         --primary-color: #6200ee;
-        /* --primary-color: #661FFF; */
-        /* --primary-color: #5c6bc0;
-        --primary-color: #1976d2; */
-        font-family: Roboto, sans-serif;;
+        --primary-color: #661FFF;
+        --primary-color: #5c6bc0;
+        --primary-color: #1976d2;
+        font-family: Roboto, sans-serif;
+
+
+        --primary-color: #6200ee;
       }
 
       /* .button:hover {
@@ -61,6 +64,28 @@
         border-radius: 4px;
       } */
 
+      body {
+        --anim: var(--anim);
+      }
+
+      @keyframes bgch {
+        from {
+          background-color: #ff000000;
+        }
+        to {
+          background-color: #ff0000ff;
+        }
+      }
+
+      .btn {
+        animation: var(--anim);
+        
+      }
+
+      .btn:active {
+        --anim: bgch 1000ms forwards;
+      }
+
     </style>
   </head>
   <body>
@@ -84,6 +109,14 @@
       <md-button style="margin: 16px">Создать</md-button>
       <md-button style="margin: 16px" outlined>Создать</md-button>
       <md-button style="margin: 16px" raised>Создать</md-button>
+
+      <div>
+        <md-radio style="margin: 16px" name="asd"></md-radio>
+        <md-radio style="margin: 16px" name="asd1"></md-radio>
+        <md-radio style="margin: 16px" name="asd2"></md-radio>
+      </div>
+
+      <button class="btn">asdasd</button>
       
     </div>
 
