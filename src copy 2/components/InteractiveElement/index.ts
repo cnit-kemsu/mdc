@@ -3,12 +3,6 @@ import templateHTML from './template.html';
 const template = document.createElement('template');
 template.innerHTML = templateHTML;
 
-let current: InteractiveElement;
-document.addEventListener('mouseup', () => {
-  current?.onMouseup();
-  current = undefined;
-});
-
 export default class InteractiveElement extends HTMLElement {
 
   private lastPressProps: {
@@ -36,9 +30,9 @@ export default class InteractiveElement extends HTMLElement {
     this.onMouseup = this.onMouseup.bind(this);
 
     this.addEventListener('mousedown', this.onMousedown);
-    //this.addEventListener('mouseup', this.onMouseup);
+    this.addEventListener('mouseup', this.onMouseup);
 
-    //this.addEventListener('click', () => console.log('111'));
+    this.addEventListener('click', () => console.log('111'));
   }
 
   private playRippleFadeoutAnimation() {
@@ -64,8 +58,6 @@ export default class InteractiveElement extends HTMLElement {
   }
 
   private onMousedown(event: MouseEvent) {
-    
-    current = this;
 
     const { clientWidth, clientHeight, offsetLeft, offsetTop, lastPressProps } = this;
 
