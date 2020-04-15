@@ -21,6 +21,10 @@ declare global {
 function App() {
 
   return <div>
+    <md-button children="sdasd" />
+    <md-button children="sdasd" />
+    <md-radio children="sdasd" />
+    <md-radio children="sdasd" />
   </div>;
 }
 
