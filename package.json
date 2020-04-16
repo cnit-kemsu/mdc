@@ -24,6 +24,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "start": "node_modules/.bin/nodemon --watch webpack.config.ts --watch tsconfig.json --exec webpack-dev-server"
+    "start": "node_modules/.bin/nodemon --watch webpack.config.ts --watch tsconfig.json --exec webpack-dev-server",
+    "build": "webpack"
   }
 }

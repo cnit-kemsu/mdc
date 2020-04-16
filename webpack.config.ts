@@ -72,15 +72,46 @@ export default {
     namedChunks: true,
     namedModules: true,
     splitChunks: {
+      chunks: 'all',
       cacheGroups: {
-        vendor: {
+        react: {
           test: /node_modules/,
-          name: 'vendor',
-          chunks: 'all'
+          name: 'vendor'
         }
       }
     }
   },
+  // optimization: {
+  //   namedChunks: true,
+  //   namedModules: true,
+  //   splitChunks: {
+  //     chunks: 'all',
+  //     cacheGroups: {
+  //       // react: {
+  //       //   test: /node_modules\\react(?!-dom)/,
+  //       //   name: 'react1'
+  //       // },
+  //       // reactDom: {
+  //       //   test: /node_modules\\react-dom/,
+  //       //   name: 'react2'
+  //       // },
+  //       react: {
+  //         test: /node_modules\\(react|scheduler)/,
+  //         name: 'react'
+  //       },
+  //       // scheduler: {
+  //       //   test: /node_modules\\scheduler/,
+  //       //   name: 'scheduler'
+  //       // },
+  //       other: {
+  //         test: /node_modules\\(?!(react|scheduler))/,
+  //         name: 'other'
+  //       }
+  //     }
+  //   }
+  // },
+
+  //--compress
 
   // resolve: {
   //   alias: {
