@@ -3,19 +3,21 @@ import templateHTML from './template.html';
 const template = document.createElement('template');
 template.innerHTML = templateHTML;
 
+interface SizeSnapshot {
+  width: number;
+  height: number;
+}
+
 export default class InteractiveElement extends HTMLElement {
 
-  private fixed: {
-    width: number,
-    height: number
-  } = {
-    width: 0,
-    height: 0
-  };
-
-  private fadeinTimeout: any;
-  private fadeoutTimeout: any;
   private isPressed: boolean = false;
+  private sizeSnapshot: SizeSnapshot = { width: 0, height: 0 };
+  private duration1: number = 0;
+  private duration2: number = 0;
+  private currentTimeout: number = 0;
+  private animationStage: number = 0;
+  private overlay: HTMLElement;
+  private overlayStyle: CSSStyleDeclaration;
 
   constructor() {
     super();
@@ -24,47 +26,49 @@ export default class InteractiveElement extends HTMLElement {
     const child = template.content.cloneNode(true);
     this.shadowRoot.appendChild(child);
 
-    this.playRippleFadeinAnimation = this.playRippleFadeinAnimation.bind(this);
-    this.onFadeinTimeoutExpires = this.onFadeinTimeoutExpires.bind(this);
-    //this.onMousedown = this.onMousedown.bind(this);
-    //this.onMouseup = this.onMouseup.bind(this);
+    this.overlay = this.shadowRoot.children[1] as HTMLElement;
+    this.overlayStyle = this.overlay.style;
 
-    this.addEventListener('mousedown', this.onMousedown);
+    this.onMouseUp = this.onMouseUp.bind(this);
+    this.playAnimation1 = this.playAnimation1.bind(this);
+    this.onAnimation1Complete = this.onAnimation1Complete.bind(this);
+    this.onAnimation2Complete = this.onAnimation2Complete.bind(this);
+
+    this.addEventListener('mousedown', this.onMouseDown);
   }
 
-  private playRippleFadeoutAnimation() {
-    this.style.setProperty('--ripple-animation', 'var(--ripple-fadeout-animation)');
-    this.fadeoutTimeout = setTimeout(() => {
-      this.style.removeProperty('--ripple-animation');
-      this.style.setProperty('--overlay-opacity', 'var(--state-overlay-opacity)');
-    }, 150);
+  private onAnimation2Complete() {
+    this.animationStage = 0;
+    this.overlayStyle.removeProperty('--md-ripple-animation');
+    this.overlayStyle.setProperty('--md-overlay-opacity-1-current', 'var(--md-overlay-opacity-1)');
+  }
+  private playAnimation2() {
+    this.animationStage = 2;
+    this.overlayStyle.setProperty('--md-ripple-animation', 'var(--md-ripple-stage2)');
+    this.currentTimeout = <any>setTimeout(this.onAnimation2Complete, this.duration2);
+  }
+  private onAnimation1Complete() {
+    if (this.isPressed) this.animationStage = 0;
+    else this.playAnimation2();
+  }
+  private playAnimation1() {
+    this.overlayStyle.setProperty('--md-ripple-animation', 'var(--md-ripple-stage1)');
+    this.currentTimeout = <any>setTimeout(this.onAnimation1Complete, this.duration1);
   }
 
-  private onFadeinTimeoutExpires() {
-    this.fadeinTimeout = undefined;
-    if (this.isPressed) return;
-    this.playRippleFadeoutAnimation();
-  }
+  private onMouseDown(event: MouseEvent) {
+    currentMouseUpCallback = this.onMouseUp;
+    this.isPressed = true;
+    const { clientWidth, clientHeight, sizeSnapshot } = this;
 
-  private playRippleFadeinAnimation() {
-    this.style.setProperty('--ripple-animation', 'var(--ripple-fadein-animation)');
-    this.fadeinTimeout = setTimeout(this.onFadeinTimeoutExpires, 225);
-  }
-
-  private onMousedown(event: MouseEvent) {
-    
-    currentPressedElement = this;
-
-    const { clientWidth, clientHeight, fixed } = this;
-
-    if (fixed.width !== clientWidth || fixed.height !== clientHeight) {
-      fixed.width = clientWidth;
-      fixed.height = clientHeight;
+    if (sizeSnapshot.width !== clientWidth || sizeSnapshot.height !== clientHeight) {
+      sizeSnapshot.width = clientWidth;
+      sizeSnapshot.height = clientHeight;
       // Math.round
       const rippleOverlaySize = Math.sqrt(clientWidth * clientWidth + clientHeight * clientHeight);
-      this.style.setProperty('--ripple-overlay-size', rippleOverlaySize + 'px');
-      this.style.setProperty('--ripple-overlay-left', (clientWidth - rippleOverlaySize) / 2 + 'px');
-      this.style.setProperty('--ripple-overlay-top', (clientHeight - rippleOverlaySize) / 2 + 'px');
+      this.overlayStyle.setProperty('--md-ripple-size', rippleOverlaySize + 'px');
+      this.overlayStyle.setProperty('--md-ripple-left', (clientWidth - rippleOverlaySize) / 2 + 'px');
+      this.overlayStyle.setProperty('--md-ripple-top', (clientHeight - rippleOverlaySize) / 2 + 'px');
     }
     
     /*
@@ -72,34 +76,37 @@ export default class InteractiveElement extends HTMLElement {
       const offsetX === event.clientX - left;
       const offsetY === event.clientY - top;
     */
-    this.style.setProperty('--ripple-animation-start-x', event.offsetX - clientWidth / 2 + 'px');
-    this.style.setProperty('--ripple-animation-start-y', event.offsetY - clientHeight / 2 + 'px');
+    this.overlayStyle.setProperty('--md-ripple-start-x', event.offsetX - clientWidth / 2 + 'px');
+    this.overlayStyle.setProperty('--md-ripple-start-y', event.offsetY - clientHeight / 2 + 'px');
 
-    if (this.fadeoutTimeout !== undefined) {
-      clearTimeout(this.fadeoutTimeout);
-      this.fadeoutTimeout = undefined;
+    const ov_comp_style = getComputedStyle(this.overlay);
+    this.overlayStyle.setProperty('--md-overlay-opacity-1-current', ov_comp_style.getPropertyValue('--md-overlay-opacity-1'));
+
+    this.duration1 = Math.max(
+      parseInt(ov_comp_style.getPropertyValue('--md-ripple-transofrm-duration')),
+      parseInt(ov_comp_style.getPropertyValue('--md-ripple-fadein-duration'))
+    );
+    this.duration2 = parseInt(ov_comp_style.getPropertyValue('--md-ripple-fadeout-duration'));
+
+    if (this.animationStage !== 0) clearTimeout(this.currentTimeout);  
+    if (this.animationStage === 1) {
+      this.overlayStyle.removeProperty('--md-ripple-animation');
+      requestAnimationFrame(this.playAnimation1);
+    } else {
+      this.animationStage = 1;
+      this.playAnimation1();
     }
-
-    const style = window.getComputedStyle(this);
-    this.style.setProperty('--overlay-opacity', style.getPropertyValue('--state-overlay-opacity'));
-
-    this.isPressed = true;
-    if (this.fadeinTimeout !== undefined) {
-      clearTimeout(this.fadeinTimeout);
-      this.style.removeProperty('--ripple-animation');
-      window.requestAnimationFrame(this.playRippleFadeinAnimation);
-    } else this.playRippleFadeinAnimation();
   }
 
-  disablePressedState() {
+  onMouseUp() {
     this.isPressed = false;
-    if (this.fadeinTimeout === undefined) this.playRippleFadeoutAnimation();
+    if (this.animationStage === 0) this.playAnimation2();
   }
 }
 
-let currentPressedElement: InteractiveElement = null;
+let currentMouseUpCallback: () => void = null;
 document.addEventListener('mouseup', () => {
-  if (currentPressedElement === null) return;
-  currentPressedElement.disablePressedState();
-  currentPressedElement = null;
+  if (currentMouseUpCallback === null) return;
+  currentMouseUpCallback();
+  currentMouseUpCallback = null;
 });

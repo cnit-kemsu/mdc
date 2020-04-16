@@ -11,5 +11,5 @@ export default class Overlay extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     const child = template.content.cloneNode(true);
     this.shadowRoot.appendChild(child);
-  }
+  };
 }
