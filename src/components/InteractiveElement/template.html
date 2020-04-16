@@ -9,10 +9,10 @@
     --md-ripple-stage1: ripple-transform ease var(--md-ripple-transofrm-duration) forwards, ripple-fadein ease var(--md-ripple-fadein-duration) forwards;
     --md-ripple-stage2: ripple-fadeout ease var(--md-ripple-fadeout-duration) forwards;
   }
-  :host(:hover) {
+  :host(:hover:not([disabled])) {
     --md-overlay-opacity-1: var(--md-overlay-opacity-hover);
   }
-  :host(:focus-within) {
+  :host(:focus-within:not([disabled])) {
     --md-overlay-opacity-1:  var(--md-overlay-opacity-focused);
   }
 

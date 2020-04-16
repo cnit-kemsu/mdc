@@ -18,13 +18,13 @@ export default class InteractiveElement extends HTMLElement {
   private animationStage: number = 0;
   private overlay: HTMLElement;
   private overlayStyle: CSSStyleDeclaration;
+  protected inputElement: HTMLInputElement;
 
-  constructor() {
+  constructor(templateNode: Node) {
     super();
     
     this.attachShadow({ mode: 'open' });
-    const child = template.content.cloneNode(true);
-    this.shadowRoot.appendChild(child);
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.overlay = this.shadowRoot.children[1] as HTMLElement;
     this.overlayStyle = this.overlay.style;
@@ -35,6 +35,27 @@ export default class InteractiveElement extends HTMLElement {
     this.onAnimation2Complete = this.onAnimation2Complete.bind(this);
 
     this.addEventListener('mousedown', this.onMouseDown);
+
+    this.shadowRoot.appendChild(templateNode);
+    //this.inputElement = this.shadowRoot.querySelector('#input');
+    this.inputElement = this.shadowRoot.childNodes[this.shadowRoot.childNodes.length - 1] as HTMLInputElement;
+  }
+
+  get disabled() {
+    return this.hasAttribute('disabled');
+  }
+  set disabled(value: boolean) {
+    if (value) {
+      this.setAttribute('disabled', '');
+      this.inputElement.disabled = true;
+    } else {
+      this.removeAttribute('disabled');
+      this.inputElement.disabled = false;
+    }
+  }
+
+  connectedCallback() {
+    if (this.hasAttribute('disabled')) this.inputElement.disabled = true;
   }
 
   private onAnimation2Complete() {
@@ -57,6 +78,7 @@ export default class InteractiveElement extends HTMLElement {
   }
 
   private onMouseDown(event: MouseEvent) {
+    //if (this.disabled) return;
     currentMouseUpCallback = this.onMouseUp;
     this.isPressed = true;
     const { clientWidth, clientHeight, sizeSnapshot } = this;
@@ -101,6 +123,13 @@ export default class InteractiveElement extends HTMLElement {
   onMouseUp() {
     this.isPressed = false;
     if (this.animationStage === 0) this.playAnimation2();
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'disabled') {
+      if (newValue !== null) this.inputElement.disabled = true;
+      this.inputElement.disabled = false;
+    }
   }
 }
 

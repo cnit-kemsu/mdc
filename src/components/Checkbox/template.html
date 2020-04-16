@@ -41,11 +41,11 @@
     padding: 11px;
     border-radius: 50%;
   }
-  :host([checked="true"]) div {
+  :host([checked]) div {
     border-color: var(--primary-color);
     background-color: var(--primary-color);
   }
-  :host([checked="true"]) div > svg {
+  :host([checked]) div > svg {
     opacity: 1;
   }
   div {
@@ -80,4 +80,4 @@
     <path fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
   </svg>
 </div>
-<input type="checkbox" />
+<input type="checkbox" id="input" />
