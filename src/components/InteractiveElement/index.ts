@@ -12,7 +12,8 @@ export default class InteractiveElement extends HTMLElement {
 
   private isPressed: boolean = false;
   private sizeSnapshot: SizeSnapshot = { width: 0, height: 0 };
-
+  private pressX: number = -1;
+  private pressY: number = -1;
   // All ripple phases:
   // 0 - not existent;
   // 1 - animation of spreading;
@@ -26,10 +27,8 @@ export default class InteractiveElement extends HTMLElement {
   // Current ripple animation timeout id
   private currentTimeout: number = 0;
   
-  //private overlay: HTMLElement;
-  //private overlayStyle: CSSStyleDeclaration;
-  private setOverlayStyleProperty: (propertyName: string, value: string) => void;
-  private removeOverlayStyleProperty: (propertyName: string) => string;
+  private setOverlayStyleProp: (propertyName: string, value: string) => void;
+  private removeOverlayStyleProp: (propertyName: string) => string;
   private getOverlayComputedStyle: () => CSSStyleDeclaration;
 
   protected inputElement: HTMLInputElement;
@@ -40,15 +39,13 @@ export default class InteractiveElement extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    //this.overlay = this.shadowRoot.children[1] as HTMLElement;
     const overlay = this.shadowRoot.children[1] as HTMLElement;
     const overlayStyle = overlay.style;
-    //this.overlayStyle = this.overlay.style;
-    this.setOverlayStyleProperty = overlayStyle.setProperty.bind(overlayStyle);
-    this.removeOverlayStyleProperty = overlayStyle.removeProperty.bind(overlayStyle);
+    this.setOverlayStyleProp = overlayStyle.setProperty.bind(overlayStyle);
+    this.removeOverlayStyleProp = overlayStyle.removeProperty.bind(overlayStyle);
     this.getOverlayComputedStyle = () => getComputedStyle(overlay);
 
-    this.cancelPressedState = this.cancelPressedState.bind(this);
+    this.releasePressedState = this.releasePressedState.bind(this);
     this.ripple_startPhase1 = this.ripple_startPhase1.bind(this);
     this.ripple_onPhase1Complete = this.ripple_onPhase1Complete.bind(this);
     this.ripple_onPhase3Complete = this.ripple_onPhase3Complete.bind(this);
@@ -86,12 +83,12 @@ export default class InteractiveElement extends HTMLElement {
 
   private ripple_onPhase3Complete() {
     this.ripplePhase = 0;
-    this.removeOverlayStyleProperty('--md-ripple-animation');
-    this.setOverlayStyleProperty('--md-overlay-opacity-1-current', 'var(--md-overlay-opacity-1)');
+    this.removeOverlayStyleProp('--md-ripple-animation');
+    this.setOverlayStyleProp('--md-overlay-opacity-1-current', 'var(--md-overlay-opacity-1)');
   }
   private ripple_startPhase3() {
     this.ripplePhase = 3;
-    this.setOverlayStyleProperty('--md-ripple-animation', 'var(--md-ripple-fade)');
+    this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-fade)');
     this.currentTimeout = <any>setTimeout(this.ripple_onPhase3Complete, this.duration_phase3);
   }
   private ripple_onPhase1Complete() {
@@ -100,38 +97,38 @@ export default class InteractiveElement extends HTMLElement {
   }
   private ripple_startPhase1() {
     const ov_comp_style = this.getOverlayComputedStyle();
-    
     this.duration_phase1 = Math.max(
-      parseInt(ov_comp_style.getPropertyValue('--md-ripple-transofrm-duration')),
-      parseInt(ov_comp_style.getPropertyValue('--md-ripple-fadein-duration'))
+      parseInt(ov_comp_style.getPropertyValue('--md-ripple-duration-transform')),
+      parseInt(ov_comp_style.getPropertyValue('--md-ripple-duration-fadein'))
     );
-    this.duration_phase3 = parseInt(ov_comp_style.getPropertyValue('--md-ripple-fadeout-duration'));
+    this.duration_phase3 = parseInt(ov_comp_style.getPropertyValue('--md-ripple-duration-fadeout'));
+    this.setOverlayStyleProp('--md-overlay-opacity-1-current', ov_comp_style.getPropertyValue('--md-overlay-opacity-1'));
 
-    this.setOverlayStyleProperty('--md-overlay-opacity-1-current', ov_comp_style.getPropertyValue('--md-overlay-opacity-1'));
-
-    this.setOverlayStyleProperty('--md-ripple-animation', 'var(--md-ripple-spread)');
+    this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-spread)');
     this.currentTimeout = <any>setTimeout(this.ripple_onPhase1Complete, this.duration_phase1);
   }
   
-  private invokePressedState(startX?: number, startY?: number) {
+  private invokePressedState() {
     this.isPressed = true;
-    const { clientWidth, clientHeight, sizeSnapshot } = this;
+    const { clientWidth, clientHeight, sizeSnapshot, pressX, pressY } = this;
 
     if (sizeSnapshot.width !== clientWidth || sizeSnapshot.height !== clientHeight) {
       sizeSnapshot.width = clientWidth;
       sizeSnapshot.height = clientHeight;
       const rippleSize = Math.sqrt(clientWidth * clientWidth + clientHeight * clientHeight);
-      this.setOverlayStyleProperty('--md-ripple-size', rippleSize + 'px');
-      this.setOverlayStyleProperty('--md-ripple-left', (clientWidth - rippleSize) / 2 + 'px');
-      this.setOverlayStyleProperty('--md-ripple-top', (clientHeight - rippleSize) / 2 + 'px');
+      this.setOverlayStyleProp('--md-ripple-size', rippleSize + 'px');
+      this.setOverlayStyleProp('--md-ripple-left', (clientWidth - rippleSize) / 2 + 'px');
+      this.setOverlayStyleProp('--md-ripple-top', (clientHeight - rippleSize) / 2 + 'px');
     }
     
-    this.setOverlayStyleProperty('--md-ripple-start-x', (startX - clientWidth / 2 || 0) + 'px');
-    this.setOverlayStyleProperty('--md-ripple-start-y', (startY - clientHeight / 2 || 0) + 'px');
+    const startX = pressX === -1 ? 0 : pressX - clientWidth / 2;
+    const startY = pressY === -1 ? 0 : pressY - clientHeight / 2;
+    this.setOverlayStyleProp('--md-ripple-start-x', startX + 'px');
+    this.setOverlayStyleProp('--md-ripple-start-y', startY + 'px');
 
     if (this.ripplePhase === 1) {
       clearTimeout(this.currentTimeout);
-      this.removeOverlayStyleProperty('--md-ripple-animation');
+      this.removeOverlayStyleProp('--md-ripple-animation');
       requestAnimationFrame(this.ripple_startPhase1);
     } else {
       if (this.ripplePhase === 3) clearTimeout(this.currentTimeout);
@@ -139,43 +136,45 @@ export default class InteractiveElement extends HTMLElement {
       this.ripple_startPhase1();
     }
   }
-  private cancelPressedState() {
+  private releasePressedState() {
     this.isPressed = false;
     if (this.ripplePhase === 2) this.ripple_startPhase3();
   }
 
-  private handleMousedown({ offsetX, offsetY }: MouseEvent) {
-    if (!this.isPressed) {
-      __mouseup_callback = this.cancelPressedState;
-      this.invokePressedState(offsetX, offsetY);
-    }
+  private handleMousedown(event: MouseEvent) {
+    if (this.isPressed) return;
+    mouseupCallback = this.releasePressedState;
+    this.pressX = event.offsetX;
+    this.pressY = event.offsetY;
+    this.invokePressedState();
   }
-  private handleKeydown({ key }: KeyboardEvent) {
-    if (key === ' ' && !this.isPressed) {
-      __invoke_keyup_callback();
-      __keyup_callback = this.cancelPressedState;
-      this.invokePressedState();
-    }
+  private handleKeydown(event: KeyboardEvent) {
+    if (event.key !== ' ' || this.isPressed) return;
+    invokeKeyupCallback();
+    keyupCallback = this.releasePressedState;
+    this.pressX = -1;
+    this.pressY = -1;
+    this.invokePressedState();
   }
 }
 
-let __mouseup_callback: () => void = null;
+let mouseupCallback: () => void = null;
 addEventListener('mouseup', function () {
-  if (__mouseup_callback === null) return;
-  __mouseup_callback();
-  __mouseup_callback = null;
+  if (mouseupCallback === null) return;
+  mouseupCallback();
+  mouseupCallback = null;
 });
 
-let __keyup_callback: () => void = null;
-function __invoke_keyup_callback() {
-  if (__keyup_callback === null) return;
-  __keyup_callback();
-  __keyup_callback = null;
+let keyupCallback: () => void = null;
+function invokeKeyupCallback() {
+  if (keyupCallback === null) return;
+  keyupCallback();
+  keyupCallback = null;
 };
-addEventListener('keyup', function ({ key }: KeyboardEvent) {
-  if (key === ' ') __invoke_keyup_callback();
+addEventListener('keyup', function (event: KeyboardEvent) {
+  if (event.key === ' ') invokeKeyupCallback();
 });
-addEventListener('contextmenu', __invoke_keyup_callback);
+addEventListener('contextmenu', invokeKeyupCallback);
 
 // Math.round
 
