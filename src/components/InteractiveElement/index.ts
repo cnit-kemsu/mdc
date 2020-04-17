@@ -55,6 +55,7 @@ export default class InteractiveElement extends HTMLElement {
 
     this.shadowRoot.appendChild(templateNode);
     this.inputElement = this.shadowRoot.querySelector('#input');
+    // this.inputElement = this.shadowRoot.childNodes[this.shadowRoot.childNodes.length - 1] as HTMLInputElement;
   }
 
   get disabled() {
@@ -115,6 +116,7 @@ export default class InteractiveElement extends HTMLElement {
     if (sizeSnapshot.width !== clientWidth || sizeSnapshot.height !== clientHeight) {
       sizeSnapshot.width = clientWidth;
       sizeSnapshot.height = clientHeight;
+      // Math.round
       const rippleSize = Math.sqrt(clientWidth * clientWidth + clientHeight * clientHeight);
       this.setOverlayStyleProp('--md-ripple-size', rippleSize + 'px');
       this.setOverlayStyleProp('--md-ripple-left', (clientWidth - rippleSize) / 2 + 'px');
@@ -146,6 +148,9 @@ export default class InteractiveElement extends HTMLElement {
     mouseupCallback = this.releasePressedState;
     this.pressX = event.offsetX;
     this.pressY = event.offsetY;
+    // const { left, top } = this.getBoundingClientRect();
+    // this.pressX = event.clientX - left;
+    // this.pressY = event.clientY - top;
     this.invokePressedState();
   }
   private handleKeydown(event: KeyboardEvent) {
@@ -175,10 +180,3 @@ addEventListener('keyup', function (event: KeyboardEvent) {
   if (event.key === ' ') invokeKeyupCallback();
 });
 addEventListener('contextmenu', invokeKeyupCallback);
-
-// Math.round
-
-// this.inputElement = this.shadowRoot.childNodes[this.shadowRoot.childNodes.length - 1] as HTMLInputElement;
-
-// const { left, top } = this.getBoundingClientRect();
-// this.playAnimation1(event.clientX - left, event.clientY - top);
