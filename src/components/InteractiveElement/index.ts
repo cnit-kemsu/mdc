@@ -46,9 +46,9 @@ export default class InteractiveElement extends HTMLElement {
     this.getOverlayComputedStyle = () => getComputedStyle(overlay);
 
     this.releasePressedState = this.releasePressedState.bind(this);
-    this.startRipplePhase1 = this.startRipplePhase1.bind(this);
-    this.onRipplePhase1Complete = this.onRipplePhase1Complete.bind(this);
-    this.onRipplePhase3Complete = this.onRipplePhase3Complete.bind(this);
+    this.ripple_startPhase1 = this.ripple_startPhase1.bind(this);
+    this.ripple_onPhase1Complete = this.ripple_onPhase1Complete.bind(this);
+    this.ripple_onPhase3Complete = this.ripple_onPhase3Complete.bind(this);
 
     this.addEventListener('mousedown', this.handleMousedown);
     this.addEventListener('keydown', this.handleKeydown);
@@ -81,21 +81,21 @@ export default class InteractiveElement extends HTMLElement {
     }
   }
 
-  private onRipplePhase3Complete() {
+  private ripple_onPhase3Complete() {
     this.ripplePhase = 0;
     this.removeOverlayStyleProp('--md-ripple-animation');
     this.setOverlayStyleProp('--md-overlay-opacity-1-current', 'var(--md-overlay-opacity-1)');
   }
-  private startRipplePhase3() {
+  private ripple_startPhase3() {
     this.ripplePhase = 3;
     this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-fade)');
-    this.currentTimeout = <any>setTimeout(this.onRipplePhase3Complete, this.duration_phase3);
+    this.currentTimeout = <any>setTimeout(this.ripple_onPhase3Complete, this.duration_phase3);
   }
-  private onRipplePhase1Complete() {
+  private ripple_onPhase1Complete() {
     if (this.isPressed) this.ripplePhase = 2;
-    else this.startRipplePhase3();
+    else this.ripple_startPhase3();
   }
-  private startRipplePhase1() {
+  private ripple_startPhase1() {
     const ov_comp_style = this.getOverlayComputedStyle();
     this.duration_phase1 = Math.max(
       parseInt(ov_comp_style.getPropertyValue('--md-ripple-duration-transform')),
@@ -105,7 +105,7 @@ export default class InteractiveElement extends HTMLElement {
     this.setOverlayStyleProp('--md-overlay-opacity-1-current', ov_comp_style.getPropertyValue('--md-overlay-opacity-1'));
 
     this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-spread)');
-    this.currentTimeout = <any>setTimeout(this.onRipplePhase1Complete, this.duration_phase1);
+    this.currentTimeout = <any>setTimeout(this.ripple_onPhase1Complete, this.duration_phase1);
   }
   
   private invokePressedState() {
@@ -129,16 +129,16 @@ export default class InteractiveElement extends HTMLElement {
     if (this.ripplePhase === 1) {
       clearTimeout(this.currentTimeout);
       this.removeOverlayStyleProp('--md-ripple-animation');
-      requestAnimationFrame(this.startRipplePhase1);
+      requestAnimationFrame(this.ripple_startPhase1);
     } else {
       if (this.ripplePhase === 3) clearTimeout(this.currentTimeout);
       this.ripplePhase = 1;
-      this.startRipplePhase1();
+      this.ripple_startPhase1();
     }
   }
   private releasePressedState() {
     this.isPressed = false;
-    if (this.ripplePhase === 2) this.startRipplePhase3();
+    if (this.ripplePhase === 2) this.ripple_startPhase3();
   }
 
   private handleMousedown(event: MouseEvent) {
