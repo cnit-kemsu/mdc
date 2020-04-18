@@ -38,9 +38,10 @@ export default class Checkbox extends InteractiveElement {
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    super.attributeChangedCallback(name, oldValue, newValue);
     if (name === 'checked') {
-      if (newValue !== null) this.inputElement.disabled = true;
-      this.inputElement.disabled = false;
+      if (newValue !== null) this.inputElement.checked = true;
+      else this.inputElement.checked = false;
     }
   }
 }

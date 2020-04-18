@@ -71,6 +71,10 @@ export default class InteractiveElement extends HTMLElement {
     }
   }
 
+  static get observedAttributes() {
+    return ['disabled'];
+  }
+
   connectedCallback() {
     if (this.hasAttribute('disabled')) this.inputElement.disabled = true;
   }
@@ -78,7 +82,7 @@ export default class InteractiveElement extends HTMLElement {
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'disabled') {
       if (newValue !== null) this.inputElement.disabled = true;
-      this.inputElement.disabled = false;
+      else this.inputElement.disabled = false;
     }
   }
 

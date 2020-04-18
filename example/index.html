@@ -86,30 +86,47 @@
   </head>
   <body>
 
+    <div id="editable" contenteditable="true">
+      <div>asd</div>
+      <table style="border: 1px solid black;">
+        <tbody>
+          <tr>
+            <td style="border: 1px solid black;">asdasd</td>
+            <td style="border: 1px solid black;">123213</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid black;">qweqwe</td>
+            <td style="border: 1px solid black;">6757</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div style="width: 100%; height: 100%; text-align: center; position: absolute; padding-top: 50%;">
 
-      <md-button style="margin: 16px; width: 200px; height: 200px;">Создать</md-button>
-      <md-button disabled style="margin: 16px" outlined>Создать</md-button>
-      <md-button style="margin: 16px" raised>Создать</md-button>
+      <div>
+        <md-button style="margin: 16px">Создать</md-button>
+        <md-button style="margin: 16px" outlined>Создать</md-button>
+        <md-button style="margin: 16px" raised>Создать</md-button>
+      </div>
 
       <div>
-        <md-checkbox disabled style="margin: 16px" name="asd"></md-checkbox>
+        <md-button disabled style="margin: 16px;">Создать</md-button>
+        <md-button disabled style="margin: 16px" outlined>Создать</md-button>
+        <md-button disabled style="margin: 16px" raised>Создать</md-button>
+      </div>
+
+      <div>
+        <md-checkbox disabled style="margin: 16px" name="asd0"></md-checkbox>
         <md-checkbox checked id="123" style="margin: 16px" name="asd1"></md-checkbox>
         <md-checkbox style="margin: 16px" name="asd2"></md-checkbox>
       </div>
 
-      <script>
-        function log() {
-          console.log('asd')
-        }
-      </script>
-      <button onClick="log()" class="btn">asdasd</button>
-      <button class="btn">asdasd</button>
-      
-    </div>
+      <div>
+        <md-textfield style=""></md-textfield>
+      </div>
 
-    <div style="height: 10px;">
-      <div style="background-color: red; height: 33%;"></div>
+      
     </div>
 
     <div id="root"></div>
