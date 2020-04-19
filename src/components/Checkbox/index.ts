@@ -1,13 +1,13 @@
 import InteractiveElement from '@components/InteractiveElement';
-import templateHTML from './template.html';
+import HTMLTemplate from '@lib/HTMLTemplate';
+import html from './template.html';
 
-const template = document.createElement('template');
-template.innerHTML = templateHTML;
+const template = new HTMLTemplate(html);
 
 export default class Checkbox extends InteractiveElement {
 
   constructor() {
-    super(template.content.cloneNode(true));
+    super(template.clonedContent);
 
     this.onInputElementChange = this.onInputElementChange.bind(this);
     
@@ -19,9 +19,10 @@ export default class Checkbox extends InteractiveElement {
     if (this.hasAttribute('checked')) this.inputElement.checked = true;
   }
 
-  onInputElementChange() {
+  onInputElementChange(event) {
     if (this.inputElement.checked) this.setAttribute('checked', '');
     else this.removeAttribute('checked');
+    this.dispatchEvent(new Event('change'));
   }
 
   get checked() {

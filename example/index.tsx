@@ -11,6 +11,19 @@ customElements.define('md-button', Button);
 customElements.define('md-checkbox', Checkbox);
 customElements.define('md-textfield', TextField);
 
+// const createElement = React.createElement;
+// //@ts-ignore
+// React.createElement = (type, props, ...children) => {
+//   //console.log(type);
+//   const newProps = { ...props };
+//   if (type === 'md-checkbox') {
+//     newProps.ref = (element: any) => {
+//       if (newProps.onChange) element.addEventListener('change', newProps.onChange);
+//     }
+//   }
+//   return createElement(type, newProps, ...children);
+// };
+
 declare global {
   module JSX {
     interface IntrinsicElements {
@@ -27,6 +40,7 @@ function App() {
     <md-button children="sdasd" />
     <md-checkbox checked children="sdasd" />
     <md-checkbox disabled children="sdasd" /> */}
+    <md-checkbox onChange={() => console.log('111')} onClick={() => console.log('222')} onBlur={() => console.log('444')} />
   </div>;
 }
 

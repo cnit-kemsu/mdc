@@ -1,7 +1,7 @@
-import templateHTML from './template.html';
+import HTMLTemplate from '@lib/HTMLTemplate';
+import html from './template.html';
 
-const template = document.createElement('template');
-template.innerHTML = templateHTML;
+const template = new HTMLTemplate(html);
 
 interface SizeSnapshot {
   width: number;
@@ -37,7 +37,7 @@ export default class InteractiveElement extends HTMLElement {
     super();
     
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.shadowRoot.appendChild(template.clonedContent);
 
     const overlay = this.shadowRoot.children[1] as HTMLElement;
     const overlayStyle = overlay.style;
@@ -90,6 +90,7 @@ export default class InteractiveElement extends HTMLElement {
     this.ripplePhase = 0;
     this.removeOverlayStyleProp('--md-ripple-animation');
     this.setOverlayStyleProp('--md-overlay-opacity-1-current', 'var(--md-overlay-opacity-1)');
+    //requestAnimationFrame(() => requestAnimationFrame(() => this.setOverlayStyleProp('--md-overlay-transition-1-current', 'var(--md-overlay-transition-1)')));
   }
   private ripple_startPhase3() {
     this.ripplePhase = 3;
@@ -102,12 +103,15 @@ export default class InteractiveElement extends HTMLElement {
   }
   private ripple_startPhase1() {
     const ov_comp_style = this.getOverlayComputedStyle();
+
     this.duration_phase1 = Math.max(
       parseInt(ov_comp_style.getPropertyValue('--md-ripple-duration-transform')),
       parseInt(ov_comp_style.getPropertyValue('--md-ripple-duration-fadein'))
     );
     this.duration_phase3 = parseInt(ov_comp_style.getPropertyValue('--md-ripple-duration-fadeout'));
+
     this.setOverlayStyleProp('--md-overlay-opacity-1-current', ov_comp_style.getPropertyValue('--md-overlay-opacity-1'));
+    //this.setOverlayStyleProp('--md-overlay-transition-1-current', 'none');
 
     this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-spread)');
     this.currentTimeout = <any>setTimeout(this.ripple_onPhase1Complete, this.duration_phase1);

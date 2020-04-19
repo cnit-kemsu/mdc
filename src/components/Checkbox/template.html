@@ -33,13 +33,16 @@
     text-transform: uppercase; */
 
     color: var(--primary-color);
-    --md-overlay-color: var(--primary-color);
+    --md-overlay-color: black;
     --md-overlay-opacity-hover: 0.04;
     --md-overlay-opacity-focused: 0.12;
     --md-overlay-opacity-pressed: 0.08;
 
     padding: 11px;
     border-radius: 50%;
+  }
+  :host([checked]) {
+    --md-overlay-color: var(--primary-color);
   }
   :host([checked]) div {
     border-color: var(--primary-color);
