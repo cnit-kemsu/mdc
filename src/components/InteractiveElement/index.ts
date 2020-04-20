@@ -20,10 +20,10 @@ export default class InteractiveElement extends HTMLElement {
   // 2 - sustaining;
   // 3 - animation of fading.
   private ripplePhase: number = 0;
-  // Animation duration of the 1st phase of the ripple
-  private duration_phase1: number = 0;
-  // Animation duration of the 3rd phase of the ripple
-  private duration_phase3: number = 0;
+  // // Animation duration of the 1st phase of the ripple
+  // private duration_phase1: number = 0;
+  // // Animation duration of the 3rd phase of the ripple
+  // private duration_phase3: number = 0;
   // Current ripple animation timeout id
   private currentTimeout: number = 0;
   
@@ -75,10 +75,6 @@ export default class InteractiveElement extends HTMLElement {
     return ['disabled'];
   }
 
-  connectedCallback() {
-    if (this.hasAttribute('disabled')) this.inputElement.disabled = true;
-  }
-
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'disabled') {
       if (newValue !== null) this.inputElement.disabled = true;
@@ -86,35 +82,40 @@ export default class InteractiveElement extends HTMLElement {
     }
   }
 
+  // private resetOverlayTransitionCallback = () => this.setOverlayStyleProp('--md-overlay-transition-current', 'var(--md-overlay-transition)');
+  // private resetOverlayTransition = () => requestAnimationFrame(this.resetOverlayTransitionCallback);
   private ripple_onPhase3Complete() {
     this.ripplePhase = 0;
     this.removeOverlayStyleProp('--md-ripple-animation');
-    this.setOverlayStyleProp('--md-overlay-opacity-1-current', 'var(--md-overlay-opacity-1)');
-    //requestAnimationFrame(() => requestAnimationFrame(() => this.setOverlayStyleProp('--md-overlay-transition-1-current', 'var(--md-overlay-transition-1)')));
+    
+    this.setOverlayStyleProp('--md-overlay-opacity-current', 'var(--md-overlay-opacity)');
+    //requestAnimationFrame(this.resetOverlayTransition);
   }
   private ripple_startPhase3() {
     this.ripplePhase = 3;
     this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-fade)');
-    this.currentTimeout = <any>setTimeout(this.ripple_onPhase3Complete, this.duration_phase3);
+    // this.currentTimeout = <any>setTimeout(this.ripple_onPhase3Complete, this.duration_phase3);
+    this.currentTimeout = <any>setTimeout(this.ripple_onPhase3Complete, 150);
   }
   private ripple_onPhase1Complete() {
     if (this.isPressed) this.ripplePhase = 2;
     else this.ripple_startPhase3();
   }
   private ripple_startPhase1() {
-    const ov_comp_style = this.getOverlayComputedStyle();
+    const overlayCurrentStyle = this.getOverlayComputedStyle();
 
-    this.duration_phase1 = Math.max(
-      parseInt(ov_comp_style.getPropertyValue('--md-ripple-duration-transform')),
-      parseInt(ov_comp_style.getPropertyValue('--md-ripple-duration-fadein'))
-    );
-    this.duration_phase3 = parseInt(ov_comp_style.getPropertyValue('--md-ripple-duration-fadeout'));
+    // this.duration_phase1 = Math.max(
+    //   parseInt(overlayCurrentStyle.getPropertyValue('--md-ripple-transform-duration')),
+    //   parseInt(overlayCurrentStyle.getPropertyValue('--md-ripple-fadein-duration'))
+    // );
+    // this.duration_phase3 = parseInt(overlayCurrentStyle.getPropertyValue('--md-ripple-fadeout-duration'));
 
-    this.setOverlayStyleProp('--md-overlay-opacity-1-current', ov_comp_style.getPropertyValue('--md-overlay-opacity-1'));
-    //this.setOverlayStyleProp('--md-overlay-transition-1-current', 'none');
+    this.setOverlayStyleProp('--md-overlay-opacity-current', overlayCurrentStyle.getPropertyValue('--md-overlay-opacity'));
+    //this.setOverlayStyleProp('--md-overlay-transition-current', 'none');
 
     this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-spread)');
-    this.currentTimeout = <any>setTimeout(this.ripple_onPhase1Complete, this.duration_phase1);
+    // this.currentTimeout = <any>setTimeout(this.ripple_onPhase1Complete, this.duration_phase1);
+    this.currentTimeout = <any>setTimeout(this.ripple_onPhase1Complete, 225);
   }
   
   private invokePressedState() {

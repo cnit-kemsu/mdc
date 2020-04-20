@@ -4,6 +4,8 @@ import html from './template.html';
 
 const template = new HTMLTemplate(html);
 
+const observedAttributes = ['checked', ...InteractiveElement.observedAttributes];
+
 export default class Checkbox extends InteractiveElement {
 
   constructor() {
@@ -14,9 +16,8 @@ export default class Checkbox extends InteractiveElement {
     this.inputElement.addEventListener('change', this.onInputElementChange);
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    if (this.hasAttribute('checked')) this.inputElement.checked = true;
+  static get observedAttributes() {
+    return observedAttributes;
   }
 
   onInputElementChange(event) {
@@ -39,6 +40,7 @@ export default class Checkbox extends InteractiveElement {
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    console.log('attributeChangedCallback:', name, '; value:', newValue);
     super.attributeChangedCallback(name, oldValue, newValue);
     if (name === 'checked') {
       if (newValue !== null) this.inputElement.checked = true;

@@ -1,25 +1,24 @@
 <style>
   :host {
-    --md-overlay-opacity-1: 0;
-    --md-overlay-opacity-1-current: var(--md-overlay-opacity-1);
+    --md-overlay-opacity: 0;
+    --md-overlay-opacity-current: var(--md-overlay-opacity);
     
-    --md-ripple-duration-transform: 225ms;
-    --md-ripple-duration-fadein: 75ms;
-    --md-ripple-duration-fadeout: 150ms;
-    --md-ripple-spread: ripple-transform ease var(--md-ripple-duration-transform) forwards, ripple-fadein ease var(--md-ripple-duration-fadein) forwards;
-    --md-ripple-fade: ripple-fadeout ease var(--md-ripple-duration-fadeout) forwards;
+    /* --md-ripple-transform-duration: 225ms;
+    --md-ripple-fadein-duration: 75ms;
+    --md-ripple-fadeout-duration: 150ms;
+    --md-ripple-spread: ripple-transform ease var(--md-ripple-transform-duration) forwards, ripple-fadein ease var(--md-ripple-fadein-duration) forwards;
+    --md-ripple-fade: ripple-fadeout ease var(--md-ripple-fadeout-duration) forwards; */
+    --md-ripple-spread: ripple-transform ease 225ms forwards, ripple-fadein ease 75ms forwards;
+    --md-ripple-fade: ripple-fadeout ease 150ms forwards;
 
-    box-shadow: var(--md-elevation);
-    /* --md-overlay-transition-1: opacity 15ms linear; */
-    --md-overlay-transition-1-current: var(--md-overlay-transition-1);
+    /* --md-overlay-transition: opacity 15ms linear;
+    --md-overlay-transition-current: var(--md-overlay-transition); */
   }
   :host(:hover) {
-    --md-overlay-opacity-1: var(--md-overlay-opacity-hover);
+    --md-overlay-opacity: var(--md-overlay-hover-opacity);
   }
   :host(:focus-within) {
-    --md-overlay-opacity-1:  var(--md-overlay-opacity-focused);
-  }
-  :host(:not([disabled])) {
+    --md-overlay-opacity:  var(--md-overlay-focus-opacity);
   }
   :host([disabled]) md-overlay {
     display: none;
@@ -38,15 +37,15 @@
       opacity: 0;
     }
     to {
-      opacity: var(--md-overlay-opacity-pressed);
+      opacity: var(--md-overlay-pressed-opacity);
     }
   }
   @keyframes ripple-fadeout {
     from {
-      opacity: var(--md-overlay-opacity-pressed);
+      opacity: var(--md-overlay-pressed-opacity);
     }
     to {
-      opacity: calc((var(--md-overlay-opacity-1) - var(--md-overlay-opacity-1-current)) / (1 - var(--md-overlay-opacity-1-current)));
+      opacity: calc((var(--md-overlay-opacity) - var(--md-overlay-opacity-current)) / (1 - var(--md-overlay-opacity-current)));
     }
   }
 </style>

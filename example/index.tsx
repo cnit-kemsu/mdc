@@ -36,11 +36,12 @@ declare global {
 function App() {
 
   return <div>
-    {/* <md-button raised children="sdasd" />
-    <md-button children="sdasd" />
+    <md-button raised outlined children="sdasd" />
+    <md-button outlined raised children="sdasd" disabled />
     <md-checkbox checked children="sdasd" />
-    <md-checkbox disabled children="sdasd" /> */}
-    <md-checkbox onChange={() => console.log('111')} onClick={() => console.log('222')} onBlur={() => console.log('444')} />
+    <md-checkbox disabled children="sdasd" />
+    {/* <md-checkbox onChange={() => console.log('111')} onClick={() => console.log('222')} onBlur={() => console.log('444')} />
+    <md-button outlined raised>asdsad</md-button> */}
   </div>;
 }
 
@@ -50,22 +51,22 @@ ReactDOM.render(
 );
 
 
-const targetNode = document.getElementById('editable');
+// const targetNode = document.getElementById('editable');
 
-const config = { attributes: true, childList: true, subtree: true };
+// const config = { attributes: true, childList: true, subtree: true };
 
-const callback = function(mutationsList, observer) {
-  console.log(mutationsList);
+// const callback = function(mutationsList, observer) {
+//   console.log(mutationsList);
 
-  // for(let mutation of mutationsList) {
-  //     if (mutation.type === 'childList') {
-  //         console.log('A child node has been added or removed.');
-  //     }
-  //     else if (mutation.type === 'attributes') {
-  //         console.log('The ' + mutation.attributeName + ' attribute was modified.');
-  //     }
-  // }
-};
+//   // for(let mutation of mutationsList) {
+//   //     if (mutation.type === 'childList') {
+//   //         console.log('A child node has been added or removed.');
+//   //     }
+//   //     else if (mutation.type === 'attributes') {
+//   //         console.log('The ' + mutation.attributeName + ' attribute was modified.');
+//   //     }
+//   // }
+// };
 
-const observer = new MutationObserver(callback);
-observer.observe(targetNode, config);
+// const observer = new MutationObserver(callback);
+// observer.observe(targetNode, config);
