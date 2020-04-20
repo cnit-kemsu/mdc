@@ -27,7 +27,7 @@ export default class InteractiveElement extends HTMLElement {
   // Current ripple animation timeout id
   private currentTimeout: number = 0;
   
-  private setOverlayStyleProp: (propertyName: string, value: string) => void;
+  protected setOverlayStyleProp: (propertyName: string, value: string) => void;
   private removeOverlayStyleProp: (propertyName: string) => string;
   private getOverlayComputedStyle: () => CSSStyleDeclaration;
 

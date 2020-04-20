@@ -20,10 +20,21 @@ export default class Checkbox extends InteractiveElement {
     return observedAttributes;
   }
 
-  onInputElementChange(event) {
-    if (this.inputElement.checked) this.setAttribute('checked', '');
+  onInputElementChange() {
+    const checked = this.inputElement.checked;
+    if (checked) this.setAttribute('checked', '');
     else this.removeAttribute('checked');
     this.dispatchEvent(new Event('change'));
+    
+    if (checked) {
+      this.style.removeProperty('--md-trans-curr');
+      this.style.setProperty('--md-dashoffset', '30px');
+      requestAnimationFrame(() => {
+        this.style.setProperty('--md-trans-curr', 'var(--md-trans)');
+        this.style.setProperty('--md-dashoffset', '0px');
+      });
+    }
+    else this.style.setProperty('--md-dashoffset', '-30px');
   }
 
   get checked() {
