@@ -8,8 +8,8 @@
     --md-ripple-fadeout-duration: 150ms;
     --md-ripple-spread: ripple-transform ease var(--md-ripple-transform-duration) forwards, ripple-fadein ease var(--md-ripple-fadein-duration) forwards;
     --md-ripple-fade: ripple-fadeout ease var(--md-ripple-fadeout-duration) forwards; */
-    --md-ripple-spread: ripple-transform ease 225ms forwards, ripple-fadein ease 75ms forwards;
-    --md-ripple-fade: ripple-fadeout ease 150ms forwards;
+    --md-ripple-spread: md-ripple-transform ease 225ms forwards, md-ripple-fadein ease 75ms forwards;
+    --md-ripple-fade: md-ripple-fadeout ease 150ms forwards;
 
     /* --md-overlay-transition: opacity 15ms linear;
     --md-overlay-transition-current: var(--md-overlay-transition); */
@@ -24,7 +24,7 @@
     display: none;
   }
 
-  @keyframes ripple-transform {
+  @keyframes md-ripple-transform {
     from {
       transform: translate(var(--md-ripple-start-x), var(--md-ripple-start-y)) scale(0.5);
     }
@@ -32,7 +32,7 @@
       transform: translate(0, 0) scale(1);
     }
   }
-  @keyframes ripple-fadein {
+  @keyframes md-ripple-fadein {
     from {
       opacity: 0;
     }
@@ -40,7 +40,7 @@
       opacity: var(--md-overlay-pressed-opacity);
     }
   }
-  @keyframes ripple-fadeout {
+  @keyframes md-ripple-fadeout {
     from {
       opacity: var(--md-overlay-pressed-opacity);
     }
