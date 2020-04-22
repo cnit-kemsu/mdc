@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Roboto+Mono:400,500|Material+Icons" rel="stylesheet">
     <style>
 
-      md-checkbox {
+      md-checkbox, md-radio {
         --md-current-color: var(--md-secondary-color);
       }
 
@@ -167,19 +167,22 @@
         <md-checkbox disabled style="margin: 16px" name="asd0"></md-checkbox>
         <md-checkbox disabled checked id="123" style="margin: 16px" name="asd1"></md-checkbox>
         <md-checkbox checked id="123" style="margin: 16px" name="asd1"></md-checkbox>
-        <md-checkbox onchange="console.log(event)" style="margin: 16px" name="asd2"></md-checkbox>
+        <md-checkbox style="margin: 16px" value="123" name="asd2"></md-checkbox>
+        <!-- <md-checkbox onchange="console.log(event)" style="margin: 16px" value="123" name="asd2"></md-checkbox> -->
       </div>
 
       <div>
-        <input id="chbx" type="checkbox">
-        <input type="radio" value="b" name="asd" checked>
-        <input  type="radio" value="a" name="asd" checked>
+        <!-- <md-radio disabled style="margin: 16px" name="qweqwe"></md-radio>
+        <md-radio disabled checked id="123" style="margin: 16px" name="qweqwe"></md-radio> -->
+        <md-radio style="margin: 16px" value="q" name="qwe" checked disabled></md-radio>
+        <md-radio style="margin: 16px" value="b" name="qwe" checked disabled></md-radio>
+        <md-radio style="margin: 16px" value="q" name="asd" checked></md-radio>
+        <md-radio style="margin: 16px" value="b" name="asd"></md-radio>
       </div>
 
       <div>
-        <md-textfield style="" onchange="console.log(event)"></md-textfield>
+        <md-textfield></md-textfield>
       </div>
-
       
     </div>
 

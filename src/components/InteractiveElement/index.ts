@@ -33,7 +33,7 @@ export default class InteractiveElement extends HTMLElement {
 
   protected inputElement: HTMLInputElement;
 
-  constructor(templateNode: Node) {
+  constructor(...childNodes: Node[]) {
     super();
     
     this.attachShadow({ mode: 'open' });
@@ -53,7 +53,7 @@ export default class InteractiveElement extends HTMLElement {
     this.addEventListener('mousedown', this.handleMousedown);
     this.addEventListener('keydown', this.handleKeydown);
 
-    this.shadowRoot.appendChild(templateNode);
+    for (const node of childNodes) this.shadowRoot.appendChild(node);
     this.inputElement = this.shadowRoot.querySelector('#input');
     // this.inputElement = this.shadowRoot.childNodes[this.shadowRoot.childNodes.length - 1] as HTMLInputElement;
   }

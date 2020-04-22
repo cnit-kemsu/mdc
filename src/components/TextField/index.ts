@@ -1,25 +1,59 @@
-import InteractiveElement from '@components/InteractiveElement';
-import templateHTML from './template.html';
+import HTMLTemplate from '@lib/HTMLTemplate';
+import html from './template.html';
 
-const template = document.createElement('template');
-template.innerHTML = templateHTML;
+const template = new HTMLTemplate(html);
 
-export default class TextField extends InteractiveElement {
+const observedAttributes = ['name', 'value'];
+
+export default class TextField extends HTMLElement {
+
+  inputElement: HTMLInputElement;
 
   constructor() {
-    super(template.content.cloneNode(true));
+    super();
 
-    this.onInputElementChange = this.onInputElementChange.bind(this);
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.clonedContent);
+
+    this.onChange = this.onChange.bind(this);
     
-    this.inputElement.addEventListener('change', this.onInputElementChange);
+    this.inputElement = this.shadowRoot.querySelector('#input');
+    this.inputElement.addEventListener('input', this.onChange);
   }
 
-  connectedCallback() {
+  static get observedAttributes() {
+    return observedAttributes;
   }
 
-  onInputElementChange() {
+  onChange() {
+    console.log('change');
+    this.setAttribute('value', this.inputElement.value);
+
+    this.dispatchEvent(new Event('change'));
+  }
+
+  get name(): string {
+    return this.inputElement.name;
+  }
+  set name(value: string) {
+    this.setAttribute('name', value);
+  }
+
+  get value(): string {
+    return this.inputElement.value;
+  }
+  set value(value: string) {
+    this.setAttribute('value', value);
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    switch (name) {
+      case 'name':
+        this.inputElement.name = newValue;
+        break;
+      case 'value':
+        this.inputElement.value = newValue;
+        break;
+    }
   }
 }

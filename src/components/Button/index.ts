@@ -10,6 +10,10 @@ export default class Button extends InteractiveElement {
 
   constructor() {
     super(template.clonedContent);
+
+    // if (navigator.userAgent.indexOf('Firefox') > 0) {
+    //   this.style.setProperty('border-width', '1.5px');
+    // }
   }
 
   static get observedAttributes() {
