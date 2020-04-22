@@ -13,7 +13,7 @@ export default class SelectionControl extends InteractiveElement {
 
     this.onChange = this.onChange.bind(this);
     
-    this.inputElement.addEventListener('change', this.onChange);
+    this.inputElement.addEventListener('input', this.onChange);
   }
 
   static get observedAttributes() {

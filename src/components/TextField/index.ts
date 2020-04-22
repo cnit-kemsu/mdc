@@ -29,7 +29,7 @@ export default class TextField extends HTMLElement {
     console.log('change');
     this.setAttribute('value', this.inputElement.value);
 
-    this.dispatchEvent(new Event('change'));
+    this.dispatchEvent(new Event('input'));
   }
 
   get name(): string {

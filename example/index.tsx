@@ -20,17 +20,51 @@ declare global {
     interface IntrinsicElements {
       'md-button': any;
       'md-checkbox': any;
+      'md-textfield': any;
+      'ce-element': any;
     }
   }
 }
+
+import HTMLTemplate from '@lib/HTMLTemplate';
+const template = new HTMLTemplate(`
+  <style>
+    :host {
+      display: inline-block;
+    }
+    ::slotted(div) {
+      background-color: red;
+    }
+  </style>
+  <div>123123</div>
+  <slot></slot>
+`);
+class CustomElement extends HTMLElement {
+
+  constructor() {
+    super();
+
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.clonedContent);
+    
+  }
+
+  connectedCallback() {
+    this.innerHTML = '<div>asdasd</div>';
+  }
+
+}
+customElements.define('ce-element', CustomElement);
 
 function App() {
 
   return <div>
     <md-button raised outlined children="sdasd" />
     <md-button outlined raised children="sdasd" disabled />
-    <md-checkbox checked children="sdasd" />
+    <md-checkbox onInput={event => console.log(event.target.checked)} checked children="sdasd" />
     <md-checkbox disabled children="sdasd" />
+    <md-textfield onInput={event => console.log(event.target.value)} />
+    <ce-element></ce-element>
   </div>;
 }
 
