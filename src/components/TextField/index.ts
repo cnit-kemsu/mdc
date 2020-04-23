@@ -7,22 +7,20 @@ const observedAttributes = ['name', 'value'];
 
 export default class TextField extends HTMLElement {
 
-  private inputElement: HTMLInputElement;
+  private textInput: HTMLInputElement;
   private labelStyle: CSSStyleDeclaration;
-  shadowRoot1: any;
+  private isEmpty: boolean = true;
+
   constructor() {
     super();
 
-    //@ts-ignore
-    this.shadowRoot1 = this.attachShadow({ mode: 'closed' });
-    this.shadowRoot1.appendChild(template.clonedContent);
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.clonedContent);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.inputElement = this.shadowRoot1.querySelector('input');
-    //this.inputElement.addEventListener('change', this.handleChange, { capture: true });
-    this.inputElement.addEventListener('input', this.handleChange, { capture: true });
+    this.textInput = this.shadowRoot.querySelector('input');
+    this.addEventListener('input', this.onChange);
 
-    const label = this.shadowRoot1.querySelector('label');
+    const label = this.shadowRoot.querySelector('label');
     this.labelStyle = label.style;
   }
 
@@ -30,45 +28,29 @@ export default class TextField extends HTMLElement {
     return observedAttributes;
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    switch (name) {
-      case 'name':
-        this.inputElement.name = newValue;
-        break;
-      case 'value':
-        this.value = newValue;
-        break;
-    }
+    if (name === 'value') this.value = newValue;
   }
 
   onChange() {
-    if (this.inputElement.value) this.labelStyle.setProperty('--md-label-transform', 'var(--md-label-elevated)');
-    else this.labelStyle.setProperty('--md-label-transform', 'var(--md-label-lowered)');
-  }
-
-  handleChange(event) {
-    //event.preventDefault();
-    event.stopPropagation();
-    this.onChange();
-    //const ev = new InputEvent('input', { bubbles: true, cancelable: true });
-    const ev = new Event('input', { bubbles: true });
-    // @ts-ignore
-    //ev.simulated = true;
-    this.dispatchEvent(ev);
-    //this.dispatchEvent(event);
+    const isEmpty = !this.textInput.value;
+    if (this.isEmpty === isEmpty) return;
+    this.isEmpty = isEmpty;
+    if (isEmpty) this.labelStyle.setProperty('--md-label-transform', 'var(--md-label-lowered)');
+    else this.labelStyle.setProperty('--md-label-transform', 'var(--md-label-elevated)');
   }
 
   get name(): string {
-    return this.inputElement.name;
+    return this.getAttribute('name');
   }
   set name(value: string) {
     this.setAttribute('name', value);
   }
 
   get value(): string {
-    return this.inputElement.value;
+    return this.textInput.value;
   }
   set value(value: string) {
-    this.inputElement.value = value;
+    this.textInput.value = value;
     this.onChange();
   }
 }

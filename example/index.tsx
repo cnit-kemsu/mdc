@@ -27,21 +27,14 @@ declare global {
 
 function App() {
 
-  const [value, setValue] = React.useState('');
-
   return <div>
-    <md-checkbox disabled children="sdasd" />
-    <md-checkbox disabled children="sdasd" />
-    <button children="sdasd" onClick={event => console.log('click', event.bubbles)} />
-    <md-button raised outlined children="sdasd" onClick={() => console.log('click')} />
-    <md-button outlined raised children="sdasd" disabled onClick={() => console.log('click')} />
-    <md-checkbox onInput={event => console.log(event.target.checked)} checked children="sdasd" />
-    <md-checkbox disabled children="sdasd" />
-    <md-textfield 
-    onInput={event => console.log('input', event.target.value)} 
-    onChange={event => console.log('change', event.target.value)} />
-    <md-checkbox onChange={event => console.log('change', event.target)} onInput={event => console.log('input', event.target)} />
-    <input type="checkbox" onChange={event => console.log('change', event.nativeEvent)} onInput={event => console.log('input', event.nativeEvent)} />
+    <md-button raised outlined onClick={() => console.log('click')}>Click me</md-button>
+    <md-button outlined raised disabled onClick={() => console.log('click')}>Click me</md-button>
+
+    <md-checkbox onInput={event => console.log(event.target.checked)} />
+    <md-checkbox disabled onInput={event => console.log(event.target.checked)} />
+
+    <md-textfield onInput={event => console.log('input', event.target.value)} />
   </div>;
 }
 

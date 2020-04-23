@@ -16,34 +16,30 @@
     height: 56px;
 
     --md-current-color: var(--md-primary-color);
+
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(0, 0, 0, 0.42);
+    box-sizing: border-box;
   }
   :host(:hover) {
     --md-overlay-opacity-current: 0.04;
     background-color: rgba(0, 0, 0, 0.08);
+
+    border-bottom-color: rgba(0, 0, 0, 0.87);
   }
   :host(:focus-within) {
     --md-overlay-opacity-current:  0.12;
     background-color: rgba(0, 0, 0, 0.14);
   }
-  :host([disabled]) md-overlay {
-    display: none;
-  }
 
   input {
-    /* opacity: 0;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    cursor: inherit; */
     padding: 20px 16px 6px 16px;
     outline: none;
     border: none;
-    border-bottom-width: 1px;
+    /* border-bottom-width: 1px;
     border-bottom-style: solid;
-    border-bottom-color: rgba(0, 0, 0, 0.42);
+    border-bottom-color: rgba(0, 0, 0, 0.42); */
 
     font-size: 16px;
     font-weight: 400;
@@ -54,16 +50,16 @@
     /* width: 100%; */
     height: 100%;
   }
-  :host(:hover) input {
+  /* :host(:hover) input {
     border-bottom-color: rgba(0, 0, 0, 0.87);
-  }
+  } */
   div {
     background-color: var(--md-current-color);
     height: 2px;
     width: 100%;
     transform: scaleX(0);
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     opacity: 0;
     transition: transform 0ms 180ms ease, opacity 180ms ease;
@@ -83,28 +79,22 @@
     font-family: inherit;
     position: absolute;
     pointer-events: none;
-    /* transform: translateY(-50%); */
     --md-label-lowered: translateY(-50%);
     --md-label-elevated: translateY(-106%) scale(0.75);
     --md-label-transform: var(--md-label-lowered);
     transform: var(--md-label-transform);
-    right: auto;
+    /* right: auto; */
     line-height: 18.4px;
-    /* text-align: left; */
     transform-origin: left top;
     transition: transform 150ms ease, color 150ms ease;
-    /* will-change: transform; */
+    user-select: none;
   }
   :host(:focus-within) label {
     transform: var(--md-label-elevated);
     color: var(--md-current-color);
   }
-  /* :host([value]:not([value=""])) label {
-    transform: translateY(-106%) scale(0.75);
-  } */
 </style>
 
-<!-- <md-overlay></md-overlay> -->
-<input type="text" id="input" />
+<input type="text">
 <div></div>
 <label id="label">Name</label>
