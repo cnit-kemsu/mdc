@@ -64,10 +64,10 @@ export default class InteractiveElement extends HTMLElement {
   set disabled(value: boolean) {
     if (value) {
       this.setAttribute('disabled', '');
-      this.inputElement.disabled = true;
+      //this.inputElement.disabled = true;
     } else {
       this.removeAttribute('disabled');
-      this.inputElement.disabled = false;
+      //this.inputElement.disabled = false;
     }
   }
 
@@ -77,8 +77,8 @@ export default class InteractiveElement extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'disabled') {
-      if (newValue !== null) this.inputElement.disabled = true;
-      else this.inputElement.disabled = false;
+      //if (newValue !== null) this.inputElement.disabled = true;
+      //else this.inputElement.disabled = false;
     }
   }
 
@@ -150,6 +150,7 @@ export default class InteractiveElement extends HTMLElement {
   private releasePressedState() {
     this.isPressed = false;
     if (this.ripplePhase === 2) this.ripple_startPhase3();
+    this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
   }
 
   private handleMousedown(event: MouseEvent) {
@@ -164,6 +165,7 @@ export default class InteractiveElement extends HTMLElement {
   }
   private handleKeydown(event: KeyboardEvent) {
     if (event.key !== ' ' || this.isPressed) return;
+    event.preventDefault();
     invokeKeyupCallback();
     keyupCallback = this.releasePressedState;
     this.pressX = -1;

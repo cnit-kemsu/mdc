@@ -83,7 +83,11 @@
     font-family: inherit;
     position: absolute;
     pointer-events: none;
-    transform: translateY(-50%);
+    /* transform: translateY(-50%); */
+    --md-label-lowered: translateY(-50%);
+    --md-label-elevated: translateY(-106%) scale(0.75);
+    --md-label-transform: var(--md-label-lowered);
+    transform: var(--md-label-transform);
     right: auto;
     line-height: 18.4px;
     /* text-align: left; */
@@ -92,12 +96,12 @@
     /* will-change: transform; */
   }
   :host(:focus-within) label {
-    transform: translateY(-106%) scale(0.75);
+    transform: var(--md-label-elevated);
     color: var(--md-current-color);
   }
-  :host([value]:not([value=""])) label {
+  /* :host([value]:not([value=""])) label {
     transform: translateY(-106%) scale(0.75);
-  }
+  } */
 </style>
 
 <!-- <md-overlay></md-overlay> -->

@@ -149,6 +149,14 @@
   </head>
   <body>
 
+    <div id="root"></div>
+
+    <div>
+      <button onclick="console.log(event)">asdsad</button>
+      <md-button onclick="console.log(event)">Создать</md-button>
+      <div onclick="console.log(event)">asdaddasdsadsad</div>
+    </div>
+
     <div style="width: 100%; height: 100%; text-align: center; position: absolute; padding-top: 50%;">
 
       <div>
@@ -167,14 +175,11 @@
         <md-checkbox disabled style="margin: 16px" name="asd0"></md-checkbox>
         <md-checkbox disabled checked id="123" style="margin: 16px" name="asd1"></md-checkbox>
         <md-checkbox checked id="123" style="margin: 16px" name="asd1"></md-checkbox>
-        <md-checkbox style="margin: 16px" value="123" name="asd2"></md-checkbox>
-        <!-- <md-checkbox onchange="console.log(event)" style="margin: 16px" value="123" name="asd2"></md-checkbox> -->
+        <md-checkbox style="margin: 16px" value="123" name="asd2" onchange="console.log('change')"></md-checkbox>
       </div>
 
       <div>
-        <!-- <md-radio disabled style="margin: 16px" name="qweqwe"></md-radio>
-        <md-radio disabled checked id="123" style="margin: 16px" name="qweqwe"></md-radio> -->
-        <md-radio style="margin: 16px" value="q" name="qwe" checked disabled></md-radio>
+        <md-radio style="margin: 16px" value="q" name="qwe" disabled></md-radio>
         <md-radio style="margin: 16px" value="b" name="qwe" checked disabled></md-radio>
         <md-radio style="margin: 16px" value="q" name="asd" checked></md-radio>
         <md-radio style="margin: 16px" value="b" name="asd"></md-radio>
@@ -182,15 +187,11 @@
 
       <div>
         <md-textfield id="textfield"></md-textfield>
-        <input type="text" id="textinpt" oninput="console.log('input')" onchange="console.log('change')">
       </div>
 
-      <div>
-        <ce-element></ce-element>
-      </div>
       
     </div>
 
-    <div id="root"></div>
+    
   </body>
 </html>

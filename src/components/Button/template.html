@@ -28,6 +28,7 @@
   }
   :host([disabled]) {
     color: var(--md-disabled-text-color);
+    pointer-events: none;
   }
 
   :host(:not([raised]):not([outlined])) {
@@ -104,4 +105,4 @@
 <div>
   <slot></slot>
 </div>
-<button id="input"></button>
+<!-- <button id="input"></button> -->

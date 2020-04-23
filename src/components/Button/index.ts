@@ -16,6 +16,10 @@ export default class Button extends InteractiveElement {
     // }
   }
 
+  connectedCallback() {
+    this.tabIndex = 0;
+  }
+
   static get observedAttributes() {
     return observedAttributes;
   }

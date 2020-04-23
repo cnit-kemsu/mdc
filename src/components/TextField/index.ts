@@ -7,29 +7,54 @@ const observedAttributes = ['name', 'value'];
 
 export default class TextField extends HTMLElement {
 
-  inputElement: HTMLInputElement;
-
+  private inputElement: HTMLInputElement;
+  private labelStyle: CSSStyleDeclaration;
+  shadowRoot1: any;
   constructor() {
     super();
 
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(template.clonedContent);
+    //@ts-ignore
+    this.shadowRoot1 = this.attachShadow({ mode: 'closed' });
+    this.shadowRoot1.appendChild(template.clonedContent);
 
-    this.onChange = this.onChange.bind(this);
-    
-    this.inputElement = this.shadowRoot.querySelector('#input');
-    this.inputElement.addEventListener('input', this.onChange);
+    this.handleChange = this.handleChange.bind(this);
+    this.inputElement = this.shadowRoot1.querySelector('input');
+    //this.inputElement.addEventListener('change', this.handleChange, { capture: true });
+    this.inputElement.addEventListener('input', this.handleChange, { capture: true });
+
+    const label = this.shadowRoot1.querySelector('label');
+    this.labelStyle = label.style;
   }
 
   static get observedAttributes() {
     return observedAttributes;
   }
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    switch (name) {
+      case 'name':
+        this.inputElement.name = newValue;
+        break;
+      case 'value':
+        this.value = newValue;
+        break;
+    }
+  }
 
   onChange() {
-    console.log('change');
-    this.setAttribute('value', this.inputElement.value);
+    if (this.inputElement.value) this.labelStyle.setProperty('--md-label-transform', 'var(--md-label-elevated)');
+    else this.labelStyle.setProperty('--md-label-transform', 'var(--md-label-lowered)');
+  }
 
-    this.dispatchEvent(new Event('input'));
+  handleChange(event) {
+    //event.preventDefault();
+    event.stopPropagation();
+    this.onChange();
+    //const ev = new InputEvent('input', { bubbles: true, cancelable: true });
+    const ev = new Event('input', { bubbles: true });
+    // @ts-ignore
+    //ev.simulated = true;
+    this.dispatchEvent(ev);
+    //this.dispatchEvent(event);
   }
 
   get name(): string {
@@ -43,17 +68,7 @@ export default class TextField extends HTMLElement {
     return this.inputElement.value;
   }
   set value(value: string) {
-    this.setAttribute('value', value);
-  }
-
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    switch (name) {
-      case 'name':
-        this.inputElement.name = newValue;
-        break;
-      case 'value':
-        this.inputElement.value = newValue;
-        break;
-    }
+    this.inputElement.value = value;
+    this.onChange();
   }
 }

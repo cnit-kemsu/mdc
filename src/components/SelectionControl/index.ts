@@ -12,8 +12,13 @@ export default class SelectionControl extends InteractiveElement {
     super(template.clonedContent, templateNode);
 
     this.onChange = this.onChange.bind(this);
+
+    this.addEventListener('click', () => {
+      console.log('click');
+      this.dispatchEvent(new MouseEvent('change', { bubbles: true, cancelable: true, composed: true }));
+    })
     
-    this.inputElement.addEventListener('input', this.onChange);
+    //this.inputElement.addEventListener('input', this.onChange);
   }
 
   static get observedAttributes() {
@@ -24,7 +29,7 @@ export default class SelectionControl extends InteractiveElement {
     if (this.checked) this.setAttribute('checked', '');
     else this.removeAttribute('checked');
 
-    this.dispatchEvent(new Event('change'));
+    //this.dispatchEvent(new Event('change'));
   }
 
   get checked(): boolean {
@@ -56,17 +61,17 @@ export default class SelectionControl extends InteractiveElement {
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
-    switch (name) {
-      case 'checked':
-        // if (oldValue === null || newValue === null)
-          this.inputElement.checked = newValue !== null;
-        break;
-      case 'name':
-        this.inputElement.name = newValue;
-        break;
-      case 'value':
-        this.inputElement.value = newValue;
-        break;
-    }
+    // switch (name) {
+    //   case 'checked':
+    //     // if (oldValue === null || newValue === null)
+    //       this.inputElement.checked = newValue !== null;
+    //     break;
+    //   case 'name':
+    //     this.inputElement.name = newValue;
+    //     break;
+    //   case 'value':
+    //     this.inputElement.value = newValue;
+    //     break;
+    // }
   }
 }
