@@ -3,7 +3,7 @@ import html from './template.html';
 
 const template = new HTMLTemplate(html);
 
-const observedAttributes = ['name', 'value'];
+const observedAttributes = ['name', 'value', 'disabled'];
 
 export default class TextField extends HTMLElement {
 
@@ -28,7 +28,17 @@ export default class TextField extends HTMLElement {
     return observedAttributes;
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    console.log(name);
     if (name === 'value') this.value = newValue;
+    if (name === 'disabled') {
+      if (newValue === null) {
+        this.tabIndex = 0;
+        this.textInput.disabled = true;
+      } else {
+        this.tabIndex = -1;
+        this.textInput.disabled = false;
+      }
+    }
   }
 
   onChange() {
@@ -44,6 +54,13 @@ export default class TextField extends HTMLElement {
   }
   set name(value: string) {
     this.setAttribute('name', value);
+  }
+
+  get disabled(): boolean {
+    return Boolean(this.getAttribute('disabled'));
+  }
+  set disabled(value: boolean) {
+    this.setAttribute('disabled', value ? '' : null);
   }
 
   get value(): string {
