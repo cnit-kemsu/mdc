@@ -1,3 +1,4 @@
+import InteractiveElement from '../InteractiveElement';
 import HTMLTemplate from '@lib/HTMLTemplate';
 import html from './template.html';
 
@@ -8,7 +9,7 @@ interface SizeSnapshot {
   height: number;
 }
 
-export default class InteractiveElement extends HTMLElement {
+export default class RippleElement extends InteractiveElement {
 
   private isPressed: boolean = false;
   private sizeSnapshot: SizeSnapshot = { width: 0, height: 0 };
@@ -34,12 +35,9 @@ export default class InteractiveElement extends HTMLElement {
   protected inputElement: HTMLInputElement;
 
   constructor(...childNodes: Node[]) {
-    super();
-    
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(template.clonedContent);
+    super(template.clonedContent, ...childNodes);
 
-    const overlay = this.shadowRoot.children[1] as HTMLElement;
+    const overlay = this.shadowRoot.querySelector('md-ripple-overlay') as HTMLElement;
     const overlayStyle = overlay.style;
     this.setOverlayStyleProp = overlayStyle.setProperty.bind(overlayStyle);
     this.removeOverlayStyleProp = overlayStyle.removeProperty.bind(overlayStyle);
@@ -52,34 +50,6 @@ export default class InteractiveElement extends HTMLElement {
 
     this.addEventListener('mousedown', this.handleMousedown);
     this.addEventListener('keydown', this.handleKeydown);
-
-    for (const node of childNodes) this.shadowRoot.appendChild(node);
-    this.inputElement = this.shadowRoot.querySelector('#input');
-    // this.inputElement = this.shadowRoot.childNodes[this.shadowRoot.childNodes.length - 1] as HTMLInputElement;
-  }
-
-  get disabled() {
-    return this.hasAttribute('disabled');
-  }
-  set disabled(value: boolean) {
-    if (value) {
-      this.setAttribute('disabled', '');
-      //this.inputElement.disabled = true;
-    } else {
-      this.removeAttribute('disabled');
-      //this.inputElement.disabled = false;
-    }
-  }
-
-  static get observedAttributes() {
-    return ['disabled'];
-  }
-
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'disabled') {
-      //if (newValue !== null) this.inputElement.disabled = true;
-      //else this.inputElement.disabled = false;
-    }
   }
 
   // private resetOverlayTransitionCallback = () => this.setOverlayStyleProp('--md-overlay-transition-current', 'var(--md-overlay-transition)');
@@ -150,7 +120,6 @@ export default class InteractiveElement extends HTMLElement {
   private releasePressedState() {
     this.isPressed = false;
     if (this.ripplePhase === 2) this.ripple_startPhase3();
-    this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
   }
 
   private handleMousedown(event: MouseEvent) {

@@ -1,4 +1,4 @@
-import Overlay from '@components/Overlay';
+import Overlay from '../Overlay';
 import HTMLTemplate from '@lib/HTMLTemplate';
 import html from './template.html';
 

@@ -91,18 +91,33 @@
     height: 100%;
     vertical-align: middle;
   }
-  button {
-    opacity: 0;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    cursor: inherit;
+
+  md-icon:not([name]) {
+    display: none;
+  }
+  md-icon {
+    display: table-cell;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    padding-right: 4px;
+    transform: translateX(-4px) translateY(2px);
+  }
+  :host(:not([raised]):not([outlined])) md-icon {
+    transform: translateY(2px);
+  }
+  :host([raised]:not([disabled])) md-icon {
+    fill: var(--md-on-current-color);
+  }
+  :host(:not([raised]):not([disabled])) md-icon {
+    fill: var(--md-current-color);
+  }
+  :host([disabled]) md-icon {
+    fill: var(--md-disabled-text-color);
   }
 </style>
 
 <div>
+  <md-icon></md-icon>
   <slot></slot>
 </div>
-<!-- <button id="input"></button> -->

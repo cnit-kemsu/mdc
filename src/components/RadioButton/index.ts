@@ -1,4 +1,4 @@
-import SelectionControl from '@components/SelectionControl';
+import SelectionControl from '@components/base/SelectionControl';
 import HTMLTemplate from '@lib/HTMLTemplate';
 import html from './template.html';
 
@@ -15,6 +15,13 @@ export default class RadioButton extends SelectionControl {
   disconnectedCallback() {
     const { name } = this;
     if (checkedMap.get(name) === this) checkedMap.delete(name);
+  }
+
+  onChange() {
+    if (this.checked) return;
+    this.checked = true;
+
+    super.onChange();
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {

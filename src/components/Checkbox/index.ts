@@ -1,4 +1,4 @@
-import SelectionControl from '@components/SelectionControl';
+import SelectionControl from '@components/base/SelectionControl';
 import HTMLTemplate from '@lib/HTMLTemplate';
 import html from './template.html';
 
@@ -18,9 +18,11 @@ export default class Checkbox extends SelectionControl {
   }
 
   onChange() {
-    super.onChange();
+    this.checked = !this.checked;
     
     if (this.checked) this.setPathStyleProp('--md-path-animation', 'var(--md-path-check)');
     else this.setPathStyleProp('--md-path-animation', 'var(--md-path-uncheck)');
+
+    super.onChange();
   }
 }

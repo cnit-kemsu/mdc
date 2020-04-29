@@ -1,5 +1,6 @@
 import HTMLTemplate from '@lib/HTMLTemplate';
 import html from './template.html';
+import InteractiveElement from '@components/base/InteractiveElement';
 
 const template = new HTMLTemplate(html);
 
@@ -28,17 +29,8 @@ export default class TextField extends HTMLElement {
     return observedAttributes;
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    console.log(name);
     if (name === 'value') this.value = newValue;
-    if (name === 'disabled') {
-      if (newValue === null) {
-        this.tabIndex = 0;
-        this.textInput.disabled = true;
-      } else {
-        this.tabIndex = -1;
-        this.textInput.disabled = false;
-      }
-    }
+    if (name === 'disabled') this.textInput.disabled = newValue !== null;
   }
 
   onChange() {
@@ -49,18 +41,19 @@ export default class TextField extends HTMLElement {
     else this.labelStyle.setProperty('--md-label-transform', 'var(--md-label-elevated)');
   }
 
+  get disabled(): boolean {
+    return this.getAttribute('disabled') !== null;
+  }
+  set disabled(value: boolean) {
+    if (value) this.setAttribute('checked', '');
+    else this.removeAttribute('checked');
+  }
+
   get name(): string {
     return this.getAttribute('name');
   }
   set name(value: string) {
     this.setAttribute('name', value);
-  }
-
-  get disabled(): boolean {
-    return Boolean(this.getAttribute('disabled'));
-  }
-  set disabled(value: boolean) {
-    this.setAttribute('disabled', value ? '' : null);
   }
 
   get value(): string {
