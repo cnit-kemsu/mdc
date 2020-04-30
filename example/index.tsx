@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './register';
+
 
 declare global {
   module JSX {
@@ -14,9 +14,9 @@ declare global {
 
 function App() {
 
-  return <div>
-    <md-button raised outlined onClick={() => console.log('click')}>Click me</md-button>
-    <md-button outlined raised disabled onClick={() => console.log('click')}>Click me</md-button>
+  return <div style={{ padding: '20px' }}>
+    <md-button icon="copyright" raised label="Click me" onClick={() => console.log('click')} />
+    <md-button outlined label="Click me" disabled onClick={() => console.log('click')} />
 
     <md-checkbox onInput={event => console.log(event.target.checked)} />
     <md-checkbox disabled onInput={event => console.log(event.target.checked)} />
@@ -29,3 +29,5 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
+
+require('./register');

@@ -5,7 +5,7 @@ import html from './template.html';
 
 const template = new HTMLTemplate(html);
 
-const observedAttributes = ['outlined', 'raised', 'icon', 'label', ...RippleElement.observedAttributes];
+const observedAttributes = ['icon', ...RippleElement.observedAttributes];
 
 export default class Button extends RippleElement {
 
@@ -17,11 +17,7 @@ export default class Button extends RippleElement {
 
     this.addEventListener('keyup', this.handleKeyup);
 
-    // if (navigator.userAgent.indexOf('Firefox') > 0) {
-    //   this.style.setProperty('border-width', '1.5px');
-    // }
     this._icon = this.shadowRoot.querySelector('md-icon');
-    this._label = this.shadowRoot.querySelector('label');
   }
 
   static get observedAttributes() {
@@ -29,17 +25,10 @@ export default class Button extends RippleElement {
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
-    if (newValue !== null) {
-      if (name === 'raised' && this.hasAttribute('raised')) this.removeAttribute('outlined');
-      if (name === 'outlined' && this.hasAttribute('outlined')) this.removeAttribute('raised');
-    }
     switch (name) {
       case 'icon':
         this._icon.icon = newValue;
         //this._icon.setAttribute('icon', newValue);
-        break;
-      case 'label':
-        this._label.style.setProperty('--md-label-text', `'${newValue}'`);
         break;
     }
   }
@@ -49,12 +38,6 @@ export default class Button extends RippleElement {
     this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
   }
 
-  get label(): string {
-    return this.getAttribute('label');
-  }
-  set label(value: string) {
-    this.setAttribute('label', value);
-  }
 
   get icon(): string {
     return this.getAttribute('icon');

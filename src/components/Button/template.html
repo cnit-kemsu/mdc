@@ -1,7 +1,8 @@
 <style>
   :host {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     vertical-align: top;
     text-align: center;
     outline: none;
@@ -80,31 +81,24 @@
     background-color: var(--md-disabled-color);
   }
 
-  div {
-    display: table;
-    position: relative;
-    width: 100%;
-    height: 100%;
+  label {
+    pointer-events: none;
   }
-  slot {
-    display: table-cell;
-    height: 100%;
-    vertical-align: middle;
+  label::after {
+    content: var(--md-label-text);
   }
-
-  md-icon:not([name]) {
+  
+  md-icon:not([icon]) {
     display: none;
   }
   md-icon {
-    display: table-cell;
-    vertical-align: middle;
     width: 18px;
     height: 18px;
-    padding-right: 4px;
-    transform: translateX(-4px) translateY(2px);
+    margin-left: -4px;
+    margin-right: 8px;
   }
   :host(:not([raised]):not([outlined])) md-icon {
-    transform: translateY(2px);
+    margin-left: 0px;
   }
   :host([raised]:not([disabled])) md-icon {
     fill: var(--md-on-current-color);
@@ -117,7 +111,5 @@
   }
 </style>
 
-<div>
-  <md-icon></md-icon>
-  <slot></slot>
-</div>
+<md-icon></md-icon>
+<label></label>

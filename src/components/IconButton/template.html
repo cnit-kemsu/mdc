@@ -1,0 +1,38 @@
+<style>
+  :host {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    outline: none;
+    box-sizing: border-box;
+    user-select: none;
+
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    border-radius: 50px;
+
+    --md-current-color: #000000;
+
+    --md-overlay-color: var(--md-current-color);
+    --md-overlay-hover-opacity: 0.04;
+    --md-overlay-focus-opacity: 0.12;
+    --md-overlay-pressed-opacity: 0.12;
+  }
+  :host(:not([disabled])) {
+    cursor: pointer;
+  }
+  :host([disabled]) {
+    color: var(--md-disabled-text-color);
+    pointer-events: none;
+  }
+  
+  md-icon {
+    fill: var(--md-current-color);
+  }
+  :host([disabled]) md-icon {
+    fill: var(--md-disabled-text-color);
+  }
+</style>
+
+<md-icon></md-icon>

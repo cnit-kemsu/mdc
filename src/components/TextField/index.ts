@@ -1,6 +1,5 @@
 import HTMLTemplate from '@lib/HTMLTemplate';
 import html from './template.html';
-import InteractiveElement from '@components/base/InteractiveElement';
 
 const template = new HTMLTemplate(html);
 

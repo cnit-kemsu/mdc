@@ -1,38 +1,38 @@
 import HTMLTemplate from '@lib/HTMLTemplate';
 import html from './template.html';
-import icons from '../../icons';
 
 const template = new HTMLTemplate(html);
 
-const observedAttributes = ['name'];
+const observedAttributes = ['icon'];
 
 export default class Icon extends HTMLElement {
+
+  container: HTMLSpanElement;
 
   constructor() {
     super();
 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.clonedContent);
+
+    this.container = this.shadowRoot.querySelector('span');
   }
 
-  get iconName() {
-    return this.getAttribute('name');
+  get icon(): string {
+    return this.getAttribute('icon');
   }
-  set iconName(value) {
-    this.setAttribute('name', value)
+  set icon(value: string) {
+    this.setAttribute('icon', value);
   }
 
-  // connectedCallback() {
-  //   const name = this.getAttribute('name');
-  //   if (!name) return;
-  //   this.shadowRoot.innerHTML += icons.get(name);
-  // }
   static get observedAttributes() {
     return observedAttributes;
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'name') {
-      if (newValue) this.shadowRoot.innerHTML += icons.get(newValue);
-    }
+    if (name === 'icon') this.container.innerHTML = getIcon(newValue) || '';
   }
 }
+
+const icons = new Map();
+const getIcon = icons.get.bind(icons);
+export const setIcon = icons.set.bind(icons);
