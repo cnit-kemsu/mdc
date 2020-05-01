@@ -3,15 +3,14 @@ import html from './template.html';
 
 const template = new HTMLTemplate(html);
 
-const observedAttributes = ['name', 'value', 'disabled', 'helper-text', 'error', 'label'];
+const observedAttributes = ['label', 'helper-text', 'error', 'name', 'value', 'disabled'];
 
 export default class TextField extends HTMLElement {
 
-  private textInput: HTMLInputElement;
-  private labelStyle: CSSStyleDeclaration;
   private isEmpty: boolean = true;
-  private helperText: HTMLDivElement;
-  private label: HTMLLabelElement;
+  private $textInput: HTMLInputElement;
+  private $label: HTMLLabelElement;
+  private $helperText: HTMLDivElement;
 
   constructor() {
     super();
@@ -19,40 +18,57 @@ export default class TextField extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.clonedContent);
 
-    this.textInput = this.shadowRoot.querySelector('input');
+    this.$textInput = this.shadowRoot.querySelector('input');
     this.addEventListener('input', this.onChange);
-
-    this.label = this.shadowRoot.querySelector('label');
-    this.labelStyle = this.label.style;
-
-    this.helperText = this.shadowRoot.querySelector('#helper');
+    this.$label = this.shadowRoot.querySelector('label');
+    this.$helperText = this.shadowRoot.querySelector('.helper-text');
   }
 
   static get observedAttributes() {
     return observedAttributes;
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'value') this.value = newValue;
-    if (name === 'disabled') this.textInput.disabled = newValue !== null;
-    if (name === 'helper-text' && this.getAttribute('error') === null) this.helperText.innerText = newValue || '';
-    if (name === 'error') this.helperText.innerText = newValue || this.getAttribute('helper-text') || '';
-    if (name === 'label') this.label.innerText = newValue || '';
+    switch (name) {
+      case 'label':
+        this.$label.innerText = newValue || ''; break;
+      case 'helper-text':
+        if (this.getAttribute('error') === null) this.$helperText.innerText = newValue || ''; break;
+      case 'error':
+        this.$helperText.innerText = newValue || this.getAttribute('helper-text') || ''; break;
+      case 'value':
+        this.value = newValue; break;
+      case 'disabled':
+        this.$textInput.disabled = newValue !== null; break;
+    }
   }
 
-  onChange() {
-    const isEmpty = !this.textInput.value;
+  private onChange() {
+    const isEmpty = !this.$textInput.value;
     if (this.isEmpty === isEmpty) return;
     this.isEmpty = isEmpty;
-    if (isEmpty) this.labelStyle.setProperty('--md-label-transform', 'var(--md-label-lowered)');
-    else this.labelStyle.setProperty('--md-label-transform', 'var(--md-label-elevated)');
+    if (isEmpty) this.$label.style.removeProperty('--md-label-transform');
+    else this.$label.style.setProperty('--md-label-transform', 'var(--md-label-elevated)');
   }
 
-  get disabled(): boolean {
-    return this.getAttribute('disabled') !== null;
+  get label(): string {
+    return this.getAttribute('label');
   }
-  set disabled(value: boolean) {
-    if (value) this.setAttribute('checked', '');
-    else this.removeAttribute('checked');
+  set label(value: string) {
+    this.setAttribute('label', value);
+  }
+
+  get helperText(): string {
+    return this.getAttribute('helper-text');
+  }
+  set helperText(value: string) {
+    this.setAttribute('helper-text', value);
+  }
+
+  get error(): string {
+    return this.getAttribute('error');
+  }
+  set error(value: string) {
+    this.setAttribute('error', value);
   }
 
   get name(): string {
@@ -63,10 +79,18 @@ export default class TextField extends HTMLElement {
   }
 
   get value(): string {
-    return this.textInput.value;
+    return this.$textInput.value;
   }
   set value(value: string) {
-    this.textInput.value = value;
+    this.$textInput.value = value;
     this.onChange();
+  }
+
+  get disabled(): boolean {
+    return this.getAttribute('disabled') !== null;
+  }
+  set disabled(value: boolean) {
+    if (value) this.setAttribute('checked', '');
+    else this.removeAttribute('checked');
   }
 }
