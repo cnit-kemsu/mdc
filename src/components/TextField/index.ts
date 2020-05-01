@@ -3,13 +3,15 @@ import html from './template.html';
 
 const template = new HTMLTemplate(html);
 
-const observedAttributes = ['name', 'value', 'disabled'];
+const observedAttributes = ['name', 'value', 'disabled', 'helper-text', 'error', 'label'];
 
 export default class TextField extends HTMLElement {
 
   private textInput: HTMLInputElement;
   private labelStyle: CSSStyleDeclaration;
   private isEmpty: boolean = true;
+  private helperText: HTMLDivElement;
+  private label: HTMLLabelElement;
 
   constructor() {
     super();
@@ -20,8 +22,10 @@ export default class TextField extends HTMLElement {
     this.textInput = this.shadowRoot.querySelector('input');
     this.addEventListener('input', this.onChange);
 
-    const label = this.shadowRoot.querySelector('label');
-    this.labelStyle = label.style;
+    this.label = this.shadowRoot.querySelector('label');
+    this.labelStyle = this.label.style;
+
+    this.helperText = this.shadowRoot.querySelector('#helper');
   }
 
   static get observedAttributes() {
@@ -30,6 +34,9 @@ export default class TextField extends HTMLElement {
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'value') this.value = newValue;
     if (name === 'disabled') this.textInput.disabled = newValue !== null;
+    if (name === 'helper-text' && this.getAttribute('error') === null) this.helperText.innerText = newValue || '';
+    if (name === 'error') this.helperText.innerText = newValue || this.getAttribute('helper-text') || '';
+    if (name === 'label') this.label.innerText = newValue || '';
   }
 
   onChange() {

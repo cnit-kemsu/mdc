@@ -1,5 +1,5 @@
 <style>
-  :host {
+  /* :host {
     position: relative;
     vertical-align: top;
     outline: none;
@@ -18,19 +18,46 @@
     border-bottom-style: solid;
     border-bottom-color: #8e8e8e;
     box-sizing: border-box;
+  } */
+  :host {
+    position: relative;
+    vertical-align: top;
+    outline: none;
+    display: inline-block;
+
+    --md-current-color: var(--md-primary-color);
+  }
+  :host([error]) {
+    --md-current-color: var(--md-error-color);
+  }
+  :host > #input {
+    position: relative;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+
+    transition: background-color 15ms linear;
+    background-color: #f5f5f5;
+    height: 56px;
+
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #8e8e8e;
+    box-sizing: border-box;
   }
   :host([disabled]) {
+    pointer-events: none;
+  }
+  :host([disabled]) > #input {
     color: rgba(0, 0, 0, 0.37);
     background-color: #fafafa;
     border-bottom-color: #ebebeb;
-    pointer-events: none;
   }
-  :host(:hover) {
+  :host(:hover) > #input {
     background-color: #ececec;
 
     border-bottom-color: #1f1f1f;
   }
-  :host(:focus-within) {
+  :host(:focus-within) > #input {
     background-color: #dcdcdc;
   }
 
@@ -55,7 +82,7 @@
     pointer-events: none;
   }
 
-  div {
+  :host > #input > div {
     background-color: var(--md-current-color);
     height: 2px;
     width: 100%;
@@ -66,7 +93,7 @@
     opacity: 0;
     transition: transform 0ms 180ms ease, opacity 180ms ease;
   }
-  :host(:focus-within) div {
+  :host(:focus-within) > #input > div {
     transform: scaleX(1);
     transition: transform 180ms ease, opacity 180ms ease;
     opacity: 1;
@@ -100,8 +127,36 @@
   :host([disabled]) label {
     color: rgba(0, 0, 0, 0.37);
   }
+
+  #helper {
+    /* height: 16px; */
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.4px;
+    font-family: inherit;
+    color: var(--md-helper-text-color);
+    text-align: left;
+    padding: 0px 16px 0px 16px;
+    padding-top: 5px;
+  }
+  :host(:not([helper-text]):not([error])) > #helper {
+    display: none;
+  }
+  :host([error]) > #helper {
+    color: var(--md-error-color);
+  }
+  :host([error]:not([disabled])) label {
+    color: var(--md-error-color);
+  }
+  :host([disabled]) > #helper {
+    color: rgba(0, 0, 0, 0.37);
+  }
+
 </style>
 
-<input type="text" spellcheck="false">
-<div></div>
-<label id="label">Name</label>
+<div id="input">
+  <input type="text" spellcheck="false">
+  <div></div>
+  <label id="label"></label>
+</div>
+<div id="helper"></div>
