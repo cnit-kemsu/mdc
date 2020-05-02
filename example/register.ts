@@ -15,6 +15,7 @@ import RadioButton from '@components/RadioButton';
 import TextField from '@components/TextField';
 import Icon from '@components/Icon';
 import IconButton from '@components/IconButton';
+import Select from '@components/Select';
 
 customElements.define('md-overlay', Overlay);
 customElements.define('md-ripple-overlay', RippleOverlay);
@@ -24,3 +25,4 @@ customElements.define('md-checkbox', Checkbox);
 customElements.define('md-radio', RadioButton);
 customElements.define('md-textfield', TextField);
 customElements.define('md-iconbtn', IconButton);
+customElements.define('md-select', Select);

@@ -90,7 +90,7 @@ export default class TextField extends HTMLElement {
     return this.getAttribute('disabled') !== null;
   }
   set disabled(value: boolean) {
-    if (value) this.setAttribute('checked', '');
-    else this.removeAttribute('checked');
+    if (value) this.setAttribute('disabled', '');
+    else this.removeAttribute('disabled');
   }
 }
