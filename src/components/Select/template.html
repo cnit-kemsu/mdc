@@ -17,17 +17,46 @@
     font-size: 16px;
     padding: 10px;
   }
-  .container {
+  .wrapper {
     position: relative;
     display: inline-block;
   }
+
+  .value {
+    background-color: transparent;
+    outline: none;
+    border: none;
+
+    box-sizing: border-box;
+    padding: 20px 16px 6px 16px;
+    width: 100%;
+    height: 100%;
+
+    min-width: 214px;
+    text-align: left;
+    cursor: pointer;
+    
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.15px;
+    font-family: inherit;
+  }
+  :host([disabled]) .value {
+    color: var(--md-disabled-text-color);
+    /* pointer-events: none; */
+  }
 </style>
 
-<div class="container">
-  <md-textfield tabindex="0"></md-textfield>
-  <div class="menu">
-    <div value="opt1" tabindex="0" class="list-item"><span>Option 1</span></div>
-    <div value="opt2" tabindex="0" class="list-item">Option 2</div>
-    <div value="opt3" tabindex="0" class="list-item">Option 3</div>
+<div class="wrapper">
+  <div class="container">
+    <div class="value"></div>
+    <div class="menu">
+      <div value="opt1" tabindex="-1" class="list-item"><span>Option 1</span></div>
+      <div value="opt2" tabindex="-1" class="list-item">Option 2</div>
+      <div value="opt3" tabindex="-1" class="list-item">Option 3</div>
+    </div>
+    <div class="underline"></div>
+    <label></label>
   </div>
+  <div class="helper-text"></div>
 </div>

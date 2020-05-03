@@ -9,17 +9,19 @@ registerIcon('copyright');
 
 import Overlay from '@components/base/Overlay';
 import RippleOverlay from '@components/base/RippleOverlay';
+import Icon from '@components/Icon';
+import InputField from '@components/InputField';
 import Button from '@components/Button';
 import Checkbox from '@components/Checkbox';
 import RadioButton from '@components/RadioButton';
 import TextField from '@components/TextField';
-import Icon from '@components/Icon';
 import IconButton from '@components/IconButton';
 import Select from '@components/Select';
 
 customElements.define('md-overlay', Overlay);
 customElements.define('md-ripple-overlay', RippleOverlay);
 customElements.define('md-icon', Icon);
+customElements.define('md-input', InputField);
 customElements.define('md-button', Button);
 customElements.define('md-checkbox', Checkbox);
 customElements.define('md-radio', RadioButton);

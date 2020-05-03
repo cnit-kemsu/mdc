@@ -1,0 +1,97 @@
+<style>
+  :host {
+    position: relative;
+    vertical-align: top;
+    outline: none;
+    display: inline-block;
+    --md-current-color: var(--md-primary-color);
+    --md-label-text-color: var(--md-helper-text-color);
+    --md-label-elevated: translateY(-100%) scale(0.75);
+    --md-background-color: #f5f5f5;
+  }
+  :host(:hover) {
+    --md-background-color: #ececec;
+    --md-border-color: #1f1f1f;
+  }
+  :host(:focus-within) {
+    --md-background-color: #dcdcdc;
+    --md-label-text-color: var(--md-current-color);
+    --md-label-transform: var(--md-label-elevated);
+  }
+  :host([error]) {
+    --md-current-color: var(--md-error-color);
+    --md-helper-text-color: var(--md-error-color);
+    --md-border-color: var(--md-error-color);
+  }
+  :host([disabled]) {
+    pointer-events: none;
+    --md-helper-text-color: var(--md-disabled-text-color);
+    color: var(--md-disabled-text-color);
+    --md-background-color: #fafafa;
+    --md-border-color: #ebebeb;
+  }
+
+  .container {
+    position: relative;
+    box-sizing: border-box;
+    height: 56px;
+    transition: background-color 15ms linear;
+    background-color: var(--md-background-color);
+    border-radius: 4px 4px 0px 0px;
+    border-bottom: 1px solid var(--md-border-color, #8e8e8e);
+  }
+
+  .underline {
+    background-color: var(--md-current-color);
+    height: 2px;
+    width: 100%;
+    transform: scaleX(0);
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    opacity: 0;
+    transition: transform 0ms 180ms ease, opacity 180ms ease;
+  }
+  :host(:focus-within) .underline {
+    transform: scaleX(1);
+    transition: transform 180ms ease, opacity 180ms ease;
+    opacity: 1;
+  }
+  
+  label {
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    color: var(--md-label-text-color);
+    transform: var(--md-label-transform, translateY(-50%));
+    transform-origin: left top;
+    transition: transform 150ms ease, color 150ms ease;
+    
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.15px;
+    font-family: inherit;
+    /* line-height: 18.4px; */
+  }
+  
+  .helper-text {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.4px;
+    font-family: inherit;
+    color: var(--md-helper-text-color);
+
+    display: flex;
+    align-items: flex-end;
+    height: 20px;
+    text-align: left;
+    padding: 0px 16px 0px 16px;
+    visibility: hidden;
+  }
+  :host([helper-text]) .helper-text,
+  :host([error]) .helper-text {
+    visibility: visible;
+  }
+</style>

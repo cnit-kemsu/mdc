@@ -50,6 +50,10 @@ export default class RippleElement extends InteractiveElement {
 
     this.addEventListener('mousedown', this.handleMousedown);
     this.addEventListener('keydown', this.handleKeydown);
+
+    // this.addEventListener('touchstart', this.handleTouchstart);
+    // this.addEventListener('touchend', this.handleTouchend);
+    // this.addEventListener('mouseup', this.handleMouseup);
   }
 
   // private resetOverlayTransitionCallback = () => this.setOverlayStyleProp('--md-overlay-transition-current', 'var(--md-overlay-transition)');
@@ -122,14 +126,31 @@ export default class RippleElement extends InteractiveElement {
     if (this.ripplePhase === 2) this.ripple_startPhase3();
   }
 
+  // private handleTouchstart(event: TouchEvent) {
+  //   console.log(event);
+  //   if (this.isPressed) return;
+  //   //touchendCallback = this.releasePressedState;
+  //   const touch = event.touches[0];
+  //   const { left, top } = this.getBoundingClientRect();
+  //   this.pressX = touch.clientX - left;
+  //   this.pressY = touch.clientY - top;
+  //   this.invokePressedState();
+  // }
+
+  // private handleTouchend(event: TouchEvent) {
+  //   //event.preventDefault();
+  //   //this.releasePressedState();
+  // }
+
+  // private handleMouseup() {
+  //   this.releasePressedState();
+  // }
+
   private handleMousedown(event: MouseEvent) {
     if (this.isPressed) return;
     mouseupCallback = this.releasePressedState;
     this.pressX = event.offsetX;
     this.pressY = event.offsetY;
-    // const { left, top } = this.getBoundingClientRect();
-    // this.pressX = event.clientX - left;
-    // this.pressY = event.clientY - top;
     this.invokePressedState();
   }
   private handleKeydown(event: KeyboardEvent) {
@@ -149,6 +170,13 @@ addEventListener('mouseup', function () {
   mouseupCallback();
   mouseupCallback = null;
 });
+
+// let touchendCallback: () => void = null;
+// addEventListener('touchend', function (event: TouchEvent) {
+//   if (touchendCallback === null) return;
+//   touchendCallback();
+//   touchendCallback = null;
+// });
 
 let keyupCallback: () => void = null;
 function invokeKeyupCallback() {
