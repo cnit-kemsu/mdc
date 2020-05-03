@@ -21,7 +21,8 @@ function App() {
     <md-checkbox onInput={event => console.log(event.target.checked)} />
     <md-checkbox disabled onInput={event => console.log(event.target.checked)} />
 
-    <md-textfield onInput={event => console.log('input', event.target.value)} />
+    <md-textfield disabled={false || null} onInput={event => console.log('input', event.target.value)} />
+    <button disabled={false}>asd</button>
   </div>;
 }
 

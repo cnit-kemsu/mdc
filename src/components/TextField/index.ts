@@ -6,7 +6,7 @@ const template = new HTMLTemplate(html);
 
 export default class TextField extends InputField {
 
-  private isEmpty: boolean = true;
+  
   private $textInput: HTMLInputElement;
 
   constructor() {
@@ -18,20 +18,7 @@ export default class TextField extends InputField {
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
-    switch (name) {
-      case 'value':
-        this.value = newValue; break;
-      case 'disabled':
-        this.$textInput.disabled = newValue !== null; break;
-    }
-  }
-
-  private onChange() {
-    const isEmpty = !this.$textInput.value;
-    if (this.isEmpty === isEmpty) return;
-    this.isEmpty = isEmpty;
-    if (isEmpty) this.$label.style.removeProperty('--md-label-transform');
-    else this.$label.style.setProperty('--md-label-transform', 'var(--md-label-elevated)');
+    if (name === 'disabled') this.$textInput.disabled = newValue !== null;
   }
 
   get value(): string {
@@ -39,6 +26,6 @@ export default class TextField extends InputField {
   }
   set value(value: string) {
     this.$textInput.value = value;
-    this.onChange();
+    super.onChange();
   }
 }

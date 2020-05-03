@@ -5,8 +5,9 @@ const template = new HTMLTemplate(html);
 
 const observedAttributes = ['label', 'helper-text', 'error', 'name', 'value', 'disabled'];
 
-export default class InputField extends HTMLElement {
+export default abstract class InputField extends HTMLElement {
 
+  private isEmpty: boolean = true;
   protected $label: HTMLLabelElement;
   protected $helperText: HTMLDivElement;
 
@@ -33,7 +34,17 @@ export default class InputField extends HTMLElement {
         if (this.getAttribute('error') === null) this.$helperText.innerText = newValue || ''; break;
       case 'error':
         this.$helperText.innerText = newValue || this.getAttribute('helper-text') || ''; break;
+      case 'value':
+        this.value = newValue; break;
     }
+  }
+
+  protected onChange() {
+    const isEmpty = !this.value;
+    if (this.isEmpty === isEmpty) return;
+    this.isEmpty = isEmpty;
+    if (isEmpty) this.$label.style.removeProperty('--md-label-transform');
+    else this.$label.style.setProperty('--md-label-transform', 'var(--md-label-elevated)');
   }
 
   get label(): string {
@@ -63,6 +74,9 @@ export default class InputField extends HTMLElement {
   set name(value: string) {
     this.setAttribute('name', value);
   }
+
+  abstract get value(): string;
+  abstract set value(value: string);
 
   get disabled(): boolean {
     return this.getAttribute('disabled') !== null;

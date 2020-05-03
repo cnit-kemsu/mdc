@@ -1,130 +1,119 @@
 import HTMLTemplate from '@lib/HTMLTemplate';
 import html from './template.html';
 import InputField from '../InputField';
+import SelectOption from '../SelectOption';
 
 const template = new HTMLTemplate(html);
 
 export default class Select extends InputField {
 
   private $value: HTMLDivElement;
-  private $menu: HTMLLabelElement;
+  private $dropdown: HTMLLabelElement;
+  private $currentOption: SelectOption = null;
 
   constructor() {
     super(template.clonedContent);
 
     this.$value = this.shadowRoot.querySelector('.value');
-    this.$menu = this.shadowRoot.querySelector('.menu');
-    
-    // const textInput = this.$textField.shadowRoot.querySelector('input');
-    // //textInput.disabled = true;
-    // textInput.style.setProperty('pointer-events', 'none');
-    // textInput.setAttribute('tabindex', '-1');
+    this.$dropdown = this.shadowRoot.querySelector('.dropdown');
 
     this.addEventListener('keydown', this.handleKeydown);
     this.addEventListener('keyup', this.handleKeyup);
     this.addEventListener('click', this.handleClick);
-  }
-
-  connectedCallback() {
-    this.tabIndex = 0;
+    this.addEventListener('select', this.handleSelect);
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
-    switch (name) {
-      case 'value':
-        this.value = newValue; break;
-    }
+    if (name === 'disabled') this.$value.tabIndex = newValue === null ? 0 : -1;
   }
 
-  private currentOption = null;
-  private handleKeydown(event: KeyboardEvent) {
-    console.log(event.key);
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+  private handleSelect(event: CustomEvent) {
+    if (this.$currentOption !== null) {
+      this.$currentOption.tabIndex = -1;
+      this.$currentOption.removeAttribute('selected');
+    }
+    const option = event.target as SelectOption;
+    this.$currentOption = option;
+    this.$currentOption.tabIndex = 0;
+    this.$currentOption.setAttribute('selected', '');
+    this.$value.innerHTML = this.$currentOption?.innerHTML;
+    super.onChange();
+  }
 
+  private $_currentOption: SelectOption = null;
+  private handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
 
       if (event.key === 'ArrowDown') {
-        if (this.currentOption === null) {
-          this.currentOption = this.$menu.getElementsByClassName('list-item')[0];
-          this.currentOption.tabIndex = 0;
-          this.currentOption.focus();
+        if (this.$_currentOption === null) {
+          console.log(this.getElementsByTagName('md-option'));
+          this.$_currentOption = this.getElementsByTagName('md-option')[0] as SelectOption;
+          this.$_currentOption.tabIndex = 0;
+          this.$_currentOption.focus();
         } else {
-          this.currentOption.tabIndex = -1;
-          const next = this.currentOption.nextElementSibling;
-          if (next === null) this.currentOption = this.$menu.getElementsByClassName('list-item')[0];
-          else this.currentOption = next;
-          this.currentOption.tabIndex = 0;
-          this.currentOption.focus();
+          this.$_currentOption.tabIndex = -1;
+          const nextOption = this.$_currentOption.nextElementSibling as SelectOption;
+          if (nextOption === null) this.$_currentOption = this.getElementsByTagName('md-option')[0] as SelectOption;
+          else this.$_currentOption = nextOption;
+          this.$_currentOption.tabIndex = 0;
+          this.$_currentOption.focus();
         }
       }
 
       if (event.key === 'ArrowUp') {
-        if (this.currentOption === null) {
-          const all = this.$menu.getElementsByClassName('list-item');
-          this.currentOption = all[all.length - 1];
-          this.currentOption.tabIndex = 0;
-          this.currentOption.focus();
+        if (this.$_currentOption === null) {
+          const allOptions = this.getElementsByTagName('md-option');
+          this.$_currentOption = allOptions[allOptions.length - 1] as SelectOption;
+          this.$_currentOption.tabIndex = 0;
+          this.$_currentOption.focus();
         } else {
-          this.currentOption.tabIndex = -1;
-          const next = this.currentOption.previousElementSibling;
-          const all = this.$menu.getElementsByClassName('list-item');
-          if (next === null) this.currentOption = all[all.length - 1];
-          else this.currentOption = next;
-          this.currentOption.tabIndex = 0;
-          this.currentOption.focus();
+          this.$_currentOption.tabIndex = -1;
+          const nextOption = this.$_currentOption.previousElementSibling as SelectOption;
+          const allOptions = this.getElementsByTagName('md-option');
+          if (nextOption === null) this.$_currentOption = allOptions[allOptions.length - 1] as SelectOption;
+          else this.$_currentOption = nextOption;
+          this.$_currentOption.tabIndex = 0;
+          this.$_currentOption.focus();
         }
       }
       
       return;
     }
-    if (event.key !== ' ') return;
-    event.preventDefault();
+    if (event.key === ' ') event.preventDefault();;
   }
 
   private handleKeyup(event: KeyboardEvent) {
-    if (event.key !== ' ') return;
-    this.value = this.currentOption?.innerText;
+    if (event.key !== ' ' || event.target !== this) return;
     this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
   }
 
   private handleClick(event: MouseEvent) {
-    console.log(event.target);
-    // @ts-ignore
-    const path = event.path;
-    //console.log(event.path);
-    for (let index = 0; index <= path.length; index++) {
-      if (path[index] !== this.$menu) continue;
-      this.value = path[index - 1].getAttribute('value');
-    }
+    console.log(event);
     this.toggleMenu();
   }
 
   private open = false;
   toggleMenu() {
     this.open = !this.open;
-    this.$menu.style.setProperty('display', this.open ? 'block' : 'none');
-    this.focus();
+    this.$dropdown.style.setProperty('display', this.open ? 'block' : 'none');
+    this.$value.focus();
   }
 
-  private isEmpty: boolean = true;
-  private onChange() {
-    const isEmpty = !this.value;
-    if (this.isEmpty === isEmpty) return;
-    this.isEmpty = isEmpty;
-    if (isEmpty) this.$label.style.removeProperty('--md-label-transform');
-    else this.$label.style.setProperty('--md-label-transform', 'var(--md-label-elevated)');
+  private getOptions(): SelectOption[] {
+    // @ts-ignore
+    return [...this.getElementsByTagName('md-option')];
   }
 
-  private _value: string;
   get value(): string {
-    return this._value;
-    //return this.$textField.value;
+    return this.$currentOption?.value;
   }
   set value(value: string) {
-    this._value = value;
-    this.$value.innerText = value;
-    //this.$textField.value = value;
-    this.onChange();
+    const options = this.getOptions();
+    const option = options.find(opt => opt.value === value);
+    this.$currentOption = option || null;
+    this.$value.innerHTML = this.$currentOption?.innerHTML || '';
+    super.onChange();
   }
 }
