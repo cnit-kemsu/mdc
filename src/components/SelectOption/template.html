@@ -1,11 +1,21 @@
 <style>
   :host {
     font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.15px;
+    font-family: inherit;
+
     padding: 10px;
     display: block;
     outline: none;
     position: relative;
     cursor: pointer;
+
+    padding: 0px 16px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
     --md-current-color: #000000;
 
@@ -15,8 +25,21 @@
     --md-overlay-pressed-opacity: 0.12;
   }
   :host([selected]) {
-    background-color: yellow;
+    --md-current-color: var(--md-primary-color);
+    --md-overlay-pressed-opacity: 0.24;
+  }
+  div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+  }
+  :host([selected]) div {
+    background-color: var(--md-primary-color);
+    opacity: 0.08;
   }
 </style>
 
+<div></div>
 <label></label>
