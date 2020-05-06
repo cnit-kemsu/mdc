@@ -7,6 +7,8 @@ const template = new HTMLTemplate(html);
 
 export default class SelectOption extends RippleElement {
 
+  private $select: Select;
+
   constructor() {
     super(template.clonedContent);
 
@@ -16,6 +18,13 @@ export default class SelectOption extends RippleElement {
 
   connectedCallback() {
     this.tabIndex = -1;
+
+    //this.$select = this.closest('md-select') as Select;
+    this.$select = this.parentNode as Select;
+    this.$select.requireToAdoptOptions = true;
+  }
+  disconnectedCallback() {
+    this.$select.requireToAdoptOptions = true;
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
