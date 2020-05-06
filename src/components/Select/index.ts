@@ -9,9 +9,11 @@ export default class Select extends InputField {
 
   private valueEl: HTMLDivElement;
   private dropdownEl: HTMLLabelElement;
+  private open = false;
 
+  private _value: string = '';
   private focusIndex: number = -1;
-  private selectedOption: SelectOption = null;
+  private _selectedOption: SelectOption = null;
   private _options: SelectOption[];
   requireToAdoptOptions: boolean = true;
   
@@ -35,10 +37,10 @@ export default class Select extends InputField {
 
   private incrementFocusIndex(value: number) {
     const { options, focusIndex } = this;
-    const length = options.length;
-    if (length === 0) return;
+    const totalCount = options.length;
+    if (totalCount === 0) return;
 
-    const maxIndex = length - 1;
+    const maxIndex = totalCount - 1;
     let index = focusIndex + value;
     index = index > maxIndex ? 0 : index < 0 ? maxIndex: index;
     this.focusIndex = index;
@@ -65,21 +67,9 @@ export default class Select extends InputField {
     if (key === ' ') event.preventDefault();
   }
 
-  private handleSelect(event: CustomEvent) {
-    const { selectedOption, options, valueEl } = this;
-
-    if (selectedOption !== null) {
-      selectedOption.tabIndex = -1;
-      selectedOption.removeAttribute('selected');
-    }
-
-    const option = event.target as SelectOption;
-    option.tabIndex = 0;
-    option.setAttribute('selected', '');
-    valueEl.innerHTML = option.innerHTML;
-    this.selectedOption = option;
-    this.focusIndex = options.indexOf(option);
-
+  private handleSelect(event: Event) {
+    event.stopPropagation();
+    this.selectedOption = event.target as SelectOption;
     super.onChange();
     this.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
   }
@@ -93,30 +83,50 @@ export default class Select extends InputField {
     this.toggleMenu();
   }
 
-  private open = false;
   toggleMenu() {
     this.open = !this.open;
     this.dropdownEl.style.setProperty('display', this.open ? 'block' : 'none');
-    if (this.open) this.selectedOption?.focus();
+    if (this.open) this._selectedOption?.focus();
     else this.valueEl.focus();
   }
 
   private get options(): SelectOption[] {
     if (this.requireToAdoptOptions) {
-      this._options = [...this.getElementsByTagName('md-option') as any];
       this.requireToAdoptOptions = false;
+      const elements = this.getElementsByTagName('md-option') as HTMLCollectionOf<SelectOption>;
+      this._options = Array.from(elements);
     }
     return this._options;
   }
 
+  private set selectedOption(option: SelectOption) {
+    const { _selectedOption, options, valueEl } = this;
+
+    if (_selectedOption !== null) {
+      _selectedOption.tabIndex = -1;
+      _selectedOption.removeAttribute('selected');
+    }
+
+    if (option === undefined) {
+      valueEl.innerHTML = '';
+      this._value = '';
+      this._selectedOption = null;
+      this.focusIndex = -1;
+    }
+
+    option.tabIndex = 0;
+    option.setAttribute('selected', '');
+    valueEl.innerHTML = option.label;
+    this._value = option.value;
+    this._selectedOption = option;
+    this.focusIndex = options.indexOf(option);
+  }
+
   get value(): string {
-    return this.selectedOption?.value;
+    return this._value;
   }
   set value(value: string) {
-    const option = this.options.find(opt => opt.value === value);
-    this.valueEl.innerHTML = option?.innerHTML || '';
-    this.selectedOption = option || null;
-
+    this.selectedOption = this.options.find(option => option.value === value);
     super.onChange();
   }
 }

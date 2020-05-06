@@ -5,30 +5,48 @@ import Select from '../Select';
 
 const template = new HTMLTemplate(html);
 
+const observedAttributes = ['label', 'value'];
+
 export default class SelectOption extends RippleElement {
 
-  private $select: Select;
+  private selectEl: Select;
+  private labelEl: HTMLSpanElement;
+  private _value: string = '';
+  private _label: string = '';
 
   constructor() {
     super(template.clonedContent);
+
+    this.tabIndex = -1;
+
+    this.labelEl = this.shadowRoot.querySelector('label');
 
     this.addEventListener('keyup', this.handleKeyup);
     this.addEventListener('click', this.onClick);
   }
 
   connectedCallback() {
-    this.tabIndex = -1;
-
-    //this.$select = this.closest('md-select') as Select;
-    this.$select = this.parentNode as Select;
-    this.$select.requireToAdoptOptions = true;
+    //this.selectEl = this.closest('md-select') as Select;
+    this.selectEl = this.parentNode as Select;
+    this.selectEl.requireToAdoptOptions = true;
   }
   disconnectedCallback() {
-    this.$select.requireToAdoptOptions = true;
+    this.selectEl.requireToAdoptOptions = true;
+  }
+  static get observedAttributes() {
+    return observedAttributes;
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
-    //
+    switch (name) {
+      case 'value':
+        this._value = newValue;
+        break;
+      case 'label':
+        this._label = newValue;
+        this.labelEl.innerText = newValue;
+        break;
+    }
   }
 
   private handleKeyup(event: KeyboardEvent) {
@@ -41,6 +59,16 @@ export default class SelectOption extends RippleElement {
   }
 
   get value(): string {
-    return this.getAttribute('value');
+    return this._value;
+  }
+  set value(value: string) {
+    this.setAttribute('value', value);
+  }
+
+  get label(): string {
+    return this._label;
+  }
+  set label(value: string) {
+    this.setAttribute('label', value);
   }
 }
