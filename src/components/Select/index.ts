@@ -17,12 +17,15 @@ export default class Select extends InputField {
   private _options: SelectOption[];
   requireToAdoptOptions: boolean = true;
   
+  private containerEl: HTMLDivElement;
 
   constructor() {
     super(template.clonedContent);
 
     this.valueEl = this.shadowRoot.querySelector('.value');
     this.dropdownEl = this.shadowRoot.querySelector('.dropdown');
+
+    this.containerEl = this.shadowRoot.querySelector('.container');
 
     this.addEventListener('keydown', this.handleKeydown);
     this.addEventListener('keyup', this.handleKeyup);
@@ -88,6 +91,8 @@ export default class Select extends InputField {
     this.dropdownEl.style.setProperty('display', this.open ? 'block' : 'none');
     if (this.open) this._selectedOption?.focus();
     else this.valueEl.focus();
+    if (this.open) this.containerEl.style.setProperty('--md-background-color', '#f5f5f5');
+    else this.containerEl.style.removeProperty('--md-background-color');
   }
 
   private get options(): SelectOption[] {

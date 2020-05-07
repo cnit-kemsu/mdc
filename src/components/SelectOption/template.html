@@ -26,7 +26,10 @@
   }
   :host([selected]) {
     --md-current-color: var(--md-primary-color);
-    --md-overlay-pressed-opacity: 0.24;
+    --md-overlay-hover-opacity: 0.12;
+    --md-overlay-pressed-opacity: 0.2;
+    --md-overlay-focus-opacity: 0.2;
+    --md-static-overlay-opacity: 0.08;
   }
   div {
     position: absolute;
@@ -35,10 +38,10 @@
     left: 0px;
     top: 0px;
   }
-  :host([selected]) div {
+  /* :host([selected]) div {
     background-color: var(--md-primary-color);
     opacity: 0.08;
-  }
+  } */
 </style>
 
 <div></div>
