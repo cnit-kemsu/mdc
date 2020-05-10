@@ -1,10 +1,17 @@
 {
   "javascript.referencesCodeLens.enabled": false,
+  //"javascript.validate.enable": false,
+
+  //"javascript.implicitProjectConfig.checkJs": false,
   
   "editor.tabSize": 2,
+  //"editor.autoIndent": true,
   
   "emmet.triggerExpansionOnTab": true,
 
+  // "eslint.validate": [
+  //   "javascript", "html"
+  // ],
 
   "files.exclude": {
     "node_modules": true,
@@ -26,10 +33,7 @@
   },
 
   "editor.semanticHighlighting.enabled": true,
-  "editor.semanticTokenColorCustomizations": {
-    "rules": {
-      "*.readonly": "#9cdcfe",
-    }
-  }
+  "editor.semanticTokenColorCustomizations": { "enabled": false }
+  //"typescript.tsdk": "node_modules\\typescript\\lib"
 
 }

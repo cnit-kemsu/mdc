@@ -31,6 +31,18 @@ export default class Select extends InputField {
     this.addEventListener('keyup', this.handleKeyup);
     this.addEventListener('click', this.handleClick);
     this.addEventListener('select', this.handleSelect);
+
+    const slot: HTMLSlotElement = this.shadowRoot.querySelector('slot');
+    const nodes = slot.assignedNodes().filter(node => node.nodeName === 'MD-OPTION');
+    // @ts-ignore
+    this._options = nodes;
+
+    slot.addEventListener('slotchange', function(event) {
+      //console.log(slot);
+      const nodes = slot.assignedNodes().filter(node => node.nodeName === 'MD-OPTION');
+      console.log(nodes);
+      this._options = nodes;
+    });
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -96,11 +108,11 @@ export default class Select extends InputField {
   }
 
   private get options(): SelectOption[] {
-    if (this.requireToAdoptOptions) {
-      this.requireToAdoptOptions = false;
-      const elements = this.getElementsByTagName('md-option') as HTMLCollectionOf<SelectOption>;
-      this._options = Array.from(elements);
-    }
+    // if (this.requireToAdoptOptions) {
+    //   this.requireToAdoptOptions = false;
+    //   const elements = this.getElementsByTagName('md-option') as HTMLCollectionOf<SelectOption>;
+    //   this._options = Array.from(elements);
+    // }
     return this._options;
   }
 
@@ -117,6 +129,7 @@ export default class Select extends InputField {
       this._value = '';
       this._selectedOption = null;
       this.focusIndex = -1;
+      return;
     }
 
     option.tabIndex = 0;

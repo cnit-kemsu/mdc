@@ -17,8 +17,6 @@ export default class SelectOption extends RippleElement {
   constructor() {
     super(template.clonedContent);
 
-    this.tabIndex = -1;
-
     this.labelEl = this.shadowRoot.querySelector('label');
 
     this.addEventListener('keyup', this.handleKeyup);
@@ -26,6 +24,8 @@ export default class SelectOption extends RippleElement {
   }
 
   connectedCallback() {
+    this.tabIndex = -1;
+
     //this.selectEl = this.closest('md-select') as Select;
     this.selectEl = this.parentNode as Select;
     this.selectEl.requireToAdoptOptions = true;
