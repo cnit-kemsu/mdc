@@ -7,7 +7,7 @@ const template = new HTMLTemplate(html);
 @customElement('md-datefield')
 export default class DateField extends InputField {
 
-  
+  private _value = '';
   private inputEl: HTMLInputElement;
 
   constructor() {
@@ -15,7 +15,6 @@ export default class DateField extends InputField {
 
     this.inputEl = this.shadowRoot.querySelector('input');
     this.addEventListener('input', this.onInput);
-    //this.addEventListener('keydown', this.onKeydown);
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -24,27 +23,33 @@ export default class DateField extends InputField {
   }
 
   onInput({ inputType, data }: InputEvent) {
-    let { selectionStart } = this.inputEl;
+    const { inputEl } = this;
+    let caretPosition = inputEl.selectionStart;
 
-    this.value = this.inputEl.value;
+    this.value = inputEl.value;
+    const value = this.value;
 
-    switch (inputType) {
+    let lastDigitIndex = value.indexOf('_');
+    if (inputType === 'deleteContentBackward' && value[lastDigitIndex - 1] === '-') lastDigitIndex--;
+
+    if (caretPosition > lastDigitIndex) caretPosition = lastDigitIndex;
+    else switch (inputType) {
       case 'insertText':
         const charCode = data.charCodeAt(0);
-        const isDigit = charCode >= 48 && charCode <= 57;
-        if (!isDigit) selectionStart--;
-        else if (this.value[selectionStart] === '-' || this.value[selectionStart - 1] === '-') selectionStart++;
+        if (charCode < 48 || charCode > 57) {
+          if (value[caretPosition - 1] !== '-') caretPosition--;
+        } else if (value[caretPosition] === '-' || value[caretPosition - 1] === '-') caretPosition++;
         break;
       case 'deleteContentBackward':
-        if (this.value[selectionStart - 1] === '-') selectionStart--;
+        if (value[caretPosition - 1] === '-') caretPosition--;
         break;
       case 'deleteContentForward':
-        if (this.value[selectionStart] === '-') selectionStart++;
+        if (value[caretPosition] === '-') caretPosition++;
         break;
     }
     
-    this.inputEl.selectionStart = selectionStart;
-    this.inputEl.selectionEnd = selectionStart;
+    inputEl.selectionStart = caretPosition;
+    inputEl.selectionEnd = caretPosition;
   }
 
   formatValue(value: string) {
@@ -55,7 +60,6 @@ export default class DateField extends InputField {
     return `${day}-${month}-${year}`;
   }
 
-  private _value = '';
   get value(): string {
     return this._value;
   }
@@ -65,21 +69,12 @@ export default class DateField extends InputField {
     this.inputEl.value = _value;
     super.onChange();
   }
-
-  // get value(): string {
-  //   return this.$textInput.value;
-  // }
-  // set value(value: string) {
-  //   this.$textInput.value = value;
-  //   super.onChange();
-  // }
 }
 
 interface DateFieldProps extends React.HTMLAttributes<HTMLElement> {
   value?: string;
   label?: string;
 }
-
 declare global {
   module JSX {
     interface IntrinsicElements {
