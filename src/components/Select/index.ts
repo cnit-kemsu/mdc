@@ -16,16 +16,13 @@ export default class Select extends InputField {
   private _selectedOption: SelectOption = null;
   private _options: SelectOption[];
   requireToAdoptOptions: boolean = true;
-  
-  private containerEl: HTMLDivElement;
 
   constructor() {
-    super(template.clonedContent);
+    super();
 
+    this.containerEl.prepend(template.clonedContent);
     this.valueEl = this.shadowRoot.querySelector('.value');
     this.dropdownEl = this.shadowRoot.querySelector('.dropdown');
-
-    this.containerEl = this.shadowRoot.querySelector('.container');
 
     this.addEventListener('keydown', this.handleKeydown);
     this.addEventListener('keyup', this.handleKeyup);

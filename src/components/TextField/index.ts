@@ -5,13 +5,13 @@ import InputField from '../InputField';
 const template = new HTMLTemplate(html);
 
 export default class TextField extends InputField {
-
   
   private inputEl: HTMLInputElement;
 
   constructor() {
-    super(template.clonedContent);
+    super();
 
+    this.containerEl.prepend(template.clonedContent);
     this.inputEl = this.shadowRoot.querySelector('input');
     this.addEventListener('input', this.onChange);
   }

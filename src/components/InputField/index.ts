@@ -8,19 +8,19 @@ const observedAttributes = ['label', 'helper-text', 'error', 'name', 'value', 'd
 export default abstract class InputField extends HTMLElement {
 
   private isEmpty: boolean = true;
-  protected $label: HTMLLabelElement;
-  protected $helperText: HTMLDivElement;
+  protected containerEl: HTMLDivElement;
+  protected labelEl: HTMLLabelElement;
+  protected helperTextEl: HTMLDivElement;
 
-  constructor(...childNodes: Node[]) {
+  constructor() {
     super();
 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.clonedContent);
 
-    for (const node of childNodes) this.shadowRoot.appendChild(node);
-
-    this.$label = this.shadowRoot.querySelector('label');
-    this.$helperText = this.shadowRoot.querySelector('.helper-text');
+    this.containerEl = this.shadowRoot.querySelector('.container');
+    this.labelEl = this.shadowRoot.querySelector('label');
+    this.helperTextEl = this.shadowRoot.querySelector('.helper-text');
   }
 
   static get observedAttributes() {
@@ -29,13 +29,17 @@ export default abstract class InputField extends HTMLElement {
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     switch (name) {
       case 'label':
-        this.$label.innerText = newValue || ''; break;
+        this.labelEl.innerText = newValue || '';
+        break;
       case 'helper-text':
-        if (this.getAttribute('error') === null) this.$helperText.innerText = newValue || ''; break;
+        if (this.getAttribute('error') === null) this.helperTextEl.innerText = newValue || '';
+        break;
       case 'error':
-        this.$helperText.innerText = newValue || this.getAttribute('helper-text') || ''; break;
+        this.helperTextEl.innerText = newValue || this.getAttribute('helper-text') || '';
+        break;
       case 'value':
-        this.value = newValue; break;
+        this.value = newValue;
+        break;
     }
   }
 
@@ -43,8 +47,8 @@ export default abstract class InputField extends HTMLElement {
     const isEmpty = !this.value;
     if (this.isEmpty === isEmpty) return;
     this.isEmpty = isEmpty;
-    if (isEmpty) this.$label.style.removeProperty('--md-label-transform');
-    else this.$label.style.setProperty('--md-label-transform', 'var(--md-label-elevated)');
+    if (isEmpty) this.labelEl.style.removeProperty('--md-label-transform');
+    else this.labelEl.style.setProperty('--md-label-transform', 'var(--md-label-elevated)');
   }
 
   get label(): string {

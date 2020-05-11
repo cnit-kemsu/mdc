@@ -94,4 +94,31 @@
   :host([error]) .helper-text {
     visibility: visible;
   }
+
+  .input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+
+    box-sizing: border-box;
+    padding: 20px 16px 6px 16px;
+    width: 100%;
+    height: 100%;
+    
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.15px;
+    font-family: inherit;
+  }
+  :host([disabled]) .input {
+    color: var(--md-disabled-text-color);
+    /* pointer-events: none; */
+  }
 </style>
+
+<div class="container">
+  <!-- input -->
+  <div class="underline"></div>
+  <label></label>
+</div>
+<div class="helper-text"></div>
