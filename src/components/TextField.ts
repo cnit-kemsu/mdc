@@ -1,6 +1,6 @@
-import HTMLTemplate from '@lib/HTMLTemplate';
-import html from './template.html';
-import InputField from '../InputField';
+import HTMLTemplate from '@lib/HTMLTemplate1';
+import html from './TextField.template.html';
+import InputField from './base/InputField';
 
 const template = new HTMLTemplate(html);
 

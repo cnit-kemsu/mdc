@@ -1,6 +1,6 @@
-import InteractiveElement from '../InteractiveElement';
-import HTMLTemplate from '@lib/HTMLTemplate';
-import html from './template.html';
+import InteractiveElement from './InteractiveElement';
+import HTMLTemplate from '@lib/HTMLTemplate1';
+import html from './RippleElement.template.html';
 
 const template = new HTMLTemplate(html);
 
@@ -34,8 +34,10 @@ export default class RippleElement extends InteractiveElement {
 
   protected inputElement: HTMLInputElement;
 
-  constructor(...childNodes: Node[]) {
-    super(template.clonedContent, ...childNodes);
+  constructor() {
+    super();
+
+    this.shadowRoot.appendChild(template.clonedContent);
 
     const overlay = this.shadowRoot.querySelector('md-ripple-overlay') as HTMLElement;
     const overlayStyle = overlay.style;
@@ -55,15 +57,11 @@ export default class RippleElement extends InteractiveElement {
     // this.addEventListener('touchend', this.handleTouchend);
     // this.addEventListener('mouseup', this.handleMouseup);
   }
-
-  // private resetOverlayTransitionCallback = () => this.setOverlayStyleProp('--md-overlay-transition-current', 'var(--md-overlay-transition)');
-  // private resetOverlayTransition = () => requestAnimationFrame(this.resetOverlayTransitionCallback);
   private ripple_onPhase3Complete() {
     this.ripplePhase = 0;
     this.removeOverlayStyleProp('--md-ripple-animation');
     
     this.setOverlayStyleProp('--md-overlay-opacity-current', 'var(--md-overlay-opacity)');
-    //requestAnimationFrame(this.resetOverlayTransition);
   }
   private ripple_startPhase3() {
     this.ripplePhase = 3;
@@ -85,7 +83,6 @@ export default class RippleElement extends InteractiveElement {
     // this.duration_phase3 = parseInt(overlayCurrentStyle.getPropertyValue('--md-ripple-fadeout-duration'));
 
     this.setOverlayStyleProp('--md-overlay-opacity-current', overlayCurrentStyle.getPropertyValue('--md-overlay-opacity'));
-    //this.setOverlayStyleProp('--md-overlay-transition-current', 'none');
 
     this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-spread)');
     // this.currentTimeout = <any>setTimeout(this.ripple_onPhase1Complete, this.duration_phase1);
@@ -127,9 +124,8 @@ export default class RippleElement extends InteractiveElement {
   }
 
   // private handleTouchstart(event: TouchEvent) {
-  //   console.log(event);
   //   if (this.isPressed) return;
-  //   //touchendCallback = this.releasePressedState;
+  //   // touchendCallback = this.releasePressedState;
   //   const touch = event.touches[0];
   //   const { left, top } = this.getBoundingClientRect();
   //   this.pressX = touch.clientX - left;
@@ -153,6 +149,7 @@ export default class RippleElement extends InteractiveElement {
     this.pressY = event.offsetY;
     this.invokePressedState();
   }
+
   private handleKeydown(event: KeyboardEvent) {
     if (event.key !== ' ' || this.isPressed) return;
     event.preventDefault();

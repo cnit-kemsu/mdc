@@ -30,6 +30,10 @@
     "rules": {
       "*.readonly": "#9cdcfe",
     }
+  },
+
+  "files.associations": {
+    "*.tmpl": "html"
   }
 
 }

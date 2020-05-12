@@ -1,6 +1,6 @@
 import RippleElement from '@components/base/RippleElement';
-import HTMLTemplate from '@lib/HTMLTemplate';
-import html from './template.html';
+import HTMLTemplate from '@lib/HTMLTemplate1';
+import html from './SelectionControl.template.html';
 
 const template = new HTMLTemplate(html);
 
@@ -10,14 +10,14 @@ export default class SelectionControl extends RippleElement {
 
   value: string = null;
 
-  constructor(templateNode: Node) {
-    super(template.clonedContent, templateNode);
+  constructor() {
+    super();
+
+    this.shadowRoot.appendChild(template.clonedContent);
 
     this.onChange = this.onChange.bind(this);
-    this.handleKeyup = this.handleKeyup.bind(this);
 
     this.addEventListener('click', this.onChange);
-    this.addEventListener('keyup', this.handleKeyup);
   }
 
   static get observedAttributes() {
@@ -26,11 +26,6 @@ export default class SelectionControl extends RippleElement {
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
     if (name === 'value') this.value = newValue;
-  }
-
-  private handleKeyup(event: KeyboardEvent) {
-    if (event.key !== ' ') return;
-    this.onChange();
   }
 
   onChange() {

@@ -13,16 +13,20 @@ export default {
       {
         test: /\.ts(x?)$/,
         use: 'ts-loader?configFile=tsconfig.json',
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /\.html$/,
-        loader: 'html-loader',
+        loader: 'html-loader'
       },
       {
         test: /\.svg$/,
         loader: 'svg-inline-loader'
-    }
+      },
+      {
+        test: /\.tmpl$/,
+        loader: path.resolve(__dirname, './plugins/template-loader.ts')
+      }
     ],
   },
   resolve: {

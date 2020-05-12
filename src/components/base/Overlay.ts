@@ -1,5 +1,5 @@
-import HTMLTemplate from '@lib/HTMLTemplate';
-import html from './template.html';
+import HTMLTemplate from '@lib/HTMLTemplate1';
+import html from './Overlay.template.html';
 
 const template = new HTMLTemplate(html);
 

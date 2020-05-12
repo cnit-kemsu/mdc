@@ -1,21 +1,20 @@
 import RippleElement from '@components/base/RippleElement';
-import Icon from '../Icon';
-import HTMLTemplate from '@lib/HTMLTemplate';
-import html from './template.html';
+import Icon from './Icon';
+import HTMLTemplate from '@lib/HTMLTemplate1';
+import html from './IconButton.template.html';
 
 const template = new HTMLTemplate(html);
 
 const observedAttributes = ['icon', ...RippleElement.observedAttributes];
 
-export default class Button extends RippleElement {
+export default class IconButton extends RippleElement {
 
   private _icon : Icon;
-  private _label : HTMLLabelElement;
 
   constructor() {
-    super(template.clonedContent);
+    super();
 
-    this.addEventListener('keyup', this.handleKeyup);
+    this.shadowRoot.appendChild(template.clonedContent);
 
     this._icon = this.shadowRoot.querySelector('md-icon');
   }
@@ -32,12 +31,6 @@ export default class Button extends RippleElement {
         break;
     }
   }
-
-  private handleKeyup(event: KeyboardEvent) {
-    if (event.key !== ' ') return;
-    this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-  }
-
 
   get icon(): string {
     return this.getAttribute('icon');

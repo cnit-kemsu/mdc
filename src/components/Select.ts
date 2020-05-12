@@ -1,7 +1,7 @@
-import HTMLTemplate from '@lib/HTMLTemplate';
-import html from './template.html';
-import InputField from '../InputField';
-import SelectOption from '../SelectOption';
+import HTMLTemplate from '@lib/HTMLTemplate1';
+import html from './Select.template.html';
+import InputField from './base/InputField';
+import SelectOption from './SelectOption';
 
 const template = new HTMLTemplate(html);
 

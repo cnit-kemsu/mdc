@@ -1,16 +1,16 @@
-import HTMLTemplate from '@lib/HTMLTemplate';
-import html from './template.html';
+import HTMLTemplate from '@lib/HTMLTemplate1';
+import html from './InputField.template.html';
 
 const template = new HTMLTemplate(html);
 
 const observedAttributes = ['label', 'helper-text', 'error', 'name', 'value', 'disabled'];
 
-export default class TextField extends HTMLElement {
+export default abstract class InputField extends HTMLElement {
 
   private isEmpty: boolean = true;
-  private $textInput: HTMLInputElement;
-  private $label: HTMLLabelElement;
-  private $helperText: HTMLDivElement;
+  protected containerEl: HTMLDivElement;
+  protected labelEl: HTMLLabelElement;
+  protected helperTextEl: HTMLDivElement;
 
   constructor() {
     super();
@@ -18,10 +18,9 @@ export default class TextField extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.clonedContent);
 
-    this.$textInput = this.shadowRoot.querySelector('input');
-    this.addEventListener('input', this.onChange);
-    this.$label = this.shadowRoot.querySelector('label');
-    this.$helperText = this.shadowRoot.querySelector('.helper-text');
+    this.containerEl = this.shadowRoot.querySelector('.container');
+    this.labelEl = this.shadowRoot.querySelector('label');
+    this.helperTextEl = this.shadowRoot.querySelector('.helper-text');
   }
 
   static get observedAttributes() {
@@ -30,24 +29,26 @@ export default class TextField extends HTMLElement {
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     switch (name) {
       case 'label':
-        this.$label.innerText = newValue || ''; break;
+        this.labelEl.innerText = newValue || '';
+        break;
       case 'helper-text':
-        if (this.getAttribute('error') === null) this.$helperText.innerText = newValue || ''; break;
+        if (this.getAttribute('error') === null) this.helperTextEl.innerText = newValue || '';
+        break;
       case 'error':
-        this.$helperText.innerText = newValue || this.getAttribute('helper-text') || ''; break;
+        this.helperTextEl.innerText = newValue || this.getAttribute('helper-text') || '';
+        break;
       case 'value':
-        this.value = newValue; break;
-      case 'disabled':
-        this.$textInput.disabled = newValue !== null; break;
+        this.value = newValue;
+        break;
     }
   }
 
-  private onChange() {
-    const isEmpty = !this.$textInput.value;
+  protected onChange() {
+    const isEmpty = !this.value;
     if (this.isEmpty === isEmpty) return;
     this.isEmpty = isEmpty;
-    if (isEmpty) this.$label.style.removeProperty('--md-label-transform');
-    else this.$label.style.setProperty('--md-label-transform', 'var(--md-label-elevated)');
+    if (isEmpty) this.labelEl.style.removeProperty('--md-label-transform');
+    else this.labelEl.style.setProperty('--md-label-transform', 'var(--md-label-elevated)');
   }
 
   get label(): string {
@@ -78,13 +79,8 @@ export default class TextField extends HTMLElement {
     this.setAttribute('name', value);
   }
 
-  get value(): string {
-    return this.$textInput.value;
-  }
-  set value(value: string) {
-    this.$textInput.value = value;
-    this.onChange();
-  }
+  abstract get value(): string;
+  abstract set value(value: string);
 
   get disabled(): boolean {
     return this.getAttribute('disabled') !== null;

@@ -1,9 +1,6 @@
 import RippleElement from '@components/base/RippleElement';
-import Icon from '../Icon';
-import HTMLTemplate from '@lib/HTMLTemplate';
-import html from './template.html';
-
-const template = new HTMLTemplate(html);
+import Icon from './Icon';
+import template from './Button.tmpl';
 
 const observedAttributes = ['outlined', 'raised', 'icon', 'label', ...RippleElement.observedAttributes];
 
@@ -13,9 +10,11 @@ export default class Button extends RippleElement {
   private _label : HTMLLabelElement;
 
   constructor() {
-    super(template.clonedContent);
+    super();
 
-    this.addEventListener('keyup', this.handleKeyup);
+    console.log(template);
+
+    this.shadowRoot.appendChild(template.clonedContent);
 
     // if (navigator.userAgent.indexOf('Firefox') > 0) {
     //   this.style.setProperty('border-width', '1.5px');
@@ -42,11 +41,6 @@ export default class Button extends RippleElement {
         this._label.style.setProperty('--md-label-text', `'${newValue}'`);
         break;
     }
-  }
-
-  private handleKeyup(event: KeyboardEvent) {
-    if (event.key !== ' ') return;
-    this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
   }
 
   get label(): string {

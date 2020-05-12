@@ -1,6 +1,6 @@
 import SelectionControl from '@components/base/SelectionControl';
-import HTMLTemplate from '@lib/HTMLTemplate';
-import html from './template.html';
+import HTMLTemplate from '@lib/HTMLTemplate1';
+import html from './RadioButton.template.html';
 
 const template = new HTMLTemplate(html);
 
@@ -9,7 +9,9 @@ const checkedMap: Map<string, RadioButton> = new Map();
 export default class RadioButton extends SelectionControl {
 
   constructor() {
-    super(template.clonedContent);
+    super();
+
+    this.shadowRoot.appendChild(template.clonedContent);
   }
 
   disconnectedCallback() {

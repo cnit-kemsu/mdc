@@ -1,7 +1,7 @@
-import HTMLTemplate from '@lib/HTMLTemplate';
-import html from './template.html';
-import RippleElement from '../base/RippleElement';
-import Select from '../Select';
+import HTMLTemplate from '@lib/HTMLTemplate1';
+import html from './SelectOption.template.html';
+import RippleElement from './base/RippleElement';
+import Select from './Select';
 
 const template = new HTMLTemplate(html);
 
@@ -15,11 +15,12 @@ export default class SelectOption extends RippleElement {
   private _label: string = '';
 
   constructor() {
-    super(template.clonedContent);
+    super();
+
+    this.shadowRoot.appendChild(template.clonedContent);
 
     this.labelEl = this.shadowRoot.querySelector('label');
-
-    this.addEventListener('keyup', this.handleKeyup);
+    
     this.addEventListener('click', this.onClick);
   }
 
@@ -47,11 +48,6 @@ export default class SelectOption extends RippleElement {
         this.labelEl.innerText = newValue;
         break;
     }
-  }
-
-  private handleKeyup(event: KeyboardEvent) {
-    if (event.key !== ' ') return;
-    this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
   }
 
   private onClick() {

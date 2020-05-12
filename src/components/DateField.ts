@@ -1,6 +1,6 @@
 import { HTMLTemplate, customElement } from '@lib';
-import html from './template.html';
-import InputField from '../InputField';
+import html from './DateField.template.html';
+import InputField from './base/InputField';
 
 const template = new HTMLTemplate(html);
 
