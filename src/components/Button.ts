@@ -1,9 +1,11 @@
+import { customElement } from '@lib';
 import RippleElement from '@components/base/RippleElement';
 import Icon from './Icon';
 import template from './Button.html?template';
 
 const observedAttributes = ['outlined', 'raised', 'icon', 'label', ...RippleElement.observedAttributes];
 
+@customElement('md-button')
 export default class Button extends RippleElement {
 
   private _icon : Icon;

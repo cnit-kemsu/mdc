@@ -1,9 +1,11 @@
+import { customElement } from '@lib';
 import template from './SelectOption.html?template';
 import RippleElement from './base/RippleElement';
 import Select from './Select';
 
 const observedAttributes = ['label', 'value'];
 
+@customElement('md-option')
 export default class SelectOption extends RippleElement {
 
   private selectEl: Select;

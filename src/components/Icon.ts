@@ -1,7 +1,13 @@
+import { customElement } from '@lib';
 import template from './Icon.html?template';
 
 const observedAttributes = ['icon'];
 
+const icons = new Map();
+const getIcon = icons.get.bind(icons);
+export const setIcon = icons.set.bind(icons);
+
+@customElement('md-icon')
 export default class Icon extends HTMLElement {
 
   container: HTMLSpanElement;
@@ -30,6 +36,3 @@ export default class Icon extends HTMLElement {
   }
 }
 
-const icons = new Map();
-const getIcon = icons.get.bind(icons);
-export const setIcon = icons.set.bind(icons);

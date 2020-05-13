@@ -1,8 +1,10 @@
+import { customElement } from '@lib';
 import SelectionControl from '@components/base/SelectionControl';
 import template from './RadioButton.html?template';
 
 const checkedMap: Map<string, RadioButton> = new Map();
 
+@customElement('md-radio')
 export default class RadioButton extends SelectionControl {
 
   constructor() {

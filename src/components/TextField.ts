@@ -1,6 +1,8 @@
+import { customElement } from '@lib';
 import template from './TextField.html?template';
 import InputField from './base/InputField';
 
+@customElement('md-textfield')
 export default class TextField extends InputField {
   
   private inputEl: HTMLInputElement;

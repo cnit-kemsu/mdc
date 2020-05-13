@@ -1,6 +1,8 @@
+import { customElement } from '@lib';
 import SelectionControl from '@components/base/SelectionControl';
 import template from './Checkbox.html?template';
 
+@customElement('md-checkbox')
 export default class Checkbox extends SelectionControl {
 
   private setPathStyleProp: (propertyName: string, value: string) => void;
