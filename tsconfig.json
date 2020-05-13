@@ -21,6 +21,7 @@
       "@lib/*": ["./src/lib/*"],
       "@lib": ["./src/lib/"],
       "@src/*": ["./src/*"],
+      "asdasd!/*": ["./plugins/template-loader.ts"]
     }
   },
   "exclude": [

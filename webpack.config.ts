@@ -17,25 +17,38 @@ export default {
       },
       {
         test: /\.html$/,
-        loader: 'html-loader'
+        oneOf: [
+          {
+            resourceQuery: /template/,
+            use: 'html-template-loader'
+          },
+          {
+            use: 'html-loader'
+          }
+        ]
       },
       {
         test: /\.svg$/,
         loader: 'svg-inline-loader'
       },
-      {
-        test: /\.tmpl$/,
-        loader: path.resolve(__dirname, './plugins/template-loader.ts')
-      }
     ],
   },
+
+  resolveLoader: {
+    alias: {
+      //'template': path.resolve(__dirname, './plugins/template-loader.ts')
+      'html-template-loader': path.resolve(__dirname, './plugins/template-loader.ts')
+    }
+  },
+
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js', '.html' ],
+    extensions: [ '.tsx', '.ts', '.js', '.html', '.tmpl' ],
     //modules: ["src", "node_modules"]
     alias: {
       '@components': path.resolve(__dirname, 'src/components/'),
       '@hooks': path.resolve(__dirname, 'src/hooks/'),
-      '@lib': path.resolve(__dirname, 'src/lib/')
+      '@lib': path.resolve(__dirname, 'src/lib/'),
+      'asdasd!': path.resolve(__dirname, '')
     }
   },
   output: {
