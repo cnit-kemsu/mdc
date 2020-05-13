@@ -1,8 +1,5 @@
 import InteractiveElement from './InteractiveElement';
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './RippleElement.template.html';
-
-const template = new HTMLTemplate(html);
+import template from './RippleElement.html?template';
 
 interface SizeSnapshot {
   width: number;

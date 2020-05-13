@@ -1,8 +1,6 @@
-import { HTMLTemplate, customElement } from '@lib';
-import html from './DateField.template.html';
+import { customElement } from '@lib';
+import template from './DateField.html?template';
 import InputField from './base/InputField';
-
-const template = new HTMLTemplate(html);
 
 @customElement('md-datefield')
 export default class DateField extends InputField {

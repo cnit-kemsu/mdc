@@ -36,7 +36,6 @@ export default {
 
   resolveLoader: {
     alias: {
-      //'template': path.resolve(__dirname, './plugins/template-loader.ts')
       'html-template-loader': path.resolve(__dirname, './plugins/template-loader.ts')
     }
   },
@@ -48,7 +47,7 @@ export default {
       '@components': path.resolve(__dirname, 'src/components/'),
       '@hooks': path.resolve(__dirname, 'src/hooks/'),
       '@lib': path.resolve(__dirname, 'src/lib/'),
-      'asdasd!': path.resolve(__dirname, '')
+      '@plugins': path.resolve(__dirname, 'plugins')
     }
   },
   output: {

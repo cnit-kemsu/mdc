@@ -1,9 +1,6 @@
 import RippleElement from '@components/base/RippleElement';
 import Icon from './Icon';
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './IconButton.template.html';
-
-const template = new HTMLTemplate(html);
+import template from './IconButton.html?template';
 
 const observedAttributes = ['icon', ...RippleElement.observedAttributes];
 

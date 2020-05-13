@@ -1,8 +1,5 @@
 import Overlay from './Overlay';
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './RippleOverlay.template.html';
-
-const template = new HTMLTemplate(html);;
+import template from './RippleOverlay.html?template';
 
 export default class RippleOverlay extends Overlay {
 

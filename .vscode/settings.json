@@ -32,8 +32,4 @@
     }
   },
 
-  "files.associations": {
-    "*.tmpl": "html"
-  }
-
 }

@@ -1,7 +1,4 @@
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './InteractiveElement.template.html';
-
-const template = new HTMLTemplate(html);
+import template from './InteractiveElement.html?template';
 
 const observedAttributes = ['disabled'];
 

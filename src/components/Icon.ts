@@ -1,7 +1,4 @@
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './Icon.template.html';
-
-const template = new HTMLTemplate(html);
+import template from './Icon.html?template';
 
 const observedAttributes = ['icon'];
 

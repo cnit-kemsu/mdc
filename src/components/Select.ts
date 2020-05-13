@@ -1,9 +1,6 @@
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './Select.template.html';
+import template from './Select.html?template';
 import InputField from './base/InputField';
 import SelectOption from './SelectOption';
-
-const template = new HTMLTemplate(html);
 
 export default class Select extends InputField {
 

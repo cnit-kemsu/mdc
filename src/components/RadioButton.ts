@@ -1,8 +1,5 @@
 import SelectionControl from '@components/base/SelectionControl';
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './RadioButton.template.html';
-
-const template = new HTMLTemplate(html);
+import template from './RadioButton.html?template';
 
 const checkedMap: Map<string, RadioButton> = new Map();
 

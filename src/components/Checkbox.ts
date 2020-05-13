@@ -1,9 +1,5 @@
 import SelectionControl from '@components/base/SelectionControl';
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './Checkbox.template.html';
-
-const template = new HTMLTemplate(html);
-
+import template from './Checkbox.html?template';
 
 export default class Checkbox extends SelectionControl {
 

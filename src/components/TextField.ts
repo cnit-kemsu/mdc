@@ -1,8 +1,5 @@
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './TextField.template.html';
+import template from './TextField.html?template';
 import InputField from './base/InputField';
-
-const template = new HTMLTemplate(html);
 
 export default class TextField extends InputField {
   

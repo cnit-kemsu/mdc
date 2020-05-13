@@ -1,6 +1,5 @@
 import RippleElement from '@components/base/RippleElement';
 import Icon from './Icon';
-// import template from '!template!./Button.html';
 import template from './Button.html?template';
 
 const observedAttributes = ['outlined', 'raised', 'icon', 'label', ...RippleElement.observedAttributes];
@@ -12,8 +11,6 @@ export default class Button extends RippleElement {
 
   constructor() {
     super();
-
-    console.log(template);
 
     this.shadowRoot.appendChild(template.clonedContent);
 

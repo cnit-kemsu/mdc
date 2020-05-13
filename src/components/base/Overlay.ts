@@ -1,7 +1,4 @@
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './Overlay.template.html';
-
-const template = new HTMLTemplate(html);
+import template from './Overlay.html?template';
 
 export default class Overlay extends HTMLElement {
 

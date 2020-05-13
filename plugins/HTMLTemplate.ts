@@ -12,3 +12,7 @@ export default class HTMLTemplate {
     return this.templateElement.content.cloneNode(true);
   }
 }
+
+declare module '*?template' {
+  const content: HTMLTemplate;
+}

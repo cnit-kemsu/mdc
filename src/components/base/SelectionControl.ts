@@ -1,8 +1,5 @@
 import RippleElement from '@components/base/RippleElement';
-import HTMLTemplate from '@lib/HTMLTemplate1';
-import html from './SelectionControl.template.html';
-
-const template = new HTMLTemplate(html);
+import template from './SelectionControl.html?template';
 
 const observedAttributes = ['checked', 'name', 'value', ...RippleElement.observedAttributes];
 
