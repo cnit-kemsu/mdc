@@ -3,8 +3,8 @@
     /* -webkit-tap-highlight-color: #0000; */
 
     /* --md-overlay-opacity: 0; */
-    --md-overlay-opacity: var(--md-overlay-opacity-initial, 0);
-    --md-overlay-opacity-current: var(--md-overlay-opacity);
+    --md-overlay-opacity: var(--md-overlay-initial-opacity, 0);
+    --md-overlay-current-opacity: var(--md-overlay-opacity);
     
     /* --md-ripple-transform-duration: 225ms;
     --md-ripple-fadein-duration: 75ms;
@@ -48,7 +48,7 @@
       opacity: var(--md-overlay-pressed-opacity);
     }
     to {
-      opacity: calc((var(--md-overlay-opacity) - var(--md-overlay-opacity-current)) / (1 - var(--md-overlay-opacity-current)));
+      opacity: calc((var(--md-overlay-opacity) - var(--md-overlay-current-opacity)) / (1 - var(--md-overlay-current-opacity)));
     }
   }
 </style>

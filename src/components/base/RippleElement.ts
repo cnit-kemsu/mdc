@@ -58,7 +58,7 @@ export default class RippleElement extends InteractiveElement {
     this.ripplePhase = 0;
     this.removeOverlayStyleProp('--md-ripple-animation');
     
-    this.setOverlayStyleProp('--md-overlay-opacity-current', 'var(--md-overlay-opacity)');
+    this.setOverlayStyleProp('--md-overlay-current-opacity', 'var(--md-overlay-opacity)');
   }
   private ripple_startPhase3() {
     this.ripplePhase = 3;
@@ -79,7 +79,7 @@ export default class RippleElement extends InteractiveElement {
     // );
     // this.duration_phase3 = parseInt(overlayCurrentStyle.getPropertyValue('--md-ripple-fadeout-duration'));
 
-    this.setOverlayStyleProp('--md-overlay-opacity-current', overlayCurrentStyle.getPropertyValue('--md-overlay-opacity'));
+    this.setOverlayStyleProp('--md-overlay-current-opacity', overlayCurrentStyle.getPropertyValue('--md-overlay-opacity'));
 
     this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-spread)');
     // this.currentTimeout = <any>setTimeout(this.ripple_onPhase1Complete, this.duration_phase1);

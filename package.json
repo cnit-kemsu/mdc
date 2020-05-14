@@ -6,6 +6,7 @@
   "author": "yo-yo",
   "license": "ISC",
   "devDependencies": {
+    "@kemsu/html-template-loader": "^0.1.7",
     "@types/html-webpack-plugin": "^3.2.2",
     "@types/react": "^16.9.32",
     "@types/react-dom": "^16.9.6",
@@ -19,7 +20,7 @@
     "svg-inline-loader": "^0.8.2",
     "ts-loader": "^6.2.2",
     "ts-node": "^8.8.2",
-    "typescript": "^3.8.3",
+    "typescript": "^3.9.2",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
