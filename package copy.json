@@ -1,0 +1,34 @@
+{
+  "name": "@kemsu/mdc",
+  "scope": "@kemsu",
+  "version": "0.1.0",
+  "description": "",
+  "author": "yo-yo",
+  "license": "ISC",
+  "devDependencies": {
+    "@github/html-template-loader": "github:cnit-kemsu/html-template-loader",
+    "@types/html-webpack-plugin": "^3.2.2",
+    "@types/react": "^16.9.32",
+    "@types/react-dom": "^16.9.6",
+    "@types/webpack": "^4.41.10",
+    "@types/webpack-dev-server": "^3.10.1",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.0.4",
+    "nodemon": "^2.0.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "svg-inline-loader": "^0.8.2",
+    "ts-loader": "^6.2.2",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.9.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "@types/html-template-loader": "file:./node_modules/@github/html-template-loader/typings",
+    "html-template-loader": "file:./node_modules/@github/html-template-loader/dist"
+  },
+  "scripts": {
+    "start": "node_modules/.bin/nodemon --watch webpack.config.ts --watch tsconfig.json --exec webpack-dev-server",
+    "build": "webpack"
+  }
+}

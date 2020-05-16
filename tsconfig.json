@@ -23,10 +23,10 @@
       "@src/*": ["./src/*"]
     },
 
-    "typeRoots" : [
-      "./node_modules/@kemsu/html-template-loader",
-      "./node_modules/@types"
-    ],
+    // "typeRoots" : [
+    //   "./node_modules/@kemsu/html-template-loader",
+    //   "./node_modules/@types"
+    // ],
 
   },
   "exclude": [
