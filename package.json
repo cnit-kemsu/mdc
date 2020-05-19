@@ -6,13 +6,33 @@
   "author": "yo-yo",
   "license": "ISC",
   "devDependencies": {
-    "@cnit-kemsu/html-template-loader": "0.1.2",
-    "adasd": "github:cnit-kemsu/html-template-loader#deploy2",
-    "zczxc": "https://github.com/cnit-kemsu/html-template-loader/blob/master/cnit-kemsu-html-template-loader-0.1.2.tgz"
+    "@types/html-template-loader": "file:node_modules/@1k-lab/html-template-loader/typings",
+    "@types/html-webpack-plugin": "^3.2.2",
+    "@types/react": "^16.9.32",
+    "@types/react-dom": "^16.9.6",
+    "@types/webpack": "^4.41.10",
+    "@types/webpack-dev-server": "^3.10.1",
+    "@types/webpack-env": "^1.15.2",
+    "html-loader": "^1.1.0",
+    "html-template-loader": "file:node_modules/@1k-lab/html-template-loader/dist",
+    "html-webpack-plugin": "^4.0.4",
+    "nodemon": "^2.0.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "svg-inline-loader": "^0.8.2",
+    "ts-loader": "^6.2.2",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.9.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
     "start": "node_modules/.bin/nodemon --watch webpack.config.ts --watch tsconfig.json --exec webpack-dev-server",
     "build": "webpack",
-    "postinstall": "echo aaa && echo foo"
+    "preinstall": " npm i -O github:1k-lab/html-template-loader"
+  },
+  "optionalDependencies": {
+    "@1k-lab/html-template-loader": "github:1k-lab/html-template-loader"
   }
 }

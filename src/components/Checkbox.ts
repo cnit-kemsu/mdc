@@ -10,7 +10,7 @@ export default class Checkbox extends SelectionControl {
   constructor() {
     super();
 
-    this.shadowRoot.appendChild(template.clonedContent);
+    this.shadowRoot.appendChild(template.fragment);
 
     const path: SVGPathElement = this.shadowRoot.querySelector('path');
     const pathStyle = path.style;

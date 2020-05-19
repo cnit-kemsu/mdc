@@ -1,38 +1,35 @@
-import { customElement } from '@lib';
+import { customElement, IconStore } from '@lib';
 import template from './Icon.html?template';
-
-const observedAttributes = ['icon'];
-
-const icons = new Map();
-const getIcon = icons.get.bind(icons);
-export const setIcon = icons.set.bind(icons);
 
 @customElement('md-icon')
 export default class Icon extends HTMLElement {
-
-  container: HTMLSpanElement;
+  svgEl: SVGElement = null;
 
   constructor() {
     super();
-
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(template.clonedContent);
-
-    this.container = this.shadowRoot.querySelector('span');
-  }
-
-  get icon(): string {
-    return this.getAttribute('icon');
-  }
-  set icon(value: string) {
-    this.setAttribute('icon', value);
+    this.shadowRoot.appendChild(template.fragment);
   }
 
   static get observedAttributes() {
-    return observedAttributes;
+    return ['store-key'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'icon') this.container.innerHTML = getIcon(newValue) || '';
+    switch (name) {
+      case 'store-key':
+        if (this.svgEl !== null) this.shadowRoot.removeChild(this.svgEl);
+        const template = IconStore.get(newValue);
+        this.svgEl = template?.fragment.firstChild || null;
+        if (this.svgEl !== null) this.shadowRoot.appendChild(this.svgEl);
+        break;
+    }
+  }
+
+  get storeKey(): string {
+    return this.getAttribute('store-key');
+  }
+  set storeKey(value: string) {
+    this.setAttribute('store-key', value);
   }
 }
 

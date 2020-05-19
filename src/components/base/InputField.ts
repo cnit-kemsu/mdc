@@ -13,7 +13,7 @@ export default abstract class InputField extends HTMLElement {
     super();
 
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(template.clonedContent);
+    this.shadowRoot.appendChild(template.fragment);
 
     this.containerEl = this.shadowRoot.querySelector('.container');
     this.labelEl = this.shadowRoot.querySelector('label');

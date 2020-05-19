@@ -8,6 +8,6 @@ export default class Overlay extends HTMLElement {
     super();
     
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(template.clonedContent);
+    this.shadowRoot.appendChild(template.fragment);
   };
 }

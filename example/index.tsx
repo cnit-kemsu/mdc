@@ -1,20 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// import '@components/base/Overlay';
-// import '@components/base/RippleOverlay';
-// import '@components/Icon';
-// import '@components/SelectOption';
-// import '@components/Button';
-// import '@components/Checkbox';
-// import '@components/RadioButton';
-// import '@components/TextField';
-// import '@components/IconButton';
-// import '@components/Select';
-// import '@components/DateField';
-
-require('./register');
-
 declare global {
   module JSX {
     interface IntrinsicElements {
@@ -58,4 +44,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// require('./register');
+require('./register');

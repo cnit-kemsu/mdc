@@ -8,6 +8,6 @@ export default class RippleOverlay extends Overlay {
   constructor() {
     super();
     
-    this.shadowRoot.appendChild(template.clonedContent);
+    this.shadowRoot.appendChild(template.fragment);
   };
 }

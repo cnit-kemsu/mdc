@@ -11,7 +11,7 @@ export default class DateField extends InputField {
   constructor() {
     super();
 
-    this.containerEl.prepend(template.clonedContent);
+    this.containerEl.prepend(template.fragment);
     this.inputEl = this.shadowRoot.querySelector('input');
     this.addEventListener('input', this.onInput);
   }

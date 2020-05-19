@@ -3,38 +3,32 @@ import RippleElement from '@components/base/RippleElement';
 import Icon from './Icon';
 import template from './IconButton.html?template';
 
-const observedAttributes = ['icon', ...RippleElement.observedAttributes];
-
-@customElement('md-iconbtn')
+@customElement('md-icon-button')
 export default class IconButton extends RippleElement {
-
-  private _icon : Icon;
+  private iconEl : Icon;
 
   constructor() {
     super();
-
-    this.shadowRoot.appendChild(template.clonedContent);
-
-    this._icon = this.shadowRoot.querySelector('md-icon');
+    this.shadowRoot.appendChild(template.fragment);
+    this.iconEl = this.shadowRoot.querySelector('md-icon');
   }
 
   static get observedAttributes() {
-    return observedAttributes;
+    return ['store-key'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
     switch (name) {
-      case 'icon':
-        this._icon.icon = newValue;
-        //this._icon.setAttribute('icon', newValue);
+      case 'store-key':
+        this.iconEl.storeKey = newValue;
         break;
     }
   }
 
-  get icon(): string {
+  get storeKey(): string {
     return this.getAttribute('icon');
   }
-  set icon(value: string) {
+  set storeKey(value: string) {
     this.setAttribute('icon', value);
   }
 }

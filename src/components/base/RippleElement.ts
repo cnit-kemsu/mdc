@@ -34,7 +34,7 @@ export default class RippleElement extends InteractiveElement {
   constructor() {
     super();
 
-    this.shadowRoot.appendChild(template.clonedContent);
+    this.shadowRoot.appendChild(template.fragment);
 
     const overlay = this.shadowRoot.querySelector('md-ripple-overlay') as HTMLElement;
     const overlayStyle = overlay.style;

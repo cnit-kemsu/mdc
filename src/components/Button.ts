@@ -3,28 +3,26 @@ import RippleElement from '@components/base/RippleElement';
 import Icon from './Icon';
 import template from './Button.html?template';
 
-const observedAttributes = ['outlined', 'raised', 'icon', 'label', ...RippleElement.observedAttributes];
-
 @customElement('md-button')
 export default class Button extends RippleElement {
 
-  private _icon : Icon;
-  private _label : HTMLLabelElement;
+  private iconEl : Icon;
+  private labelEl : HTMLLabelElement;
 
   constructor() {
     super();
 
-    this.shadowRoot.appendChild(template.clonedContent);
+    this.shadowRoot.appendChild(template.fragment);
 
     // if (navigator.userAgent.indexOf('Firefox') > 0) {
     //   this.style.setProperty('border-width', '1.5px');
     // }
-    this._icon = this.shadowRoot.querySelector('md-icon');
-    this._label = this.shadowRoot.querySelector('label');
+    this.iconEl = this.shadowRoot.querySelector('md-icon');
+    this.labelEl = this.shadowRoot.querySelector('label');
   }
 
   static get observedAttributes() {
-    return observedAttributes;
+    return ['outlined', 'raised', 'icon', 'label'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
@@ -34,11 +32,11 @@ export default class Button extends RippleElement {
     }
     switch (name) {
       case 'icon':
-        this._icon.icon = newValue;
+        this.iconEl.storeKey = newValue;
         //this._icon.setAttribute('icon', newValue);
         break;
       case 'label':
-        this._label.style.setProperty('--md-label-text', `'${newValue}'`);
+        this.labelEl.style.setProperty('--md-label-text', `'${newValue}'`);
         break;
     }
   }

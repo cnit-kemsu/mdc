@@ -29,14 +29,26 @@ export default {
       },
       {
         test: /\.svg$/,
-        loader: 'svg-inline-loader'
+        oneOf: [
+          {
+            resourceQuery: /template/,
+            use: 'html-template-loader'
+          },
+          {
+            use: 'svg-inline-loader'
+          }
+        ]
       },
+      // {
+      //   test: /\.svg$/,
+      //   loader: 'html-template-loader'
+      // },
     ],
   },
 
   resolveLoader: {
     alias: {
-      'html-template-loader': path.resolve(__dirname, './node_modules/@kemsu/html-template-loader')
+      'html-template-loader': path.resolve(__dirname, './node_modules/html-template-loader')
     }
   },
 

@@ -81,9 +81,6 @@
     content: var(--md-label-text);
   }
   
-  md-icon:not([icon]) {
-    display: none;
-  }
   md-icon {
     width: 18px;
     height: 18px;
@@ -93,10 +90,10 @@
   :host(:not([raised]):not([outlined])) md-icon {
     margin-left: 0px;
   }
-  :host([raised]:not([disabled])) md-icon {
+  :host([raised]) md-icon {
     fill: var(--md-on-current-color);
   }
-  :host(:not([raised]):not([disabled])) md-icon {
+  :host(:not([raised])) md-icon {
     fill: var(--md-current-color);
   }
   :host([disabled]) md-icon {

@@ -19,7 +19,7 @@ export default class Select extends InputField {
   constructor() {
     super();
 
-    this.containerEl.prepend(template.clonedContent);
+    this.containerEl.prepend(template.fragment);
     this.valueEl = this.shadowRoot.querySelector('.value');
     this.dropdownEl = this.shadowRoot.querySelector('.dropdown');
 

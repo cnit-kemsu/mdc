@@ -16,7 +16,7 @@ export default class SelectOption extends RippleElement {
   constructor() {
     super();
 
-    this.shadowRoot.appendChild(template.clonedContent);
+    this.shadowRoot.appendChild(template.fragment);
 
     this.labelEl = this.shadowRoot.querySelector('label');
     

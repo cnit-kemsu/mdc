@@ -10,7 +10,7 @@ export default class RadioButton extends SelectionControl {
   constructor() {
     super();
 
-    this.shadowRoot.appendChild(template.clonedContent);
+    this.shadowRoot.appendChild(template.fragment);
   }
 
   disconnectedCallback() {

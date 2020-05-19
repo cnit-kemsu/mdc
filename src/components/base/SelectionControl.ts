@@ -10,7 +10,7 @@ export default class SelectionControl extends RippleElement {
   constructor() {
     super();
 
-    this.shadowRoot.appendChild(template.clonedContent);
+    this.shadowRoot.appendChild(template.fragment);
 
     this.onChange = this.onChange.bind(this);
 
