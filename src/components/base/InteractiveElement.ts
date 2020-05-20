@@ -1,17 +1,13 @@
 import template from './InteractiveElement.html?template';
 
-const observedAttributes = ['disabled'];
-
 export default class InteractiveElement extends HTMLElement {
 
   protected focusableEl: HTMLElement = this;
 
   constructor() {
     super();
-
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.fragment);
-
     this.addEventListener('keyup', this.handleKeyup);
   }
 
@@ -20,11 +16,11 @@ export default class InteractiveElement extends HTMLElement {
     this.focusableEl.tabIndex = 0;
   }
   static get observedAttributes() {
-    return observedAttributes;
+    return ['disabled'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'disabled') {
-      if (newValue === 'false') this.setAttribute('disabled', null);
+      if (newValue === 'false') this.removeAttribute('disabled');
       else this.focusableEl.tabIndex = newValue === null ? 0 : -1;
     }
   }
@@ -35,10 +31,14 @@ export default class InteractiveElement extends HTMLElement {
   }
 
   get disabled(): boolean {
-    //return this.focusableEl.tabIndex === -1;
     return this.getAttribute('disabled') !== null;
   }
   set disabled(value: boolean) {
-    this.setAttribute('disabled', value ? '' : null);
+    if (value) this.setAttribute('disabled', '');
+    else this.removeAttribute('disabled');
   }
+}
+
+export interface InteractiveElementProps extends React.HTMLAttributes<HTMLElement> {
+  disabled?: boolean;
 }

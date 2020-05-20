@@ -12,54 +12,57 @@
     font-size: 14px;
     letter-spacing: 1.25px;
     font-weight: 500;
+    text-transform: uppercase;
+
     min-width: 64px;
     height: 36px;
     border-radius: 4px;
-    text-transform: uppercase;
-  }
-  :host(:not([disabled])) {
-    cursor: pointer;
-  }
-  :host([disabled]) {
-    color: var(--md-disabled-text-color);
-    pointer-events: none;
+    color: var(--md-text-color);
   }
 
-  :host(:not([raised]):not([outlined])) {
-    padding: 0px 8px;
-  }
-  :host([outlined]) {
-    padding: 0px 15px;
-    border-width: 1px;
-    border-style: solid;
-  }
-  :host([outlined]:not([disabled])) {
-    border-color: var(--md-current-color);
-  }
-  :host([outlined][disabled]) {
-    border-color: var(--md-disabled-text-color);
-  }
-  :host(:not([raised]):not([disabled])) {
-    color: var(--md-current-color);
+  /* text or outlined variant */
+  :host(:not([raised])) {
+    --md-text-color: var(--md-current-color);
     --md-overlay-color: var(--md-current-color);
     --md-overlay-hover-opacity: 0.04;
     --md-overlay-focus-opacity: 0.12;
     --md-overlay-pressed-opacity: 0.12;
   }
   
+  /* text variant */
+  :host(:not([raised]):not([outlined])) {
+    padding: 0px 8px;
+    --md-icon-border-side-margin: 0px;
+  }
+
+  /* outlined variant */
+  :host([outlined]) {
+    padding: 0px 15px;
+    border: 1px solid var(--md-current-color);
+    --md-icon-border-side-margin: -4px;
+  }
+  /* @-moz-document url-prefix() {
+    :host([outlined]) {
+      border-width: 1.5px;
+    }
+  } */
+  :host([outlined][disabled]) {
+    border-color: var(--md-disabled-text-color);
+  }
+  
+  /* raised variant */
   :host([raised]) {
     padding: 0px 16px;
-  }
-  :host([raised]:not([disabled])) {
+    box-shadow: var(--md-elevation);
+    transition: var(--md-shadow-transition);
     background-color: var(--md-current-color);
-    color: var(--md-on-current-color);
+    --md-text-color: var(--md-on-current-color);
     --md-overlay-color: var(--md-on-current-color);
     --md-overlay-hover-opacity: 0.08;
     --md-overlay-focus-opacity: 0.24;
     --md-overlay-pressed-opacity: 0.24;
     --md-elevation: var(--md-dp-2);
-    box-shadow: var(--md-elevation);
-    transition: var(--md-shadow-transition);
+    --md-icon-border-side-margin: -4px;
   }
   :host([raised]:hover) {
     --md-elevation: var(--md-dp-4);
@@ -72,34 +75,35 @@
   }
   :host([raised][disabled]) {
     background-color: var(--md-disabled-color);
+    --md-elevation: none;
   }
 
+  /* disabled */
+  :host([disabled]) {
+    --md-text-color: var(--md-disabled-text-color);
+  }
+
+  /* label */
   label {
     pointer-events: none;
   }
-  label::after {
-    content: var(--md-label-text);
-  }
   
+  /* icon */
   md-icon {
     width: 18px;
     height: 18px;
-    margin-left: -4px;
+    fill: var(--md-text-color);
+  }
+  .leading-icon {
     margin-right: 8px;
+    margin-left: var(--md-icon-border-side-margin);
   }
-  :host(:not([raised]):not([outlined])) md-icon {
-    margin-left: 0px;
-  }
-  :host([raised]) md-icon {
-    fill: var(--md-on-current-color);
-  }
-  :host(:not([raised])) md-icon {
-    fill: var(--md-current-color);
-  }
-  :host([disabled]) md-icon {
-    fill: var(--md-disabled-text-color);
+  .trailing-icon {
+    margin-left: 8px;
+    margin-right: var(--md-icon-border-side-margin);
   }
 </style>
 
-<md-icon></md-icon>
+<md-icon class="leading-icon"></md-icon>
 <label></label>
+<md-icon class="trailing-icon"></md-icon>

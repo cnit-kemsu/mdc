@@ -3,6 +3,7 @@ import template from './Icon.html?template';
 
 @customElement('md-icon')
 export default class Icon extends HTMLElement {
+
   svgEl: SVGElement = null;
 
   constructor() {
@@ -29,7 +30,18 @@ export default class Icon extends HTMLElement {
     return this.getAttribute('store-key');
   }
   set storeKey(value: string) {
-    this.setAttribute('store-key', value);
+    if (value) this.setAttribute('store-key', value);
+    else this.removeAttribute('store-key');
   }
 }
 
+interface IconProps extends React.HTMLAttributes<HTMLElement> {
+  'store-key'?: string;
+}
+declare global {
+  module JSX {
+    interface IntrinsicElements {
+      'md-icon': IconProps;
+    }
+  }
+}

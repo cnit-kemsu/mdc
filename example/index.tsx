@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 declare global {
   module JSX {
     interface IntrinsicElements {
-      'md-button': any;
       'md-checkbox': any;
       'md-textfield': any;
       'md-select': any;
@@ -19,8 +18,8 @@ function App() {
   const [val, chval] = React.useState(2);
 
   return <div style={{ padding: '20px' }}>
-    <md-button icon="copyright" raised label="Click me" onClick={() => console.log('click')} />
-    <md-button outlined label="Click me" disabled onClick={() => console.log('click')} />
+    <md-button leading-icon="favorite" raised label="Click me" onClick={() => console.log('click')} />
+    <md-button trailing-icon="copyright" outlined label="Click me" disabled onClick={() => console.log('click')} />
 
     <md-checkbox onInput={event => console.log(event.target.checked)} />
     <md-checkbox disabled onInput={event => console.log(event.target.checked)} />
