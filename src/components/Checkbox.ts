@@ -5,24 +5,31 @@ import template from './Checkbox.html?template';
 @customElement('md-checkbox')
 export default class Checkbox extends SelectionControl {
 
-  private setPathStyleProp: (propertyName: string, value: string) => void;
+  get type(): string { return 'checkbox'; }
+  private pathEl: SVGPathElement;
 
   constructor() {
     super();
-
     this.shadowRoot.appendChild(template.fragment);
-
-    const path: SVGPathElement = this.shadowRoot.querySelector('path');
-    const pathStyle = path.style;
-    this.setPathStyleProp = pathStyle.setProperty.bind(pathStyle);
+    this.pathEl = this.shadowRoot.querySelector('path');
   }
 
   onChange() {
     this.checked = !this.checked;
-    
-    if (this.checked) this.setPathStyleProp('--md-path-animation', 'var(--md-path-check)');
-    else this.setPathStyleProp('--md-path-animation', 'var(--md-path-uncheck)');
-
+    if (this.checked) this.pathEl.style.setProperty('--md-path-animation', 'var(--md-path-check)');
+    else this.pathEl.style.setProperty('--md-path-animation', 'var(--md-path-uncheck)');
     super.onChange();
+  }
+}
+
+declare global {
+  module MDC {
+    interface CheckboxProps extends SelectionControlProps<Checkbox> {
+    }
+  }
+  module JSX {
+    interface IntrinsicElements {
+      'md-checkbox': MDC.CheckboxProps;
+    }
   }
 }

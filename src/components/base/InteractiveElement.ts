@@ -12,16 +12,17 @@ export default class InteractiveElement extends HTMLElement {
   }
 
   connectedCallback() {
-    // if (!this.disabled)
-    this.focusableEl.tabIndex = 0;
+    this.focusableEl.tabIndex = this.disabled ? -1 : 0;
   }
   static get observedAttributes() {
     return ['disabled'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'disabled') {
-      if (newValue === 'false') this.removeAttribute('disabled');
-      else this.focusableEl.tabIndex = newValue === null ? 0 : -1;
+    switch (name) {
+      case 'disabled':
+        if (newValue === 'false') this.removeAttribute('disabled');
+        else this.focusableEl.tabIndex = newValue === null ? 0 : -1;
+        break;
     }
   }
 
@@ -39,6 +40,13 @@ export default class InteractiveElement extends HTMLElement {
   }
 }
 
-export interface InteractiveElementProps extends React.HTMLAttributes<HTMLElement> {
-  disabled?: boolean;
+declare global {
+  module MDC {
+    interface FormEvent<T> extends React.FormEvent<T> {
+      target: T & EventTarget;
+    }
+    interface InteractiveElementProps<T> extends React.HTMLAttributes<T> {
+      disabled?: boolean;
+    }
+  }
 }

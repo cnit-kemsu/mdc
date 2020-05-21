@@ -1,10 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+// class CustomElement extends HTMLElement {
+
+//   constructor() {
+//     super();
+//   }
+
+//   connectedCallback(){
+//     console.log('connected');
+//   }
+  
+//   disconnectedCallback(){
+//     console.log('disconnected');
+//   } 
+
+// }
+
+// customElements.define('custom-element', CustomElement);
+
+// const ce = document.createElement('custom-element');
+// document.body.appendChild(ce);
+// document.body.removeChild(ce);
+
 declare global {
   module JSX {
     interface IntrinsicElements {
-      'md-checkbox': any;
       'md-textfield': any;
       'md-select': any;
       'md-option': any;

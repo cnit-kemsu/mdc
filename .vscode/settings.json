@@ -31,5 +31,6 @@
       "*.readonly": "#9cdcfe",
     }
   },
+  "typescript.tsdk": "node_modules\\typescript\\lib",
 
 }

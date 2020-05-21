@@ -1,4 +1,4 @@
-import InteractiveElement, { InteractiveElementProps } from './InteractiveElement';
+import InteractiveElement from './InteractiveElement';
 import template from './RippleElement.html?template';
 
 interface SizeSnapshot {
@@ -183,5 +183,9 @@ addEventListener('keyup', function (event: KeyboardEvent) {
 });
 addEventListener('contextmenu', invokeKeyupCallback);
 
-export interface RippleElementProps extends InteractiveElementProps {
+declare global {
+  module MDC {
+    interface RippleElementProps<T> extends InteractiveElementProps<T> {
+    }
+  }
 }

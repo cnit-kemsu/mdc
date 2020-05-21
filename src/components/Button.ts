@@ -1,5 +1,5 @@
 import { customElement } from '@lib';
-import RippleElement, { RippleElementProps } from '@components/base/RippleElement';
+import RippleElement from '@components/base/RippleElement';
 import Icon from './Icon';
 import template from './Button.html?template';
 
@@ -22,7 +22,6 @@ export default class Button extends RippleElement {
     return ['outlined', 'raised', 'label', 'leading-icon', 'trailing-icon', ...RippleElement.observedAttributes];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    console.log('111');
     super.attributeChangedCallback(name, oldValue, newValue);
     switch (name) {
       case 'outlined':
@@ -67,17 +66,19 @@ export default class Button extends RippleElement {
   }
 }
 
-interface ButtonProps extends RippleElementProps {
-  raised?: boolean;
-  outlined?: boolean;
-  label?: string;
-  leadingIcon?: string;
-  trailingIcon?: string;
-}
 declare global {
+  module MDC {
+    interface ButtonProps extends RippleElementProps<Button> {
+      raised?: boolean;
+      outlined?: boolean;
+      label?: string;
+      leadingIcon?: string;
+      trailingIcon?: string;
+    }
+  }
   module JSX {
     interface IntrinsicElements {
-      'md-button': ButtonProps;
+      'md-button': MDC.ButtonProps;
     }
   }
 }
