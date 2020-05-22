@@ -1,30 +1,32 @@
 import RippleElement from '@components/base/RippleElement';
 import template from './SelectionControl.html?template';
+import { options } from '@lib';
 
-export default abstract class SelectionControl extends RippleElement {
+export default class SelectionControl extends RippleElement {
 
-  abstract get type(): string;
-  value: string = null;
+  private _value: string = null;
   private _name: string;
   private _checked: boolean = false;
-  protected childInputEl: HTMLInputElement = null;
+  protected inputEl: HTMLInputElement = null;
 
-  constructor() {
+  constructor(inputType: string) {
     super();
     this.shadowRoot.appendChild(template.fragment);
     this.addEventListener('click', this.onChange);
+
+    if (options.useInputElement) {
+      const inputEl = document.createElement('input');
+      inputEl.type = inputType;
+      inputEl.name = this._name;
+      inputEl.value = this._value;
+      inputEl.checked = this._checked;
+      this.inputEl = inputEl;
+    }
   }
 
   connectedCallback() {
-    if (this.childInputEl === null) {
-      const inputEl = document.createElement('input');
-      inputEl.type = this.type;
-      inputEl.name = this._name;
-      inputEl.value = this.value;
-      inputEl.checked = this._checked;
-      this.appendChild(inputEl);
-      this.childInputEl = inputEl;
-    }
+    super.connectedCallback();
+    if (options.useInputElement) this.appendChild(this.inputEl);
   }
 
   static get observedAttributes() {
@@ -32,31 +34,30 @@ export default abstract class SelectionControl extends RippleElement {
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
+
     switch (name) {
       case 'checked':
         if (newValue === 'false') {
           this.removeAttribute('checked');
           break;
         }
-        this._checked = newValue !== null;
-        if (this._isConnected) this.childInputEl.checked = this._checked;
+        const checked = newValue !== null;
+        this._checked = checked;
+        if (options.useInputElement) this.inputEl.checked = checked;
         break;
       case 'name':
         this._name = newValue;
-        if (this._isConnected) this.childInputEl.name = newValue;
+        if (options.useInputElement) this.inputEl.name = newValue;
         break;
       case 'value':
-        this.value = newValue;
+        this._value = newValue;
+        if (options.useInputElement) this.inputEl.value = newValue;
         break;
     }
   }
 
   onChange() {
     this.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-  }
-
-  protected get _isConnected() {
-    return this.childInputEl !== null;
   }
   
   get checked(): boolean {
@@ -73,6 +74,13 @@ export default abstract class SelectionControl extends RippleElement {
   set name(value: string) {
     this._name = value;
     this.setAttribute('name', value);
+  }
+
+  get value(): string {
+    return this._value;
+  }
+  set value(value: string) {
+    this._value = value;
   }
 }
 

@@ -5,11 +5,10 @@ import template from './Checkbox.html?template';
 @customElement('md-checkbox')
 export default class Checkbox extends SelectionControl {
 
-  get type(): string { return 'checkbox'; }
   private pathEl: SVGPathElement;
 
   constructor() {
-    super();
+    super('checkbox');
     this.shadowRoot.appendChild(template.fragment);
     this.pathEl = this.shadowRoot.querySelector('path');
   }

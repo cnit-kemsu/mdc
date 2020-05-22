@@ -33,12 +33,12 @@ export class RadioGroup {
 
 export type FormGroup = Map<string, RadioGroup>;
 
-const allFormGroups: WeakMap<HTMLFormElement, FormGroup> = new WeakMap();
-const dummyForm = <HTMLFormElement>{};
+const allFormGroups: WeakMap<HTMLFormElement | Object, FormGroup> = new WeakMap();
+const dummyForm = {};
 
 export function joinFormGroup(inputEl: HTMLInputElement): FormGroup {
 
-  const form = inputEl.form || dummyForm;
+  const form = inputEl?.form || dummyForm;
   let formGroup = allFormGroups.get(form);
   if (formGroup === undefined) {
     formGroup = new Map();
@@ -48,7 +48,7 @@ export function joinFormGroup(inputEl: HTMLInputElement): FormGroup {
 }
 
 export function joinRadioGroup(radioButton: RadioButton): RadioGroup {
-  // @ts-expect-error: 
+  // @ts-expect-error
   const { formGroup, name } = radioButton;
   
   let radioGroup = formGroup.get(name);
