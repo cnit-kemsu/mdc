@@ -1,4 +1,5 @@
-import { HTMLTemplate, customElement } from '../lib';
+import HTMLTemplate from '../lib/HTMLtemplate';
+import customElement from '../lib/customElement';
 import RippleElement from './base/RippleElement';
 import Select from './Select';
 import html from './SelectOption.html';

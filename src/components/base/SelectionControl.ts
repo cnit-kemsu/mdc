@@ -1,10 +1,8 @@
-import { HTMLTemplate } from '../../lib';
+import HTMLTemplate from '../../lib/HTMLtemplate';
 import RippleElement from './RippleElement';
 import html from './SelectionControl.html';
 
 const template = new HTMLTemplate(html);
-
-const options = window.mdc.options;
 
 export default class SelectionControl extends RippleElement {
 
@@ -18,7 +16,7 @@ export default class SelectionControl extends RippleElement {
     this.shadowRoot.appendChild(template.fragment);
     this.addEventListener('click', this.onChange);
 
-    if (options.useInputElement) {
+    if (__USE_INPUT_ELEMENT__) {
       const inputEl = document.createElement('input');
       inputEl.type = inputType;
       inputEl.name = this._name;
@@ -30,7 +28,7 @@ export default class SelectionControl extends RippleElement {
 
   connectedCallback() {
     super.connectedCallback();
-    if (options.useInputElement) this.appendChild(this.inputEl);
+    if (__USE_INPUT_ELEMENT__) this.appendChild(this.inputEl);
   }
 
   static get observedAttributes() {
@@ -46,15 +44,15 @@ export default class SelectionControl extends RippleElement {
           break;
         }
         this._checked = newValue !== null;
-        if (options.useInputElement) this.inputEl.checked = this._checked;
+        if (__USE_INPUT_ELEMENT__) this.inputEl.checked = this._checked;
         break;
       case 'name':
         this._name = newValue;
-        if (options.useInputElement) this.inputEl.name = newValue;
+        if (__USE_INPUT_ELEMENT__) this.inputEl.name = newValue;
         break;
       case 'value':
         this._value = newValue;
-        if (options.useInputElement) this.inputEl.value = newValue;
+        if (__USE_INPUT_ELEMENT__) this.inputEl.value = newValue;
         break;
     }
   }
@@ -86,6 +84,9 @@ export default class SelectionControl extends RippleElement {
     this._value = value;
   }
 }
+
+/** Determines whether an input element should be appended to custom elements as a child node for use with form elements. */
+declare const __USE_INPUT_ELEMENT__: boolean;
 
 declare global {
   module MDC {

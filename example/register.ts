@@ -1,4 +1,4 @@
-import { IconStore } from '../src/lib';
+import IconStore from '../src/IconStore';
 
 (function (modules: __WebpackModuleApi.RequireContext) {
   for (const key of modules.keys()) {

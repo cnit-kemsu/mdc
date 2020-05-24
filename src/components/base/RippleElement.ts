@@ -1,4 +1,4 @@
-import { HTMLTemplate } from '../../lib';
+import HTMLTemplate from '../../lib/HTMLtemplate';
 import InteractiveElement from './InteractiveElement';
 import html from './RippleElement.html';
 

@@ -1,11 +1,10 @@
-import { HTMLTemplate, customElement /** , options */ } from '../lib';
+import HTMLTemplate from '../lib/HTMLtemplate';
+import customElement from '../lib/customElement';
 import { FormGroup, RadioGroup, joinFormGroup, joinRadioGroup } from '../lib/RadioGroup';
 import SelectionControl from './base/SelectionControl';
 import html from './RadioButton.html';
 
 const template = new HTMLTemplate(html);
-
-const options = window.mdc.options;
 
 @customElement('md-radio')
 export default class RadioButton extends SelectionControl {
@@ -20,14 +19,14 @@ export default class RadioButton extends SelectionControl {
 
   connectedCallback() {
     super.connectedCallback();
-    if (options.autoUncheck) {
+    if (__AUTO_UNCHECK__) {
       this.formGroup = joinFormGroup(this.inputEl);
       this.radioGroup = joinRadioGroup(this);
     }
   }
 
   disconnectedCallback() {
-    if (options.autoUncheck) this.radioGroup.leave();
+    if (__AUTO_UNCHECK__) this.radioGroup.leave();
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -63,6 +62,9 @@ export default class RadioButton extends SelectionControl {
     super.onChange();
   }
 }
+
+/** Determines whether to set the 'checked' value of md-radio element to false if another md-radio element with the same name of the same form element is selected. */
+declare const __AUTO_UNCHECK__: boolean;
 
 declare global {
   module MDC {

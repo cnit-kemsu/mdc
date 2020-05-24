@@ -1,4 +1,5 @@
-import { HTMLTemplate, customElement } from '../../lib';
+import HTMLTemplate from '../../lib/HTMLtemplate';
+import customElement from '../../lib/customElement';
 import html from './Overlay.html';
 
 const template = new HTMLTemplate(html);

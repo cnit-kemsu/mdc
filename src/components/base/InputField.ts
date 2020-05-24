@@ -1,4 +1,4 @@
-import { HTMLTemplate } from '../../lib';
+import HTMLTemplate from '../../lib/HTMLtemplate';
 import html from './InputField.html';
 const template = new HTMLTemplate(html);
 

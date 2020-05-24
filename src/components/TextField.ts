@@ -1,4 +1,5 @@
-import { HTMLTemplate, customElement } from '../lib';
+import HTMLTemplate from '../lib/HTMLtemplate';
+import customElement from '../lib/customElement';
 import InputField from './base/InputField';
 import html from './TextField.html';
 

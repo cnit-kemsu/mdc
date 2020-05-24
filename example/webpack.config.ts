@@ -87,13 +87,13 @@ export default {
     new HtmlWebpackPlugin({
       template: './index.html'
     }),
-    // new ReplacePlugin({
-    //   exclude: [/node_modules/],
-    //   values: {
-    //     'options.useInputElement': 'false',
-    //     'options.autoUncheck': 'false'
-    //   }
-    // })
+    new ReplacePlugin({
+      exclude: [/node_modules/],
+      values: {
+        '__USE_INPUT_ELEMENT__': 'true',
+        '__AUTO_UNCHECK__': 'true'
+      }
+    })
     //new DuplicatesPlugin({})
   ],
 

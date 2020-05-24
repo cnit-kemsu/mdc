@@ -1,4 +1,4 @@
-import { HTMLTemplate } from '../../lib';
+import HTMLTemplate from '../../lib/HTMLtemplate';
 import html from './InteractiveElement.html';
 
 const template = new HTMLTemplate(html);

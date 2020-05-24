@@ -1,4 +1,6 @@
-import { HTMLTemplate, customElement, IconStore } from '../lib';
+import HTMLTemplate from '../lib/HTMLtemplate';
+import customElement from '../lib/customElement';
+import IconStore from '../IconStore';
 import html from './Icon.html';
 
 const template = new HTMLTemplate(html);
