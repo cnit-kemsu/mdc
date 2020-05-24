@@ -1,5 +1,7 @@
-import { customElement, IconStore } from '@lib';
-import template from './Icon.html?template';
+import { HTMLTemplate, customElement, IconStore } from '../lib';
+import html from './Icon.html';
+
+const template = new HTMLTemplate(html);
 
 @customElement('md-icon')
 export default class Icon extends HTMLElement {
@@ -20,7 +22,7 @@ export default class Icon extends HTMLElement {
       case 'store-key':
         if (this.svgEl !== null) this.shadowRoot.removeChild(this.svgEl);
         const template = IconStore.get(newValue);
-        this.svgEl = template?.fragment.firstChild || null;
+        this.svgEl = <any>template?.fragment.firstChild || null;
         if (this.svgEl !== null) this.shadowRoot.appendChild(this.svgEl);
         break;
     }

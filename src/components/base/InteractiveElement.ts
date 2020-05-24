@@ -1,4 +1,7 @@
-import template from './InteractiveElement.html?template';
+import { HTMLTemplate } from '../../lib';
+import html from './InteractiveElement.html';
+
+const template = new HTMLTemplate(html);
 
 export default class InteractiveElement extends HTMLElement {
 

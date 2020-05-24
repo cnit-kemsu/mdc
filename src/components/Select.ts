@@ -1,7 +1,9 @@
-import { customElement } from '@lib';
-import template from './Select.html?template';
+import { HTMLTemplate, customElement } from '../lib';
 import InputField from './base/InputField';
 import SelectOption from './SelectOption';
+import html from './Select.html';
+
+const template = new HTMLTemplate(html);
 
 @customElement('md-select')
 export default class Select extends InputField {

@@ -8,7 +8,7 @@ export default {
   devtool: 'source-map',
   target: 'web',
 
-  entry: './example/index.tsx',
+  entry: './index.tsx',
   module: {
     rules: [
       {
@@ -47,20 +47,15 @@ export default {
     ],
   },
 
-  resolveLoader: {
-    alias: {
-      'html-template-loader': path.resolve(__dirname, './node_modules/html-template-loader')
-    }
-  },
 
   resolve: {
     extensions: [ '.tsx', '.ts', '.js', '.html', '.tmpl' ],
     //modules: ["src", "node_modules"]
-    alias: {
-      '@components': path.resolve(__dirname, 'src/components/'),
-      '@hooks': path.resolve(__dirname, 'src/hooks/'),
-      '@lib': path.resolve(__dirname, 'src/lib/')
-    }
+    // alias: {
+    //   '@components': path.resolve(__dirname, 'src/components/'),
+    //   '@hooks': path.resolve(__dirname, 'src/hooks/'),
+    //   '@lib': path.resolve(__dirname, 'src/lib/')
+    // }
   },
   output: {
     filename: 'main.js',
@@ -90,7 +85,7 @@ export default {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: './example/index.html'
+      template: './index.html'
     }),
     // new ReplacePlugin({
     //   exclude: [/node_modules/],

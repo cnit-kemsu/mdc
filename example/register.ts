@@ -1,4 +1,4 @@
-import { IconStore } from '@lib';
+import { IconStore } from '../src/lib';
 
 (function (modules: __WebpackModuleApi.RequireContext) {
   for (const key of modules.keys()) {
@@ -8,15 +8,15 @@ import { IconStore } from '@lib';
   }
 }(require.context('./icons', false, /.svg/, 'sync')))
 
-import '@components/Icon';
-import '@components/base/Overlay';
-import '@components/base/RippleOverlay';
-import '@components/SelectOption';
-import '@components/Button';
-import '@components/Checkbox';
-import '@components/RadioButton';
-import '@components/TextField';
-import '@components/IconButton';
-import '@components/Select';
-import '@components/DateField';
+import '../src/components/Icon';
+import '../src/components/base/Overlay';
+import '../src/components/base/RippleOverlay';
+import '../src/components/SelectOption';
+import '../src/components/Button';
+import '../src/components/Checkbox';
+import '../src/components/RadioButton';
+import '../src/components/TextField';
+import '../src/components/IconButton';
+import '../src/components/Select';
+import '../src/components/DateField';
 

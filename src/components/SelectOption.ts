@@ -1,7 +1,9 @@
-import { customElement } from '@lib';
-import template from './SelectOption.html?template';
+import { HTMLTemplate, customElement } from '../lib';
 import RippleElement from './base/RippleElement';
 import Select from './Select';
+import html from './SelectOption.html';
+
+const template = new HTMLTemplate(html);
 
 const observedAttributes = ['label', 'value'];
 

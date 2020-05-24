@@ -1,4 +1,4 @@
-import HTMLTemplate from 'html-template-loader/HTMLTemplate';
+import { HTMLTemplate } from './';
 
 export default class IconStore {
   private static icons = new Map();

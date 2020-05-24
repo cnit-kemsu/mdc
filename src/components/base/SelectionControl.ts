@@ -1,6 +1,10 @@
-import RippleElement from '@components/base/RippleElement';
-import template from './SelectionControl.html?template';
-import { options } from '@lib';
+import { HTMLTemplate } from '../../lib';
+import RippleElement from './RippleElement';
+import html from './SelectionControl.html';
+
+const template = new HTMLTemplate(html);
+
+const options = window.mdc.options;
 
 export default class SelectionControl extends RippleElement {
 
@@ -41,9 +45,8 @@ export default class SelectionControl extends RippleElement {
           this.removeAttribute('checked');
           break;
         }
-        const checked = newValue !== null;
-        this._checked = checked;
-        if (options.useInputElement) this.inputEl.checked = checked;
+        this._checked = newValue !== null;
+        if (options.useInputElement) this.inputEl.checked = this._checked;
         break;
       case 'name':
         this._name = newValue;

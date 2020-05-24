@@ -1,7 +1,11 @@
-import { customElement, options } from '@lib';
-import { FormGroup, RadioGroup, joinFormGroup, joinRadioGroup } from '@lib/RadioGroup';
-import SelectionControl from '@components/base/SelectionControl';
-import template from './RadioButton.html?template';
+import { HTMLTemplate, customElement /** , options */ } from '../lib';
+import { FormGroup, RadioGroup, joinFormGroup, joinRadioGroup } from '../lib/RadioGroup';
+import SelectionControl from './base/SelectionControl';
+import html from './RadioButton.html';
+
+const template = new HTMLTemplate(html);
+
+const options = window.mdc.options;
 
 @customElement('md-radio')
 export default class RadioButton extends SelectionControl {

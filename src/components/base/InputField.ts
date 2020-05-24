@@ -1,4 +1,6 @@
-import template from './InputField.html?template';
+import { HTMLTemplate } from '../../lib';
+import html from './InputField.html';
+const template = new HTMLTemplate(html);
 
 const observedAttributes = ['label', 'helper-text', 'error', 'name', 'value', 'disabled'];
 
