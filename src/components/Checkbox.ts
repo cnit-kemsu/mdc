@@ -16,11 +16,11 @@ export default class Checkbox extends SelectionControl {
     this.pathEl = this.shadowRoot.querySelector('path');
   }
 
-  onChange() {
+  onClick() {
     this.checked = !this.checked;
     if (this.checked) this.pathEl.style.setProperty('--md-path-animation', 'var(--md-path-check)');
     else this.pathEl.style.setProperty('--md-path-animation', 'var(--md-path-uncheck)');
-    super.onChange();
+    super.onClick();
   }
 }
 

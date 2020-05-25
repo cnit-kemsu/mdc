@@ -1,5 +1,6 @@
 import HTMLTemplate from '../../lib/HTMLtemplate';
 import InteractiveElement from './InteractiveElement';
+import './RippleOverlay';
 import html from './RippleElement.html';
 
 const template = new HTMLTemplate(html);

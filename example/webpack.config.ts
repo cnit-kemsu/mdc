@@ -18,38 +18,18 @@ export default {
       },
       {
         test: /\.html$/,
-        oneOf: [
-          {
-            resourceQuery: /template/,
-            use: 'html-template-loader'
-          },
-          {
-            use: 'html-loader'
-          }
-        ]
+        use: 'html-loader'
       },
       {
         test: /\.svg$/,
-        oneOf: [
-          {
-            resourceQuery: /template/,
-            use: 'html-template-loader'
-          },
-          {
-            use: 'svg-inline-loader'
-          }
-        ]
-      },
-      // {
-      //   test: /\.svg$/,
-      //   loader: 'html-template-loader'
-      // },
+        use: 'svg-inline-loader'
+      }
     ],
   },
 
 
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js', '.html', '.tmpl' ],
+    extensions: [ '.tsx', '.ts', '.js', '.html' ],
     //modules: ["src", "node_modules"]
     // alias: {
     //   '@components': path.resolve(__dirname, 'src/components/'),
@@ -88,10 +68,10 @@ export default {
       template: './index.html'
     }),
     new ReplacePlugin({
-      exclude: [/node_modules/],
+      include: [/src\\components\\(RadioButton|base\\SelectionControl)/],
       values: {
-        '__USE_INPUT_ELEMENT__': 'true',
-        '__AUTO_UNCHECK__': 'true'
+        '__APPEND_INPUT_ELEMENT__': 'true',
+        '__IMPLICIT_UNCHECK__': 'true'
       }
     })
     //new DuplicatesPlugin({})

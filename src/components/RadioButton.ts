@@ -1,6 +1,6 @@
 import HTMLTemplate from '../lib/HTMLtemplate';
 import customElement from '../lib/customElement';
-import { FormGroup, RadioGroup, joinFormGroup, joinRadioGroup } from '../lib/RadioGroup';
+import { _RadioNodeList, joinRadioNodeList } from '../lib/RadioNodeList';
 import SelectionControl from './base/SelectionControl';
 import html from './RadioButton.html';
 
@@ -9,8 +9,7 @@ const template = new HTMLTemplate(html);
 @customElement('md-radio')
 export default class RadioButton extends SelectionControl {
 
-  private formGroup: FormGroup = null;
-  private radioGroup: RadioGroup = null;
+  private radioNodeList: _RadioNodeList = null;
 
   constructor() {
     super('radio');
@@ -19,14 +18,13 @@ export default class RadioButton extends SelectionControl {
 
   connectedCallback() {
     super.connectedCallback();
-    if (__AUTO_UNCHECK__) {
-      this.formGroup = joinFormGroup(this.inputEl);
-      this.radioGroup = joinRadioGroup(this);
+    if (__IMPLICIT_UNCHECK__) {
+      this.radioNodeList = joinRadioNodeList(this);
     }
   }
 
   disconnectedCallback() {
-    if (__AUTO_UNCHECK__) this.radioGroup.leave();
+    if (__IMPLICIT_UNCHECK__) this.radioNodeList.leave(this);
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -37,34 +35,30 @@ export default class RadioButton extends SelectionControl {
         if (newValue === 'false') {
           break;
         }
-        if (this.hasRadioGroup && (oldValue !== null) !== (newValue !== null)) {
-          const { checked, radioGroup } = this;
+        if (__IMPLICIT_UNCHECK__) if (this.radioNodeList !== null && (oldValue !== null) !== (newValue !== null)) {
+          const { checked, radioNodeList: radioGroup } = this;
           if (checked) radioGroup.current = this;
           else if (radioGroup.current === this) radioGroup.current = null;
         }
         break;
       case 'name':
-        if (this.hasRadioGroup) {
-          this.radioGroup.leave();
-          this.radioGroup = joinRadioGroup(this);
+        if (__IMPLICIT_UNCHECK__) if (this.radioNodeList !== null) {
+          this.radioNodeList.leave(this);
+          this.radioNodeList = joinRadioNodeList(this);
         }
         break;
     }
   }
 
-  private get hasRadioGroup() {
-    return this.radioGroup !== null;
-  }
-
-  onChange() {
+  onClick() {
     if (this.checked) return;
     this.checked = true;
-    super.onChange();
+    super.onClick();
   }
 }
 
 /** Determines whether to set the 'checked' value of md-radio element to false if another md-radio element with the same name of the same form element is selected. */
-declare const __AUTO_UNCHECK__: boolean;
+declare const __IMPLICIT_UNCHECK__: boolean;
 
 declare global {
   module MDC {

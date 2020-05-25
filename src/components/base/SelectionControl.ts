@@ -14,9 +14,9 @@ export default class SelectionControl extends RippleElement {
   constructor(inputType: string) {
     super();
     this.shadowRoot.appendChild(template.fragment);
-    this.addEventListener('click', this.onChange);
+    this.addEventListener('click', this.onClick);
 
-    if (__USE_INPUT_ELEMENT__) {
+    if (__APPEND_INPUT_ELEMENT__) {
       const inputEl = document.createElement('input');
       inputEl.type = inputType;
       inputEl.name = this._name;
@@ -28,7 +28,7 @@ export default class SelectionControl extends RippleElement {
 
   connectedCallback() {
     super.connectedCallback();
-    if (__USE_INPUT_ELEMENT__) this.appendChild(this.inputEl);
+    if (__APPEND_INPUT_ELEMENT__) this.appendChild(this.inputEl);
   }
 
   static get observedAttributes() {
@@ -44,20 +44,20 @@ export default class SelectionControl extends RippleElement {
           break;
         }
         this._checked = newValue !== null;
-        if (__USE_INPUT_ELEMENT__) this.inputEl.checked = this._checked;
+        if (__APPEND_INPUT_ELEMENT__) this.inputEl.checked = this._checked;
         break;
       case 'name':
         this._name = newValue;
-        if (__USE_INPUT_ELEMENT__) this.inputEl.name = newValue;
+        if (__APPEND_INPUT_ELEMENT__) this.inputEl.name = newValue;
         break;
       case 'value':
         this._value = newValue;
-        if (__USE_INPUT_ELEMENT__) this.inputEl.value = newValue;
+        if (__APPEND_INPUT_ELEMENT__) this.inputEl.value = newValue;
         break;
     }
   }
 
-  onChange() {
+  onClick() {
     this.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
   }
   
@@ -86,7 +86,7 @@ export default class SelectionControl extends RippleElement {
 }
 
 /** Determines whether an input element should be appended to custom elements as a child node for use with form elements. */
-declare const __USE_INPUT_ELEMENT__: boolean;
+declare const __APPEND_INPUT_ELEMENT__: boolean;
 
 declare global {
   module MDC {

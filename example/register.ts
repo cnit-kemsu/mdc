@@ -9,8 +9,6 @@ import IconStore from '../src/IconStore';
 }(require.context('./icons', false, /.svg/, 'sync')))
 
 import '../src/components/Icon';
-import '../src/components/base/Overlay';
-import '../src/components/base/RippleOverlay';
 import '../src/components/SelectOption';
 import '../src/components/Button';
 import '../src/components/Checkbox';

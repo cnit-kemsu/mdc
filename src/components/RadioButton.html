@@ -8,7 +8,9 @@
     height: 20px;
     position: relative;
   }
-  #outer {
+
+  /* outer circle */
+  .outer {
     border-radius: 50%;
     border-color: rgba(0, 0, 0, 0.54);
     border-width: 2px;
@@ -20,13 +22,15 @@
     transition: border-color 120ms ease-in-out;
     padding: 5px;
   }
-  :host([disabled]) #outer {
+  :host([disabled]) .outer {
     border-color: rgba(0, 0, 0, 0.26);
   }
-  :host(:not([disabled])[checked]) #outer {
+  :host(:not([disabled])[checked]) .outer {
     border-color: var(--md-current-color);
   }
-  #inner {
+
+  /* inner circle */
+  .inner {
     border-radius: 50%;
     transform: scale(0);
     position: absolute;
@@ -44,20 +48,20 @@
     height: 0px;
     transition: transform 120ms ease-in-out, border-color 120ms ease-in-out;
   }
-  :host([disabled]) #inner {
+  :host([disabled]) .inner {
     /* background-color: rgba(0, 0, 0, 0.26); */
     border-color: rgba(0, 0, 0, 0.26);
   }
-  :host([checked]) #inner {
+  :host([checked]) .inner {
     transform: scale(0.5);
   }
-  :host(:not([disabled])[checked]) #inner {
+  :host(:not([disabled])[checked]) .inner {
     /* background-color: var(--md-current-color); */
     border-color: var(--md-current-color);
   }
 </style>
 
 <div>
-  <div id="outer"></div>
-  <div id="inner"></div>
+  <div class="outer"></div>
+  <div class="inner"></div>
 </div>
