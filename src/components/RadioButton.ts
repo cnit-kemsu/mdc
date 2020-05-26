@@ -6,6 +6,13 @@ import html from './RadioButton.html';
 
 const template = new HTMLTemplate(html);
 
+// @ts-ignore
+if (window.mdcOptions === undefined) window.mdcOptions = {};
+if (window.mdcOptions.implicitUncheck === undefined) window.mdcOptions = {
+  ...window.mdcOptions,
+  implicitUncheck: true
+};
+
 @customElement('md-radio')
 export default class RadioButton extends SelectionControl {
 
@@ -18,13 +25,13 @@ export default class RadioButton extends SelectionControl {
 
   connectedCallback() {
     super.connectedCallback();
-    if (__IMPLICIT_UNCHECK__) {
+    if (window.mdcOptions.implicitUncheck) {
       this.radioNodeList = joinRadioNodeList(this);
     }
   }
 
   disconnectedCallback() {
-    if (__IMPLICIT_UNCHECK__) this.radioNodeList.leave(this);
+    if (window.mdcOptions.implicitUncheck) this.radioNodeList.leave(this);
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -35,14 +42,14 @@ export default class RadioButton extends SelectionControl {
         if (newValue === 'false') {
           break;
         }
-        if (__IMPLICIT_UNCHECK__) if (this.radioNodeList !== null && (oldValue !== null) !== (newValue !== null)) {
+        if (window.mdcOptions.implicitUncheck) if (this.radioNodeList !== null && (oldValue !== null) !== (newValue !== null)) {
           const { checked, radioNodeList: radioGroup } = this;
           if (checked) radioGroup.current = this;
           else if (radioGroup.current === this) radioGroup.current = null;
         }
         break;
       case 'name':
-        if (__IMPLICIT_UNCHECK__) if (this.radioNodeList !== null) {
+        if (window.mdcOptions.implicitUncheck) if (this.radioNodeList !== null) {
           this.radioNodeList.leave(this);
           this.radioNodeList = joinRadioNodeList(this);
         }
@@ -57,8 +64,16 @@ export default class RadioButton extends SelectionControl {
   }
 }
 
-/** Determines whether to set the 'checked' value of md-radio element to false if another md-radio element with the same name of the same form element is selected. */
-declare const __IMPLICIT_UNCHECK__: boolean;
+//declare const __IMPLICIT_UNCHECK__: boolean;
+
+declare global {
+  interface Window {
+    mdcOptions: {
+      /** Determines whether to set the 'checked' value of md-radio element to false if another md-radio element with the same name of the same form element is selected. */
+      implicitUncheck: boolean;
+    }
+  }
+}
 
 declare global {
   module MDC {

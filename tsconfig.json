@@ -1,36 +1,35 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "jsx": "react",
-    "outDir": "./dist/",
+    "outDir": "./dist",
     "noImplicitAny": false,
-    "module": "commonjs",
+    "module": "ES2015",
     "target": "ES2019",
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    // "allowJs": true,
+    // "esModuleInterop": true,
+    // "allowSyntheticDefaultImports": true,
+    // "sourceMap": true,
+    // "removeComments": true,
+    // "strict": true,
     "moduleResolution": "node",
-    "sourceMap": true,
+    "rootDir": "./src",
+    "importHelpers": true,
 
     "lib": ["es2020", "es2019", "es2018", "DOM"],
 
     "baseUrl": ".",
     "paths": {
       "@components/*": ["./src/components/*"],
-      "@hooks/*": ["./src/hooks/*"],
       "@lib/*": ["./src/lib/*"],
       "@lib": ["./src/lib/"],
       "@src/*": ["./src/*"]
-    },
-
-    // "typeRoots" : [
-    //   "./node_modules/@kemsu/html-template-loader",
-    //   "./node_modules/@types"
-    // ],
-
+    }
   },
+
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "example",
+    "dist"
   ]
 
 }

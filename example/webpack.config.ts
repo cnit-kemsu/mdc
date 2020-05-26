@@ -2,6 +2,9 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 //import { DuplicatesPlugin } from 'inspectpack/plugin';
 const ReplacePlugin = require('webpack-plugin-replace');
+import webpack from 'webpack';
+
+//console.log(path.resolve(__dirname, '../src/lib/'));
 
 export default {
   mode: 'development',
@@ -16,10 +19,10 @@ export default {
         use: 'ts-loader?configFile=tsconfig.json',
         exclude: /node_modules/
       },
-      {
-        test: /\.html$/,
-        use: 'html-loader'
-      },
+      // {
+      //   test: /\.html$/,
+      //   use: 'html-loader'
+      // },
       {
         test: /\.svg$/,
         use: 'svg-inline-loader'
@@ -29,12 +32,10 @@ export default {
 
 
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js', '.html' ],
+    extensions: [ '.tsx', '.ts', '.js' ],
     //modules: ["src", "node_modules"]
     // alias: {
-    //   '@components': path.resolve(__dirname, 'src/components/'),
-    //   '@hooks': path.resolve(__dirname, 'src/hooks/'),
-    //   '@lib': path.resolve(__dirname, 'src/lib/')
+    //   '@lib': path.resolve(__dirname, '../src/lib/')
     // }
   },
   output: {
@@ -67,13 +68,18 @@ export default {
     new HtmlWebpackPlugin({
       template: './index.html'
     }),
-    new ReplacePlugin({
-      include: [/src\\components\\(RadioButton|base\\SelectionControl)/],
-      values: {
-        '__APPEND_INPUT_ELEMENT__': 'true',
-        '__IMPLICIT_UNCHECK__': 'true'
-      }
+    new webpack.DefinePlugin({
+      __APPEND_INPUT_ELEMENT__: true,
+      //__IMPLICIT_UNCHECK__: true,
+      //'window.mdcOptions.implicitUncheck': true
     })
+    // new ReplacePlugin({
+    //   include: [/node_modules\\dist\\src\\components\\(RadioButton|base\\SelectionControl)/],
+    //   values: {
+    //     '__APPEND_INPUT_ELEMENT__': 'true',
+    //     '__IMPLICIT_UNCHECK__': 'true'
+    //   }
+    // })
     //new DuplicatesPlugin({})
   ],
 

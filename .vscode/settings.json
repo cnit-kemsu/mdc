@@ -31,7 +31,7 @@
       "*.readonly": "#9cdcfe",
     }
   },
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  //"typescript.tsdk": "node_modules\\typescript\\lib",
 
   "files.associations": {
     "*.template.ts": "html",
