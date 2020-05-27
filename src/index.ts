@@ -1,5 +1,5 @@
-// export { default as IconStore } from './IconStore';
-// export { default as Icon } from './components/Icon';
+export { default as IconStore } from './IconStore';
+export { default as Icon } from './components/Icon';
 // export { default as Button } from './components/Button';
 // export { default as Checkbox } from './components/Checkbox';
 // export { default as RadioButton } from './components/RadioButton';
@@ -9,10 +9,12 @@
 // export { default as Select } from './components/Select';
 // export { default as DateField } from './components/DateField';
 
-import IconStore from './IconStore';
-export {
-  IconStore
-};
+// import IconStore from './IconStore';
+// export {
+//   IconStore
+// };
+
+
 // import './components/Icon';
 // import './components/Button';
 // import './components/Checkbox';

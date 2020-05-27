@@ -1,6 +1,7 @@
 import { createFilter } from '@rollup/pluginutils';
 import { minify } from 'html-minifier';
 //import path from 'path';
+import { readFileSync } from 'fs';
 
 const htmlMinifierOptions = {
   collapseWhitespace: true,
@@ -21,20 +22,73 @@ const htmlMinifierOptions = {
 export default function htmlTemplateLoader() {
 	const filter = createFilter('**/*.html');
 	return {
-		name: 'html-loader',
-		transform(code, id) {
-			if (filter(id)) {
-				return {
-          code: `
-            import HTMLTemplate from '@lib//HTMLTemplate';
-            const html = process.env.NODE_ENV === 'production'
-              ? ${JSON.stringify(minify(code, htmlMinifierOptions))}
-              : ${JSON.stringify(code)};
-            const template = new HTMLTemplate(html);
-            export default template;
-          `
-				};
-			}
-		}
+
+    name: 'html-loader',
+    
+		// transform(code, id) {
+		// 	if (filter(id)) {
+		// 		return {
+    //       code: `
+    //         import HTMLTemplate from '@lib//HTMLTemplate';
+    //         const html = process.env.NODE_ENV === 'production'
+    //           ? ${JSON.stringify(minify(code, htmlMinifierOptions))}
+    //           : ${JSON.stringify(code)};
+    //         const template = new HTMLTemplate(html);
+    //         export default template;
+    //       `
+		// 		};
+		// 	}
+    // },
+
+    transform(code, id) {
+      if (filter(id)) return;
+      // if (filter(id)) return {
+      //   code: `export default { fragment: '' }`
+      // };
+      let _code = code;
+      _code = _code.replace(`import template from './Icon.html';`, 'asd123');
+			return {
+        code: _code
+      };
+    },
+
+    // resolveId(importee, importer) {
+    //   if (importee.slice(-5) !== '.html') return;
+    //   console.log('importee', importee);
+    //   console.log(importer);
+    //   return 'adasdasdas';
+    // }
+
+    // load(id) {
+    //   if (!filter(id)) {
+    //     return null;
+    //   }
+
+    //   // const mime = mimeTypes[extname(id)];
+    //   // if (!mime) {
+    //   //   // not an image
+    //   //   return null;
+    //   // }
+
+    //   const source = readFileSync(id).toString();
+    //   console.log(source);
+
+    //   return {
+    //     code: source
+    //   };
+    // }
+    
+    // renderChunk(code, chunk, ...args) {
+    //   if (filter(chunk.facadeModuleId)) {
+    //     console.log('code:', code);
+    //     console.log('chunk:', chunk);
+    //     console.log('args:', args);
+    //   }
+    //   return code;
+    //   // const id = chunk.fileName;
+    //   // if (!keys.length) return null;
+    //   // if (!filter(id)) return null;
+    //   // return executeReplacement(code, id);
+    // }
 	};
 }

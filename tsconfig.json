@@ -13,8 +13,9 @@
     // "strict": true,
     "moduleResolution": "node",
     "rootDir": "./src",
-    "importHelpers": true,
+    //"importHelpers": true,
     //"declaration": true,
+    "noEmitHelpers": false,
 
     "lib": ["es2020", "es2019", "es2018", "DOM"],
 
