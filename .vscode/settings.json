@@ -33,9 +33,4 @@
   },
   //"typescript.tsdk": "node_modules\\typescript\\lib",
 
-  "files.associations": {
-    "*.template.ts": "html",
-    "*.html.ts": "html"
-}
-
 }

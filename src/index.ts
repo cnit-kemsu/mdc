@@ -9,13 +9,16 @@
 // export { default as Select } from './components/Select';
 // export { default as DateField } from './components/DateField';
 
-import './IconStore';
-import './components/Icon';
-import './components/Button';
-import './components/Checkbox';
-import './components/RadioButton';
-import './components/TextField';
-import './components/IconButton';
-import'./components/SelectOption';
-import './components/Select';
-import './components/DateField';
+import IconStore from './IconStore';
+export {
+  IconStore
+};
+// import './components/Icon';
+// import './components/Button';
+// import './components/Checkbox';
+// import './components/RadioButton';
+// import './components/TextField';
+// import './components/IconButton';
+// import'./components/SelectOption';
+// import './components/Select';
+// import './components/DateField';

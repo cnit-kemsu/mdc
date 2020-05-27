@@ -8,6 +8,7 @@
     "@rollup/plugin-typescript": "^4.1.2",
     "@rollup/pluginutils": "^3.0.10",
     "@types/react": "^16.9.35",
+    "glob": "^7.1.6",
     "html-minifier": "^4.0.0",
     "rollup": "^2.10.9",
     "tslib": "^2.0.0",
