@@ -1,10 +1,8 @@
-import HTMLTemplate from '../lib/HTMLtemplate';
+import HTMLTemplate from '../lib/HTMLTemplate';
 import customElement from '../lib/customElement';
 import { _RadioNodeList, joinRadioNodeList } from '../lib/RadioNodeList';
 import SelectionControl from './base/SelectionControl';
-import html from './RadioButton.html';
-
-const template = new HTMLTemplate(html);
+import template from './RadioButton.html';
 
 // @ts-ignore
 if (window.mdcOptions === undefined) window.mdcOptions = {};
@@ -66,14 +64,14 @@ export default class RadioButton extends SelectionControl {
 
 //declare const __IMPLICIT_UNCHECK__: boolean;
 
-declare global {
-  interface Window {
-    mdcOptions: {
-      /** Determines whether to set the 'checked' value of md-radio element to false if another md-radio element with the same name of the same form element is selected. */
-      implicitUncheck: boolean;
-    }
-  }
-}
+// declare global {
+//   interface Window {
+//     mdcOptions: {
+//       /** Determines whether to set the 'checked' value of md-radio element to false if another md-radio element with the same name of the same form element is selected. */
+//       implicitUncheck: boolean;
+//     }
+//   }
+// }
 
 declare global {
   module MDC {

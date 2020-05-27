@@ -1,7 +1,5 @@
-import HTMLTemplate from '../../lib/HTMLtemplate';
-import html from './InputField.html';
-const template = new HTMLTemplate(html);
-
+import HTMLTemplate from '../../lib/HTMLTemplate';
+import template from './InputField.html';
 const observedAttributes = ['label', 'helper-text', 'error', 'name', 'value', 'disabled'];
 
 export default abstract class InputField extends HTMLElement {

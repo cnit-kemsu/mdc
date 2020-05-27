@@ -1,8 +1,24 @@
-import HTMLTemplate from '../../lib/HTMLtemplate';
+import HTMLTemplate from '../../lib/HTMLTemplate';
 import RippleElement from './RippleElement';
-import html from './SelectionControl.html';
+import template from './SelectionControl.html';
 
-const template = new HTMLTemplate(html);
+declare global {
+  interface Window {
+    mdcOptions: {
+      appendInputElement: boolean;
+      implicitUncheck: boolean;
+    }
+  }
+}
+
+// @ts-ignore
+if (window.mdcOptions === undefined) window.mdcOptions = {};
+if (window.mdcOptions.appendInputElement === undefined) window.mdcOptions = {
+  ...window.mdcOptions,
+  appendInputElement: true
+};
+
+const __APPEND_INPUT_ELEMENT__ = window.mdcOptions.appendInputElement;
 
 export default class SelectionControl extends RippleElement {
 
@@ -86,7 +102,7 @@ export default class SelectionControl extends RippleElement {
 }
 
 /** Determines whether an input element should be appended to custom elements as a child node for use with form elements. */
-declare const __APPEND_INPUT_ELEMENT__: boolean;
+//declare const __APPEND_INPUT_ELEMENT__: boolean;
 
 declare global {
   module MDC {

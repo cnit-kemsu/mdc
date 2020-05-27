@@ -69,7 +69,8 @@ export default {
       template: './index.html'
     }),
     new webpack.DefinePlugin({
-      __APPEND_INPUT_ELEMENT__: true,
+      //__APPEND_INPUT_ELEMENT__: true,
+      'window.mdcOptions.appendInputElement': true
       //__IMPLICIT_UNCHECK__: true,
       //'window.mdcOptions.implicitUncheck': true
     })

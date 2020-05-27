@@ -1,9 +1,7 @@
-import HTMLTemplate from '../lib/HTMLtemplate';
+import HTMLTemplate from '../lib/HTMLTemplate';
 import customElement from '../lib/customElement';
 import IconStore from '../IconStore';
-import html from './Icon.html';
-
-const template = new HTMLTemplate(html);
+import template from './Icon.html';
 
 @customElement('md-icon')
 export default class Icon extends HTMLElement {

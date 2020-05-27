@@ -1,10 +1,8 @@
-import HTMLTemplate from '../lib/HTMLtemplate';
+import HTMLTemplate from '../lib/HTMLTemplate';
 import customElement from '../lib/customElement';
 import RippleElement from './base/RippleElement';
 import Icon from './Icon';
-import html from './IconButton.html';
-
-const template = new HTMLTemplate(html);
+import template from './IconButton.html';
 
 @customElement('md-icon-button')
 export default class IconButton extends RippleElement {

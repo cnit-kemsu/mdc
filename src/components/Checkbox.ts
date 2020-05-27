@@ -1,9 +1,7 @@
-import HTMLTemplate from '../lib/HTMLtemplate';
+import HTMLTemplate from '../lib/HTMLTemplate';
 import customElement from '../lib/customElement';
 import SelectionControl from './base/SelectionControl';
-import html from './Checkbox.html';
-
-const template = new HTMLTemplate(html);
+import template from './Checkbox.html';
 
 @customElement('md-checkbox')
 export default class Checkbox extends SelectionControl {

@@ -12,7 +12,6 @@
     "@types/webpack": "^4.41.10",
     "@types/webpack-dev-server": "^3.10.1",
     "@types/webpack-env": "^1.15.2",
-    "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.0.4",
     "nodemon": "^2.0.2",
     "react": "^16.13.1",
@@ -23,11 +22,10 @@
     "typescript": "^3.9.2",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
-    "webpack-plugin-replace": "^1.2.0"
+    "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "start": "node_modules/.bin/nodemon --watch webpack.config.ts --watch tsconfig.json --exec webpack-dev-server",
+    "start": "npx nodemon --watch webpack.config.ts --watch tsconfig.json --exec webpack-dev-server",
     "build": "webpack"
   }
 }
