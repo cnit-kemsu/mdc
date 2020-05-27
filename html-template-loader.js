@@ -1,4 +1,4 @@
-import { createFilter } from 'rollup-pluginutils';
+import { createFilter } from '@rollup/pluginutils';
 import { minify } from 'html-minifier';
 //import path from 'path';
 
@@ -30,7 +30,7 @@ export default function htmlTemplateLoader() {
             const html = process.env.NODE_ENV === 'production'
               ? ${JSON.stringify(minify(code, htmlMinifierOptions))}
               : ${JSON.stringify(code)};
-            const template = new HTMLTemplate(html)
+            const template = new HTMLTemplate(html);
             export default template;
           `
 				};

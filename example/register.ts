@@ -18,25 +18,25 @@
 // import '../src/components/Select';
 // import '../src/components/DateField';
 
-import IconStore from '../dist/src/IconStore';
+import IconStore from '../dist/IconStore';
 
-(function (modules: __WebpackModuleApi.RequireContext) {
-  for (const key of modules.keys()) {
-    const name = key.match(/[a-zA-Z0-9_-]+/)[0];
-    const content = modules(key);
-    IconStore.set(name, content);
-  }
-}(require.context('./icons', false, /.svg/, 'sync')))
+// (function (modules: __WebpackModuleApi.RequireContext) {
+//   for (const key of modules.keys()) {
+//     const name = key.match(/[a-zA-Z0-9_-]+/)[0];
+//     const content = modules(key);
+//     IconStore.set(name, content);
+//   }
+// }(require.context('./icons', false, /.svg/, 'sync')))
 
-import '../dist/src/components/Icon';
-import '../dist/src/components/SelectOption';
-import '../dist/src/components/Button';
-import '../dist/src/components/Checkbox';
-import '../dist/src/components/RadioButton';
-import '../dist/src/components/TextField';
-import '../dist/src/components/IconButton';
-import '../dist/src/components/Select';
-import '../dist/src/components/DateField';
+import '../dist/components/Icon';
+import '../dist/components/SelectOption';
+import '../dist/components/Button';
+import '../dist/components/Checkbox';
+import '../dist/components/RadioButton';
+import '../dist/components/TextField';
+import '../dist/components/IconButton';
+import '../dist/components/Select';
+import '../dist/components/DateField';
 
 // import IconStore from 'dist/src/IconStore';
 
