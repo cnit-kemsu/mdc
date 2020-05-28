@@ -39,7 +39,7 @@ function App() {
   const [val, chval] = React.useState(2);
 
   return <div style={{ padding: '20px' }}>
-    {/* <md-button leading-icon="favorite" raised label="Click me" onClick={() => console.log('click')} />
+    <md-button leading-icon="favorite" raised label="Click me" onClick={() => console.log('click')} />
     <md-button trailing-icon="copyright" outlined label="Click me" disabled onClick={() => console.log('click')} />
 
     <md-checkbox onInput={event => console.log(event.target.checked)} />
@@ -55,7 +55,7 @@ function App() {
       <md-option value={val} label="qwe" />
       {show && <md-option value="3" label="zxc" />}
     </md-select>
-    <md-datefield></md-datefield> */}
+    <md-datefield></md-datefield>
   </div>;
 }
 

@@ -69,19 +69,9 @@ export default {
       template: './index.html'
     }),
     new webpack.DefinePlugin({
-      //__APPEND_INPUT_ELEMENT__: true,
-      'window.mdcOptions.appendInputElement': true
-      //__IMPLICIT_UNCHECK__: true,
-      //'window.mdcOptions.implicitUncheck': true
+      //'window.mdc.appendInputElement': true
+      //'window.mdc.implicitUncheck': true
     })
-    // new ReplacePlugin({
-    //   include: [/node_modules\\dist\\src\\components\\(RadioButton|base\\SelectionControl)/],
-    //   values: {
-    //     '__APPEND_INPUT_ELEMENT__': 'true',
-    //     '__IMPLICIT_UNCHECK__': 'true'
-    //   }
-    // })
-    //new DuplicatesPlugin({})
   ],
 
   // externals: {

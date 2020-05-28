@@ -1,7 +1,8 @@
-import { createFilter } from '@rollup/pluginutils';
-import { minify } from 'html-minifier';
-//import path from 'path';
+//import { createFilter } from '@rollup/pluginutils';
+import path from 'path';
 import { readFileSync } from 'fs';
+import { walk } from 'estree-walker';
+import { minify } from 'html-minifier';
 
 const htmlMinifierOptions = {
   collapseWhitespace: true,
@@ -19,8 +20,9 @@ const htmlMinifierOptions = {
 
 // import HTMLTemplate from '${resolvePathToLib(id)}/HTMLTemplate';
 
-export default function htmlTemplateLoader() {
-	const filter = createFilter('**/*.html');
+export default function htmlTemplateLoader(options) {
+  //const filter = createFilter('**/*.html');
+  
 	return {
 
     name: 'html-loader',
@@ -41,54 +43,28 @@ export default function htmlTemplateLoader() {
     // },
 
     transform(code, id) {
-      if (filter(id)) return;
-      // if (filter(id)) return {
-      //   code: `export default { fragment: '' }`
-      // };
+
+      const ast = this.parse(code);
       let _code = code;
-      _code = _code.replace(`import template from './Icon.html';`, 'asd123');
-			return {
+
+      walk(ast, {
+				enter: function({ type, specifiers, source, start, end }) {
+          if (type === 'ImportDeclaration') {
+            if (source.value.slice(-5) === '.html') {
+              const dirname = path.dirname(id);
+              const htmlFile = path.resolve(dirname, source.value);
+              const content = readFileSync(htmlFile).toString();
+              const html = `process.env.NODE_ENV === 'production' ? ${JSON.stringify(minify(content, htmlMinifierOptions))} : ${JSON.stringify(content)}`;
+              _code = _code.slice(0, start) + `import HTMLTemplate from '@lib/HTMLTemplate';\n var ${specifiers[0].local.name} = new HTMLTemplate(${html});` + _code.slice(end);
+            }
+          }
+				},
+			});
+
+      return {
         code: _code
       };
-    },
+    }
 
-    // resolveId(importee, importer) {
-    //   if (importee.slice(-5) !== '.html') return;
-    //   console.log('importee', importee);
-    //   console.log(importer);
-    //   return 'adasdasdas';
-    // }
-
-    // load(id) {
-    //   if (!filter(id)) {
-    //     return null;
-    //   }
-
-    //   // const mime = mimeTypes[extname(id)];
-    //   // if (!mime) {
-    //   //   // not an image
-    //   //   return null;
-    //   // }
-
-    //   const source = readFileSync(id).toString();
-    //   console.log(source);
-
-    //   return {
-    //     code: source
-    //   };
-    // }
-    
-    // renderChunk(code, chunk, ...args) {
-    //   if (filter(chunk.facadeModuleId)) {
-    //     console.log('code:', code);
-    //     console.log('chunk:', chunk);
-    //     console.log('args:', args);
-    //   }
-    //   return code;
-    //   // const id = chunk.fileName;
-    //   // if (!keys.length) return null;
-    //   // if (!filter(id)) return null;
-    //   // return executeReplacement(code, id);
-    // }
 	};
 }
