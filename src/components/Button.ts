@@ -3,7 +3,7 @@ import customElement from '../lib/customElement';
 import RippleElement from './base/RippleElement';
 import Icon from './Icon';
 import template from './Button.html';
-
+/**asdsdf123 */
 @customElement('md-button')
 export default class Button extends RippleElement {
 

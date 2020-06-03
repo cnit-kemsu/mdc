@@ -1,6 +1,7 @@
 import path from 'path';
 import { DefinePlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import rollupConfig from '../rollup.config';
 
 export default {
   mode: 'development',
@@ -12,7 +13,20 @@ export default {
   module: {
     rules: [
       {
-        test: /\.ts(x?)$/,
+        test: /\.ts$/,
+        loader: 'rollup-loader',
+        options: rollupConfig
+        //options: [/* custom rollup plugins */]
+        // or directly pass rollup options
+        // options: { plugins: [] }
+      },
+      // {
+      //   test: /\.ts(x?)$/,
+      //   use: 'ts-loader?configFile=tsconfig.json',
+      //   exclude: /node_modules/
+      // },
+      {
+        test: /\.tsx$/,
         use: 'ts-loader?configFile=tsconfig.json',
         exclude: /node_modules/
       },
@@ -24,7 +38,10 @@ export default {
   },
 
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: [ '.tsx', '.ts', '.js' ],
+    alias: {
+      '@mdc': path.resolve(__dirname, '../src'),
+    }
   },
 
   output: {

@@ -19,9 +19,9 @@
       "args": [
         "${file}"
       ],
-      "runtimeArgs": [
-        "-r", "ts-node/register"
-      ],
+      // "runtimeArgs": [
+      //   "-r", "ts-node/register"
+      // ],
       "skipFiles": [
         "<node_internals>/**/*.js",
         "${workspaceFolder}/node_modules/**/*.js"
