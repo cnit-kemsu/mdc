@@ -15,26 +15,15 @@
     "lib": ["es2020", "es2019", "es2018", "DOM"],
 
     "baseUrl": ".",
-    // "paths": {
-    //   "@components/*": ["./src/components/*"],
-    //   "@hooks/*": ["./src/hooks/*"],
-    //   "@lib/*": ["./src/lib/*"],
-    //   "@lib": ["./src/lib/"],
-    //   "@src/*": ["./src/*"]
-    // },
     "paths": {
-      "@mdc/*": ["../src/*"]
+      "@mdc/*": ["../src/*"],
+      "@lib/*": ["../src/lib/*"]
     },
 
-    // "typeRoots" : [
-    //   "./node_modules/@kemsu/html-template-loader",
-    //   "./node_modules/@types"
-    // ],
-
   },
-  "exclude": [
-    "node_modules",
-    "../dist"
+  "include": [
+    "src",
+    "../src"
   ]
 
 }

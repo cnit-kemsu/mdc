@@ -1,6 +1,11 @@
+//// @ts-nocheck
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+// @ts-ignore
+import IconStore from '@mdc/IconStore';
+console.log(IconStore);
 
 declare global {
   module JSX {
@@ -43,7 +48,8 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-//require('./mdc.config');
+require('./mdc.config');
+
 // import IconStore from '@mdc/IconStore';
 
 // (function (modules: __WebpackModuleApi.RequireContext) {
@@ -55,7 +61,7 @@ ReactDOM.render(
 // }(require.context('./icons', false, /.svg/, 'sync')))
 
 // import '@mdc/styles';
-import '@mdc/components/Icon';
+// import '@mdc/components/Icon';
 // import '@mdc/components/SelectOption';
 // import '@mdc/components/Button';
 // import '@mdc/components/Checkbox';
