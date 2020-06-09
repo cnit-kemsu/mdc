@@ -20,7 +20,7 @@ module.exports = {
   ],
 
   plugins: [
-    typescript(),
-    htmlTemplateLoader()
+    htmlTemplateLoader(),
+    typescript()
   ]
 };

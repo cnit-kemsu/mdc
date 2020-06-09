@@ -24,7 +24,7 @@
   },
   "nodemonConfig": {
     "watch": [
-      "../src/**/*.*",
+      "build.js",
       "webpack.config.ts",
       "tsconfig.json"
     ]

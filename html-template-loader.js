@@ -26,7 +26,7 @@ module.exports = function htmlTemplateLoader() {
 
 	return {
 
-    name: 'html-loader',
+    name: 'html-template-loader',
 
     transform(code, id) {
 

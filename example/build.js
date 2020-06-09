@@ -1,92 +1,107 @@
-// process.chdir('../');
+const fs = require('fs');
+const path = require('path');
 
-// const rollup = require('../node_modules/rollup');
-// // const typescript = require('../node_modules/@rollup/plugin-typescript');
-// // const htmlTemplateLoader = require('../html-template-loader');
-// const { output: outputOptions, ...inputOptions } = require('../rollup.config');
+class Watcher {
 
-// const inputOptions = {
-//   input: 'src/index.ts',
-//   preserveModules: true,
-//   external: [
-//     'tslib'
-//   ],
-//   plugins: [
-//     typescript({ declaration: false }),
-//     htmlTemplateLoader()
-//   ]
-// };
+  constructor(_path, callback) {
 
-// const outputOptions = {
-//   output: {
-//     dir: 'dist',
-//     format: 'cjs'
-//   }
-// };
+    this.changes = 0;
+    this.callback = callback;
 
-export default async function build() {
+    this.emitEvent = this.emitEvent.bind(this);
+    this.waitForAllChanges = this.waitForAllChanges.bind(this);
+
+    fs.watch(path.resolve(__dirname, _path), { recursive: true }, this.waitForAllChanges);
+  }
+
+  emitEvent() {
+    this.changes--;
+    if (this.changes === 0) this.callback();
+  }
+
+  waitForAllChanges() {
+    this.changes++;
+    setTimeout(this.emitEvent, 100);
+  }
+}
+
+const VirtualModulesPlugin = require('webpack-virtual-modules');
+
+async function buildWithRollup() {
 
   process.chdir('../');
-  //console.log(process.cwd());
 
   const rollup = require('../node_modules/rollup');
-  const { output: outputOptions, ...inputOptions } = require('../rollup.config');
+  const loadConfigFile = require('../node_modules/rollup/dist/loadConfigFile');
+  const { options: [{ output: [outputOptions], ...inputOptions }] } = await loadConfigFile(path.resolve(__dirname, '../rollup.config.js'));
 
   const bundle = await rollup.rollup(inputOptions);
+
   const { output } = await bundle.generate(outputOptions);
 
-  const _output = output;
-  //const _output = output.filter(o => o.type === 'chunk');
-
-  //console.log(_output.map(o => o.type));
-  // console.log(_output[10]);
+  const _output = output.filter(o => o.type === 'chunk');
 
   process.chdir('example');
-  //console.log(process.cwd());
-
-  // await bundle.write(outputOptions);
 
   return _output;
 }
 
-// async function main() {
-//   try {
-//     await build();
-//   } catch(error) {
-//     console.log(error);
-//   } finally {
-//     process.exit(0);
-//   }
-// }
+export default class RollupPlugin {
 
-// main();
+  apply(compiler) {
 
-// For assets, this contains
-// {
-//   fileName: string,              // the asset file name
-//   source: string | Uint8Array    // the asset source
-//   type: 'asset'                  // signifies that this is an asset
-// }
+    const virtulaModulesPlugin = new VirtualModulesPlugin();
+    virtulaModulesPlugin.apply(compiler);
 
-// For chunks, this contains
-// {
-//   code: string,                  // the generated JS code
-//   dynamicImports: string[],      // external modules imported dynamically by the chunk
-//   exports: string[],             // exported variable names
-//   facadeModuleId: string | null, // the id of a module that this chunk corresponds to
-//   fileName: string,              // the chunk file name
-//   imports: string[],             // external modules imported statically by the chunk
-//   isDynamicEntry: boolean,       // is this chunk a dynamic entry point
-//   isEntry: boolean,              // is this chunk a static entry point
-//   map: string | null,            // sourcemaps if present
-//   modules: {                     // information about the modules in this chunk
-//     [id: string]: {
-//       renderedExports: string[]; // exported variable names that were included
-//       removedExports: string[];  // exported variable names that were removed
-//       renderedLength: number;    // the length of the remaining code in this module
-//       originalLength: number;    // the original length of the code in this module
-//     };
-//   },
-//   name: string                   // the name of this chunk as used in naming patterns
-//   type: 'chunk',                 // signifies that this is a chunk
-// }
+    const _this = {
+      output: null,
+      requireRewriteVirtualFiles: false
+    };
+
+    async function rebuild() {
+      _this.output = await buildWithRollup();
+
+      _this.requireRewriteVirtualFiles = true;
+      const chunk = _this.output[0];
+      virtulaModulesPlugin.writeModule('./node_modules/@mdc/' + chunk.fileName, chunk['code'] || chunk['source']);
+    }
+
+    compiler.hooks.beforeCompile.tapAsync('RollupPlugin', async function (params, callback) {
+
+      if (_this.output !== null) {
+        callback();
+        return;
+      }
+      console.log('beforeCompile');
+
+      const output = await buildWithRollup();
+
+      _this.output = output;
+
+      for (const chunk of _this.output) {
+        virtulaModulesPlugin.writeModule('./node_modules/@mdc/' + chunk.fileName, chunk['code'] || chunk['source']);
+      }
+
+      callback();
+    });
+
+    new Watcher('../src', function() {
+      rebuild();
+    });
+
+    compiler.hooks.compilation.tap('RollupPlugin', function (compilation) {
+
+      if (_this.requireRewriteVirtualFiles === false) {
+        return;
+      }
+
+      console.log('compilation');
+
+      for (const chunk of _this.output) {
+        virtulaModulesPlugin.writeModule('./node_modules/@mdc/' + chunk.fileName, chunk['code'] || chunk['source']);
+      }
+
+    });
+
+  }
+}

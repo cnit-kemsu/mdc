@@ -1,44 +1,9 @@
 import path from 'path';
 import { DefinePlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import VirtualModulesPlugin from 'webpack-virtual-modules';
-import build from './build';
-
-class MyWebpackPlugin {
-
-  apply(compiler) {
-
-    const afterEnvironmentHook = () => {
-      const filesys = compiler.inputFileSystem;
-      console.log(filesys);
-      filesys._statStorage.data.set('/testdir/some.js', [null, 'export default const a = 5;']);
-      filesys._readFileStorage.data.set('/testdir/some.js', [null, 'export default const a = 5;']);
-      filesys._readdirStorage.data.set('/testdir', [null, 'export default const a = 5;']);
-      filesys._stat('./dist1/file1.js');
-      const dir = filesys._readdirSync('.');
-      console.log(dir);
-      console.log(filesys);
-    }
-
-    compiler.hooks.afterEnvironment.tap('VirtualModulesPlugin', afterEnvironmentHook);
-  }
-}
+import RollupPlugin from './build';
 
 export default async () => {
-
-  const output = await build();
-  //console.log(output);
-
-  const virtualModules = output.reduce((res, current) => {
-    return {
-      ...res,
-      ['./node_modules/@mdc/' + current.fileName]: current['code'],
-      //['../../src/' + current.fileName]: current['code'],
-      //['../src/' + current.fileName]: current['code']
-    };
-  }, {});
-
-  //console.log(virtualModules);
 
   return {
     mode: 'development',
@@ -59,7 +24,7 @@ export default async () => {
               ignoreDiagnostics: [
                 //'2339',
                 //'2307'
-              ],
+              ]
             }
           },
           exclude: /node_modules/,
@@ -92,12 +57,15 @@ export default async () => {
         // 'window.mdc.implicitUncheck': true
       }),
       //new MyWebpackPlugin(),
-      new VirtualModulesPlugin({
-        ...virtualModules
-        //'./node_modules/dist/a.js': 'module.exports = 15;',
-        //'./node_modules/dist/b.js': 'const a = require("./a"); module.exports = a;'
-      })
+      // new VirtualModulesPlugin({
+      //   ...virtualModules
+      //   //'./node_modules/dist/a.js': 'module.exports = 15;',
+      //   //'./node_modules/dist/b.js': 'const a = require("./a"); module.exports = a;'
+      // })
+      new RollupPlugin()
     ],
+
+    watch: true,
 
     optimization: {
       namedChunks: true,
