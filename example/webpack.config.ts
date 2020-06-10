@@ -1,7 +1,7 @@
 import path from 'path';
 import { DefinePlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import RollupPlugin from './build';
+import RollupPlugin from './RollupPlugin';
 
 export default async () => {
 

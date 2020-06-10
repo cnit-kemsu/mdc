@@ -1,9 +1,19 @@
 {
   "javascript.referencesCodeLens.enabled": false,
+  "javascript.implicitProjectConfig.checkJs": true,
+  "javascript.implicitProjectConfig.experimentalDecorators": true,
   
   "editor.tabSize": 2,
+  "editor.semanticHighlighting.enabled": true,
+  "editor.semanticTokenColorCustomizations": {
+    "rules": {
+      "*.readonly": "#9cdcfe",
+    }
+  },
   
   "emmet.triggerExpansionOnTab": true,
+
+  "explorer.autoReveal": false,
 
   "files.exclude": {
     "node_modules": true,
@@ -12,7 +22,7 @@
     "example/package-lock.json": true
   },
 
-  "todohighlight.keywords":[
+  "todohighlight.keywords": [
     {
       "text": "DEBUG",
       "color": "#ddddff",
@@ -20,18 +30,7 @@
     }
   ],
 
-  "explorer.autoReveal": false,
-
   "code-runner.executorMap": {
     "typescript": "node -r ts-node/register"
-  },
-
-  "editor.semanticHighlighting.enabled": true,
-  "editor.semanticTokenColorCustomizations": {
-    "rules": {
-      "*.readonly": "#9cdcfe",
-    }
-  },
-
-  //"typescript.tsdk": "node_modules\\typescript\\lib",
+  }
 }

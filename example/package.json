@@ -24,7 +24,7 @@
   },
   "nodemonConfig": {
     "watch": [
-      "build.js",
+      "RollupPlugin.js",
       "webpack.config.ts",
       "tsconfig.json"
     ]

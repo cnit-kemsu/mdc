@@ -1,10 +1,10 @@
-// import typescript from '@rollup/plugin-typescript';
-// import htmlTemplateLoader from './html-template-loader';
-const typescript = require('@rollup/plugin-typescript');
-const htmlTemplateLoader = require('./html-template-loader');
+import typescript from '@rollup/plugin-typescript';
+import htmlTemplateLoader from './html-template-loader';
+// const typescript = require('@rollup/plugin-typescript');
+// const htmlTemplateLoader = require('./html-template-loader');
 
-// export default {
-module.exports = {
+export default {
+// module.exports = {
 
   input: 'src/index.ts',
 
@@ -20,7 +20,7 @@ module.exports = {
   ],
 
   plugins: [
-    htmlTemplateLoader(),
-    typescript()
+    typescript(),
+    htmlTemplateLoader()
   ]
 };
