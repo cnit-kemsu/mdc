@@ -2,6 +2,7 @@
   "javascript.referencesCodeLens.enabled": false,
   "javascript.implicitProjectConfig.checkJs": true,
   "javascript.implicitProjectConfig.experimentalDecorators": true,
+  "javascript.validate.enable": false,
   
   "editor.tabSize": 2,
   "editor.semanticHighlighting.enabled": true,

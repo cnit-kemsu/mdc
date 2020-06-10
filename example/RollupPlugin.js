@@ -50,7 +50,7 @@ async function buildWithRollup() {
   return chunks;
 }
 
-export default class RollupPlugin {
+module.exports = class RollupPlugin {
 
   apply(compiler) {
 

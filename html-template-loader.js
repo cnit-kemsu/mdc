@@ -3,11 +3,6 @@ import { readFileSync } from 'fs';
 import { walk } from 'estree-walker';
 import { minify } from 'html-minifier';
 
-// const path = require('path');
-// const { readFileSync } = require('fs');
-// const { walk } = require('estree-walker');
-// const { minify } = require('html-minifier');
-
 const htmlMinifierOptions = {
   collapseWhitespace: true,
   collapseInlineTagWhitespace: true,
@@ -22,7 +17,6 @@ const htmlMinifierOptions = {
 };
 
 export default function htmlTemplateLoader() {
-// module.exports = function htmlTemplateLoader() {
 
 	return {
 
