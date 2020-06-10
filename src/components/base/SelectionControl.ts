@@ -2,7 +2,7 @@ import '@lib/initOptions';
 import RippleElement from './RippleElement';
 import template from './SelectionControl.html';
 
-const __APPEND_INPUT_ELEMENT__ = window.mdc.appendInputElement;
+const __APPEND_INPUT_ELEMENT__ = window.webmd.appendInputElement;
 
 export default class SelectionControl extends RippleElement {
 

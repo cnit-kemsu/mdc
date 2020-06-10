@@ -1,22 +1,21 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
     "jsx": "react",
-    "outDir": "./dist/",
+    "experimentalDecorators": true,
     "noImplicitAny": false,
+
+    "outDir": "dist",
     "module": "commonjs",
-    "target": "ES2019",
-    "allowJs": true,
+    "target": "ES2015",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
     "sourceMap": true,
+    "allowJs": true,
 
     "lib": ["es2020", "es2019", "es2018", "DOM"],
 
     "baseUrl": ".",
     "paths": {
-      "@mdc/*": ["../src/*"],
+      "@webmd/*": ["../src/*"],
       "@lib/*": ["../src/lib/*"]
     },
 

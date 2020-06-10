@@ -1,4 +1,3 @@
-import HTMLTemplate from '../lib/HTMLTemplate';
 import customElement from '../lib/customElement';
 import SelectionControl from './base/SelectionControl';
 import template from './Checkbox.html';

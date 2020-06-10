@@ -1,4 +1,3 @@
-import HTMLTemplate from '../lib/HTMLTemplate';
 import customElement from '../lib/customElement';
 import InputField from './base/InputField';
 import template from './DateField.html';

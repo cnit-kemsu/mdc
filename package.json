@@ -1,5 +1,5 @@
 {
-  "name": "md-components",
+  "name": "webmd",
   "version": "0.1.0",
   "description": "",
   "author": "johncooper87",
@@ -14,7 +14,6 @@
     "typescript": "^3.9.3"
   },
   "scripts": {
-    "start": "rollup -c --watch",
     "build": "rollup -c"
   }
 }

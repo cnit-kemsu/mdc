@@ -42,4 +42,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-require('./mdc.config');
+require('./webmd.config');

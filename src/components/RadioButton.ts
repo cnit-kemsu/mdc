@@ -3,7 +3,7 @@ import { _RadioNodeList, joinRadioNodeList } from '@lib/RadioNodeList';
 import SelectionControl from './base/SelectionControl';
 import template from './RadioButton.html';
 
-const __IMLICIT_UNCHECK__ = window.mdc.implicitUncheck;
+const __IMLICIT_UNCHECK__ = window.webmd.implicitUncheck;
 
 @customElement('md-radio')
 export default class RadioButton extends SelectionControl {

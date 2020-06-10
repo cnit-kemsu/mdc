@@ -1,4 +1,3 @@
-import HTMLTemplate from '../lib/HTMLTemplate';
 import customElement from '../lib/customElement';
 import RippleElement from './base/RippleElement';
 import Select from './Select';

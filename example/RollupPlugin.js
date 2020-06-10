@@ -57,27 +57,20 @@ module.exports = class RollupPlugin {
     const virtulaModulesPlugin = new VirtualModulesPlugin();
     virtulaModulesPlugin.apply(compiler);
 
-    let output = null
+    let output = null;
 
-    async function rebuild() {
+    async function writeChunks() {
       output = await buildWithRollup();
       for (const chunk of output) {
-        virtulaModulesPlugin.writeModule('./node_modules/@mdc/' + chunk.fileName, chunk['code']);
+        virtulaModulesPlugin.writeModule('./node_modules/@webmd/' + chunk.fileName, chunk['code']);
       }
     }
 
-    compiler.hooks.beforeCompile.tapAsync('RollupPlugin', async function (params, callback) {
-
-      if (output === null) {
-        output = await buildWithRollup();
-        for (const chunk of output) {
-          virtulaModulesPlugin.writeModule('./node_modules/@mdc/' + chunk.fileName, chunk['code'] || chunk['source']);
-        }
-      }
-
+    compiler.hooks.beforeCompile.tapAsync('RollupPlugin', async function(params, callback) {
+      if (output === null) await writeChunks();
       callback();
     });
 
-    watch('../src', rebuild);
+    watch('../src', writeChunks);
   }
 }

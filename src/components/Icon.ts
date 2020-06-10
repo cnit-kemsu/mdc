@@ -1,4 +1,3 @@
-import HTMLTemplate from '../lib/HTMLTemplate';
 import customElement from '../lib/customElement';
 import IconStore from '../IconStore';
 import template from './Icon.html';

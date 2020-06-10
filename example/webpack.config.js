@@ -16,11 +16,12 @@ module.exports = {
       {
         test: /\.ts(x?)$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        include: /src/,
       },
       {
         test: /\.svg$/,
-        use: 'svg-inline-loader'
+        use: 'svg-inline-loader',
+        include: /src/
       }
     ]
   },
@@ -39,8 +40,8 @@ module.exports = {
       template: './src/index.html'
     }),
     // new DefinePlugin({
-    //   'window.mdc.appendInputElement': true,
-    //   'window.mdc.implicitUncheck': true
+    //   'window.webmd.appendInputElement': true,
+    //   'window.webmd.implicitUncheck': true
     // }),
     new RollupPlugin()
   ],

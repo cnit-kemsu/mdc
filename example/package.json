@@ -24,9 +24,12 @@
   },
   "nodemonConfig": {
     "watch": [
+      "tsconfig.json",
       "RollupPlugin.js",
       "webpack.config.js",
-      "tsconfig.json"
+      "../tsconfig.json",
+      "../html-template-loader.js",
+      "../rollup.config.js"
     ]
   }
 }
