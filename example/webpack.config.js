@@ -15,8 +15,19 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x?)$/,
-        use: 'ts-loader',
+        //use: 'ts-loader',
         include: /src/,
+        use: {
+          //loader: 'ts-loader?configFile=tsconfig.json',
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+            ignoreDiagnostics: [
+              '2339',
+              '2307'
+            ]
+          }
+        }
       },
       {
         test: /\.svg$/,

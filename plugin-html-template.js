@@ -20,17 +20,22 @@ export default function htmlTemplateLoader() {
 
 	return {
 
-    name: 'html-template-loader',
+    name: 'html-template',
 
     transform(code, id) {
 
       const ast = this.parse(code);
       let _code = code;
+      const addWatchFile = this.addWatchFile;
 
       walk(ast, {
-				enter: function({ type, specifiers, source, start, end }) {
-          if (type === 'ImportDeclaration') {
+        enter: function(node) {
+          if (node.type === 'ImportDeclaration') {
+            // @ts-expect-error
+            const { specifiers, source, start, end } = node;
             if (source.value.slice(-5) === '.html') {
+              const filepath = path.resolve(path.dirname(id), source.value);
+              addWatchFile(filepath);
               const dirname = path.dirname(id);
               const file = path.resolve(dirname, source.value);
               const content = readFileSync(file).toString();

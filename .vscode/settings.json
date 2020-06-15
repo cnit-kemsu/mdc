@@ -1,7 +1,7 @@
 {
   "javascript.referencesCodeLens.enabled": false,
   "javascript.implicitProjectConfig.checkJs": true,
-  "javascript.implicitProjectConfig.experimentalDecorators": true,
+  //"javascript.implicitProjectConfig.experimentalDecorators": true,
   "javascript.validate.enable": true,
   
   "editor.tabSize": 2,

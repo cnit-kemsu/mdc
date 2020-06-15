@@ -1,5 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
-import htmlTemplateLoader from './html-template-loader';
+import htmlTemplate from './plugin-html-template';
 
 export default {
 
@@ -18,6 +18,6 @@ export default {
 
   plugins: [
     typescript(),
-    htmlTemplateLoader()
+    htmlTemplate()
   ]
 };
