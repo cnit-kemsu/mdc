@@ -10,3 +10,5 @@ export default class IconStore {
     IconStore.icons.set(key, new HTMLTemplate(html));
   };
 }
+
+console.log('333');

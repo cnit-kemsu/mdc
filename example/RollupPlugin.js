@@ -29,7 +29,7 @@ class Watcher {
 
   addTimeout() {
     this.totalRequested++;
-    setTimeout(this.timeoutExpired, 1000);
+    setTimeout(this.timeoutExpired, 100);
   }
 }
 
@@ -45,6 +45,9 @@ function rollup1(options) {
   })
 }
 
+const configPath = path.resolve(__dirname, '../rollup.config.js');
+let config = null;
+
 async function buildWithRollup() {
   console.log('buildWithRollup');
 
@@ -55,8 +58,9 @@ async function buildWithRollup() {
   let chunks = null;
 
   try {
-    const configPath = path.resolve(__dirname, '../rollup.config.js');
     const { options } = await loadConfigFile(configPath, { format: 'es' });
+    // if (config === null) config = await loadConfigFile(configPath, { format: 'es' });
+    // const { options } = config;
     const [{ output: [outputOptions], ...inputOptions }] = options;
 
     let bundle;
