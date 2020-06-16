@@ -9,6 +9,7 @@ export { default as IconButton } from './components/IconButton';
 export { default as SelectOption } from './components/SelectOption';
 export { default as Select } from './components/Select';
 export { default as DateField } from './components/DateField';
+export { default as ASD } from './asd';
 
 declare global {
   interface Window {

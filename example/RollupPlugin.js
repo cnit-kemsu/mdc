@@ -37,59 +37,102 @@ function watch(watchPath, callback) {
   new Watcher(watchPath, callback);
 }
 
-//let done = 0;
+process.on('uncaughtException', function(err) {
+  if (err.plugin !== 'typescript') throw err;
+  console.log('UNCAUGHT!!!!!!!!!!!!!');
+  console.log(err);
+});
 
-function rollup1(options) {
-  return new Promise((resolve, reject) => {
-    rollup.rollup(options).then(value => resolve(value), err => reject(err)).catch(err => reject(err));
-  })
-}
 
 const configPath = path.resolve(__dirname, '../rollup.config.js');
-let config = null;
 
-async function buildWithRollup() {
-  console.log('buildWithRollup');
+// async function buildWithRollup() {
 
-  //done++;
-  //if (done > 2) return null;
+//   process.chdir('../');
+//   let chunks = null;
 
-  process.chdir('../');
-  let chunks = null;
+//   try {
+//     const { options } = await loadConfigFile(configPath, { format: 'es' });
+//     const [{ output: [outputOptions], ...inputOptions }] = options;
 
-  try {
-    const { options } = await loadConfigFile(configPath, { format: 'es' });
-    // if (config === null) config = await loadConfigFile(configPath, { format: 'es' });
-    // const { options } = config;
-    const [{ output: [outputOptions], ...inputOptions }] = options;
+//     const bundle = await rollup.rollup({ ...inputOptions });
+//     const { output } = await bundle.generate(outputOptions);
 
-    let bundle;
-    //try{
-      bundle = await rollup1({ ...inputOptions });
-    //} catch (err) {
-      //console.log(err);
-    //}
+//     chunks = output.filter(module => module.type === 'chunk');
 
-    //console.log(bundle);
+//   } catch (error) {
+//     throw error;
+//   } finally {
+//     process.chdir('example');
+//   }
 
+//   return chunks;
+// }
 
+async function buildWithRollup(virtualModulesPlugin) {
 
-    const { output } = await bundle.generate(outputOptions);
+  return new Promise(async (resolve, reject) => {
+    process.chdir('../');
+    let chunks = null;
+    let firstBuild = true;
 
-    // const watcher = rollup.watch(options);
-    // watcher.on('event', event => {
-    //   console.log(event);
-    // });
+    try {
+      process.env.ROLLUP_WATCH = 'true';
+      const { options } = await loadConfigFile(configPath, { format: 'es' });
+      const [{ output: [outputOptions], ...inputOptions }] = options;
+      const watcher = rollup.watch({ ...inputOptions, cache: false, output: outputOptions, watch: {
+        skipWrite: true,
+        // chokidar: {
+        //   awaitWriteFinish: {
+        //     stabilityThreshold: 2000,
+        //     pollInterval: 100
+        //   },
+        //   interval: 1000,
+        // },
+        buildDelay: 500
+      } });
+  
+      watcher.on('event', async event => {
+        if (firstBuild) {
+          console.log(event.code);
+          if (event.code === 'BUNDLE_END') {
+            const { output } = await event.result.generate(outputOptions);
+            chunks = output.filter(module => module.type === 'chunk');
+            firstBuild = false;
+            process.chdir('example');
+            resolve(chunks);
+          }
+          if (event.code === 'ERROR') {
+            console.log(event);
+            process.chdir('example');
+          }
+        } else {
+          console.log(event.code);
+          if (event.code === 'BUNDLE_START') process.chdir('../');
+          if (event.code === 'BUNDLE_END') {
+            console.log('rebuild');
+            const { output } = await event.result.generate(outputOptions);
+            chunks = output.filter(module => module.type === 'chunk');
+            for (const chunk of output) virtualModulesPlugin.writeModule('./node_modules/@webmd/' + chunk.fileName, chunk['code']);
+            //console.log(output.find(({ fileName }) => fileName === 'IconStore.js'));
+            process.chdir('example');
+          }
+          if (event.code === 'ERROR') {
+            console.log(event);
+            process.chdir('example');
+          }
+        }
+      });
 
-    chunks = output.filter(module => module.type === 'chunk');
+    } catch (error) {
+      reject(error);
+    } finally {
+      //process.chdir('example');
+    }
+  
+    //resolve(chunks);
 
-  } catch (error) {
-    throw error;
-  } finally {
-    process.chdir('example');
-  }
-
-  return chunks;
+  });
 }
 
 module.exports = class RollupPlugin {
@@ -104,7 +147,7 @@ module.exports = class RollupPlugin {
 
     async function writeChunks() {
       try {
-        output = await buildWithRollup();
+        output = await buildWithRollup(virtualModulesPlugin);
         error = null;
       } catch (err) {
         error = err;
@@ -132,6 +175,6 @@ module.exports = class RollupPlugin {
     //setTimeout(writeChunks, 7000);
     //setTimeout(writeChunks, 14000);
 
-    watch('../src', writeChunks);
+    //watch('../src', writeChunks);
   }
 }

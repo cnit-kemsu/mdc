@@ -11,4 +11,4 @@ export default class IconStore {
   };
 }
 
-console.log('333');
+console.log('111');
