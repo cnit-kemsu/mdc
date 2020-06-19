@@ -6,9 +6,21 @@
   
   "editor.tabSize": 2,
   "editor.semanticHighlighting.enabled": true,
-  "editor.semanticTokenColorCustomizations": {
-    "rules": {
-      "*.readonly": "#9cdcfe",
+  // "editor.semanticTokenColorCustomizations": {
+  //   "rules": {
+  //     "*.readonly": "#9cdcfe",
+  //   }
+  // },
+  "editor.tokenColorCustomizations": {
+    "[Default Dark+]": {
+      "textMateRules": [
+        {
+          "scope": ["variable.other.constant", "variable.other.enummember"],
+          "settings": {
+              "foreground": "#9cdcfe"
+          }
+        }
+      ]
     }
   },
   

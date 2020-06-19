@@ -16,13 +16,13 @@
     "baseUrl": ".",
     "paths": {
       "@webmd/*": ["../src/*"],
-      //"@lib/*": ["../src/lib/*"]
+      "@lib/*": ["../src/lib/*"]
     },
 
   },
   "include": [
     "src",
-    //"../src"
+    "../src"
   ]
 
 }
