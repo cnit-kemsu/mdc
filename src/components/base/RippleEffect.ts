@@ -1,14 +1,13 @@
-import HTMLTemplate from '../../lib/HTMLTemplate';
 import InteractiveElement from './InteractiveElement';
 import './RippleOverlay';
-import template from './RippleElement.html';
+import template from './RippleEffect.html';
 
 interface SizeSnapshot {
   width: number;
   height: number;
 }
 
-export default class RippleElement extends InteractiveElement {
+export default class RippleEffect {
 
   private isPressed: boolean = false;
   private sizeSnapshot: SizeSnapshot = { width: 0, height: 0 };
@@ -31,14 +30,14 @@ export default class RippleElement extends InteractiveElement {
   private removeOverlayStyleProp: (propertyName: string) => string;
   private getOverlayComputedStyle: () => CSSStyleDeclaration;
 
-  protected inputElement: HTMLInputElement;
+  private targetEl: InteractiveElement;
 
-  constructor() {
-    super();
+  constructor(targetEl: InteractiveElement) {
 
-    this.shadowRoot.appendChild(template.fragment);
+    this.targetEl = targetEl;
+    targetEl.shadowRoot.appendChild(template.fragment);
 
-    const overlay = this.shadowRoot.querySelector('md-ripple-overlay') as HTMLElement;
+    const overlay = targetEl.shadowRoot.querySelector('md-ripple-overlay') as HTMLElement;
     const overlayStyle = overlay.style;
     this.setOverlayStyleProp = overlayStyle.setProperty.bind(overlayStyle);
     this.removeOverlayStyleProp = overlayStyle.removeProperty.bind(overlayStyle);
@@ -49,12 +48,14 @@ export default class RippleElement extends InteractiveElement {
     this.ripple_onPhase1Complete = this.ripple_onPhase1Complete.bind(this);
     this.ripple_onPhase3Complete = this.ripple_onPhase3Complete.bind(this);
 
-    this.addEventListener('mousedown', this.handleMousedown);
-    this.addEventListener('keydown', this.handleKeydown);
+    this.handleMousedown = this.handleMousedown.bind(this);
+    this.handleKeydown = this.handleKeydown.bind(this);
+    targetEl.addEventListener('mousedown', this.handleMousedown);
+    targetEl.addEventListener('keydown', this.handleKeydown);
 
-    // this.addEventListener('touchstart', this.handleTouchstart);
-    // this.addEventListener('touchend', this.handleTouchend);
-    // this.addEventListener('mouseup', this.handleMouseup);
+    // targetEl.addEventListener('touchstart', this.handleTouchstart);
+    // targetEl.addEventListener('touchend', this.handleTouchend);
+    // targetEl.addEventListener('mouseup', this.handleMouseup);
   }
   private ripple_onPhase3Complete() {
     this.ripplePhase = 0;
@@ -90,7 +91,7 @@ export default class RippleElement extends InteractiveElement {
   
   private invokePressedState() {
     this.isPressed = true;
-    const { clientWidth, clientHeight, sizeSnapshot, pressX, pressY } = this;
+    const { targetEl: { clientWidth, clientHeight }, sizeSnapshot, pressX, pressY } = this;
 
     if (sizeSnapshot.width !== clientWidth || sizeSnapshot.height !== clientHeight) {
       sizeSnapshot.width = clientWidth;
@@ -184,10 +185,3 @@ addEventListener('keyup', function (event: KeyboardEvent) {
   if (event.key === ' ') invokeKeyupCallback();
 });
 addEventListener('contextmenu', invokeKeyupCallback);
-
-declare global {
-  module MDC {
-    interface RippleElementProps<T> extends InteractiveElementProps<T> {
-    }
-  }
-}

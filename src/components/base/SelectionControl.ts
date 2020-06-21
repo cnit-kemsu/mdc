@@ -1,10 +1,11 @@
 import '@lib/initOptions';
-import RippleElement from './RippleElement';
+import InteractiveElement from './InteractiveElement';
+import RippleEffect from './RippleEffect';
 import template from './SelectionControl.html';
 
 const __APPEND_INPUT_ELEMENT__ = window.webmd.appendInputElement;
 
-export default class SelectionControl extends RippleElement {
+export default class SelectionControl extends InteractiveElement {
 
   private _value: string = null;
   private _name: string;
@@ -13,6 +14,7 @@ export default class SelectionControl extends RippleElement {
 
   constructor(inputType: string) {
     super();
+    new RippleEffect(this);
     this.shadowRoot.appendChild(template.fragment);
     this.addEventListener('click', this.onClick);
 
@@ -32,7 +34,7 @@ export default class SelectionControl extends RippleElement {
   }
 
   static get observedAttributes() {
-    return ['checked', 'name', 'value', ...RippleElement.observedAttributes];
+    return ['checked', 'name', 'value', ...InteractiveElement.observedAttributes];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
@@ -87,7 +89,7 @@ export default class SelectionControl extends RippleElement {
 
 declare global {
   module MDC {
-    interface SelectionControlProps<T> extends RippleElementProps<T> {
+    interface SelectionControlProps<T> extends InteractiveElementProps<T> {
       checked?: boolean;
       name?: string;
       value?: string;

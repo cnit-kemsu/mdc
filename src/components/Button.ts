@@ -1,10 +1,11 @@
 import customElement from '../lib/customElement';
-import RippleElement from './base/RippleElement';
+import InteractiveElement from './base/InteractiveElement';
+import RippleEffect from './base/RippleEffect';
 import Icon from './Icon';
 import template from './Button.html';
 
 @customElement('md-button')
-export default class Button extends RippleElement {
+export default class Button extends InteractiveElement {
 
   private labelEl: HTMLLabelElement;
   private leadingIconEl: Icon;
@@ -12,6 +13,7 @@ export default class Button extends RippleElement {
 
   constructor() {
     super();
+    new RippleEffect(this);
     this.shadowRoot.appendChild(template.fragment);
     this.labelEl = this.shadowRoot.querySelector('label');
     this.leadingIconEl = this.shadowRoot.querySelector('.leading-icon');
@@ -19,7 +21,7 @@ export default class Button extends RippleElement {
   }
 
   static get observedAttributes() {
-    return ['outlined', 'raised', 'label', 'leading-icon', 'trailing-icon', ...RippleElement.observedAttributes];
+    return ['outlined', 'raised', 'label', 'leading-icon', 'trailing-icon', ...InteractiveElement.observedAttributes];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
@@ -68,7 +70,7 @@ export default class Button extends RippleElement {
 
 declare global {
   module MDC {
-    interface ButtonProps extends RippleElementProps<Button> {
+    interface ButtonProps extends InteractiveElementProps<Button> {
       raised?: boolean;
       outlined?: boolean;
       label?: string;

@@ -1,12 +1,13 @@
 import customElement from '../lib/customElement';
-import RippleElement from './base/RippleElement';
+import InteractiveElement from './base/InteractiveElement';
+import RippleEffect from './base/RippleEffect';
 import Select from './Select';
 import template from './SelectOption.html';
 
 const observedAttributes = ['label', 'value'];
 
 @customElement('md-option')
-export default class SelectOption extends RippleElement {
+export default class SelectOption extends InteractiveElement {
 
   private selectEl: Select;
   private labelEl: HTMLSpanElement;
@@ -15,6 +16,8 @@ export default class SelectOption extends RippleElement {
 
   constructor() {
     super();
+
+    new RippleEffect(this);
 
     this.shadowRoot.appendChild(template.fragment);
 
