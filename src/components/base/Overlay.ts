@@ -1,8 +1,7 @@
-import HTMLTemplate from '../../lib/HTMLTemplate';
-import customElement from '../../lib/customElement';
+import customElement from '@internals/customElement';
 import template from './Overlay.html';
 
-@customElement('md-ripple')
+@customElement('md-overlay')
 export default class Overlay extends HTMLElement {
   constructor() {
     super();

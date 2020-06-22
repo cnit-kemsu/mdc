@@ -41,7 +41,7 @@ export default function htmlTemplateLoader() {
               const content = readFileSync(file).toString();
               const minified = minify(content, htmlMinifierOptions);
               const html = `process.env.NODE_ENV === 'production' \n? \`${minified}\` \n: \`${content}\n\``;
-              _code = _code.slice(0, start) + `import HTMLTemplate from '@lib/HTMLTemplate';\n var ${specifiers[0].local.name} = new HTMLTemplate(${html});\n` + _code.slice(end);
+              _code = _code.slice(0, start) + `import HTMLTemplate from '@internals/HTMLTemplate';\n var ${specifiers[0].local.name} = new HTMLTemplate(${html});\n` + _code.slice(end);
             }
           }
 				},

@@ -1,4 +1,4 @@
-import customElement from '../lib/customElement';
+import customElement from '../internals/customElement';
 import SelectionControl from './base/SelectionControl';
 import template from './Checkbox.html';
 

@@ -1,4 +1,4 @@
-import '@lib/initOptions';
+import '@internals/initOptions';
 import InteractiveElement from './InteractiveElement';
 import RippleEffect from './RippleEffect';
 import template from './SelectionControl.html';

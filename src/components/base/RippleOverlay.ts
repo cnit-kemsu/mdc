@@ -1,5 +1,4 @@
-import HTMLTemplate from '../../lib/HTMLTemplate';
-import customElement from '../../lib/customElement';
+import customElement from '@internals/customElement';
 import Overlay from './Overlay';
 import template from './RippleOverlay.html';
 

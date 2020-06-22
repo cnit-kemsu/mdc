@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@webmd/*": ["../src/*"],
-      "@lib/*": ["../src/lib/*"]
+      "@internals/*": ["../src/internals/*"]
     },
 
   },

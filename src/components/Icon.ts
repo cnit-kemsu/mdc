@@ -1,4 +1,4 @@
-import customElement from '../lib/customElement';
+import customElement from '../internals/customElement';
 import IconStore from '../IconStore';
 import template from './Icon.html';
 

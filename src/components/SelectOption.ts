@@ -1,4 +1,4 @@
-import customElement from '../lib/customElement';
+import customElement from '../internals/customElement';
 import InteractiveElement from './base/InteractiveElement';
 import RippleEffect from './base/RippleEffect';
 import Select from './Select';

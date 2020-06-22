@@ -1,6 +1,4 @@
-import HTMLTemplate from '../../lib/HTMLTemplate';
 import template from './InputField.html';
-const observedAttributes = ['label', 'helper-text', 'error', 'name', 'value', 'disabled'];
 
 export default abstract class InputField extends HTMLElement {
 
@@ -21,7 +19,7 @@ export default abstract class InputField extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return observedAttributes;
+    return ['label', 'helper-text', 'error', 'name', 'value', 'disabled'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     switch (name) {

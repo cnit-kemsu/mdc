@@ -1,5 +1,5 @@
-import customElement from '@lib/customElement';
-import { _RadioNodeList, joinRadioNodeList } from '@lib/RadioNodeList';
+import customElement from '@internals/customElement';
+import { _RadioNodeList, joinRadioNodeList } from '@internals/RadioNodeList';
 import SelectionControl from './base/SelectionControl';
 import template from './RadioButton.html';
 

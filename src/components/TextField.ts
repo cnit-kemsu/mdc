@@ -1,4 +1,4 @@
-import customElement from '../lib/customElement';
+import customElement from '../internals/customElement';
 import InputField from './base/InputField';
 import template from './TextField.html';
 

@@ -1,4 +1,3 @@
-import HTMLTemplate from '../../lib/HTMLTemplate';
 import template from './InteractiveElement.html';
 
 export default class InteractiveElement extends HTMLElement {
