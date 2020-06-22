@@ -1,28 +1,31 @@
+import InputElement from './InputElement';
 import template from './InputField.html';
 
-export default abstract class InputField extends HTMLElement {
+export default class InputField extends InputElement {
 
   private isEmpty: boolean = true;
   protected containerEl: HTMLDivElement;
   protected labelEl: HTMLLabelElement;
   protected helperTextEl: HTMLDivElement;
+  protected textInputEl: HTMLInputElement;
 
   constructor() {
-    super();
+    super('text');
 
-    this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.fragment);
-
     this.containerEl = this.shadowRoot.querySelector('.container');
     this.labelEl = this.shadowRoot.querySelector('label');
     this.helperTextEl = this.shadowRoot.querySelector('.helper-text');
   }
 
   static get observedAttributes() {
-    return ['label', 'helper-text', 'error', 'name', 'value', 'disabled'];
+    return ['label', 'helper-text', 'error', ...InputElement.observedAttributes];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     switch (name) {
+      case 'disabled':
+        this.textInputEl.disabled = newValue !== null;
+        break;
       case 'label':
         this.labelEl.innerText = newValue || '';
         break;
@@ -31,9 +34,6 @@ export default abstract class InputField extends HTMLElement {
         break;
       case 'error':
         this.helperTextEl.innerText = newValue || this.getAttribute('helper-text') || '';
-        break;
-      case 'value':
-        this.value = newValue;
         break;
     }
   }
@@ -67,21 +67,19 @@ export default abstract class InputField extends HTMLElement {
     this.setAttribute('error', value);
   }
 
-  get name(): string {
-    return this.getAttribute('name');
+  set value(value: string) {
+    super.value = value;
+    this.textInputEl.value = value;
+    this.onChange();
   }
-  set name(value: string) {
-    this.setAttribute('name', value);
-  }
+}
 
-  abstract get value(): string;
-  abstract set value(value: string);
-
-  get disabled(): boolean {
-    return this.getAttribute('disabled') !== null;
-  }
-  set disabled(value: boolean) {
-    if (value) this.setAttribute('disabled', '');
-    else this.removeAttribute('disabled');
+declare global {
+  module MDC {
+    interface InputFieldProps<T> extends InputElementProps<T> {
+      label?: string;
+      helperText?: string;
+      error?: string;
+    }
   }
 }

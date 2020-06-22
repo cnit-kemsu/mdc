@@ -42,9 +42,6 @@ export default class InteractiveElement extends HTMLElement {
 
 declare global {
   module MDC {
-    interface FormEvent<T> extends React.FormEvent<T> {
-      target: T & EventTarget;
-    }
     interface InteractiveElementProps<T> extends React.HTMLAttributes<T> {
       disabled?: boolean;
     }

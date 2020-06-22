@@ -1,4 +1,4 @@
-import customElement from '../internals/customElement';
+import customElement from '@internals/customElement';
 import InputField from './base/InputField';
 import template from './DateField.html';
 
@@ -6,26 +6,20 @@ import template from './DateField.html';
 export default class DateField extends InputField {
 
   private _value = '';
-  private inputEl: HTMLInputElement;
 
   constructor() {
     super();
 
     this.containerEl.prepend(template.fragment);
-    this.inputEl = this.shadowRoot.querySelector('input');
+    this.textInputEl = this.shadowRoot.querySelector('input');
     this.addEventListener('input', this.onInput);
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    super.attributeChangedCallback(name, oldValue, newValue);
-    if (name === 'disabled') this.inputEl.disabled = newValue !== null;
-  }
-
   onInput({ inputType, data }: InputEvent) {
-    const { inputEl } = this;
-    let caretPosition = inputEl.selectionStart;
+    const { textInputEl } = this;
+    let caretPosition = textInputEl.selectionStart;
 
-    this.value = inputEl.value;
+    this.value = textInputEl.value;
     const value = this.value;
 
     let lastDigitIndex = value.indexOf('_');
@@ -47,8 +41,8 @@ export default class DateField extends InputField {
         break;
     }
     
-    inputEl.selectionStart = caretPosition;
-    inputEl.selectionEnd = caretPosition;
+    textInputEl.selectionStart = caretPosition;
+    textInputEl.selectionEnd = caretPosition;
   }
 
   formatValue(value: string) {
@@ -59,25 +53,19 @@ export default class DateField extends InputField {
     return `${day}-${month}-${year}`;
   }
 
-  get value(): string {
-    return this._value;
-  }
   set value(value: string) {
-    const _value = this.formatValue(value);
-    this._value = _value;
-    this.inputEl.value = _value;
-    super.onChange();
+    super.value = this.formatValue(value);
   }
 }
 
-interface DateFieldProps extends React.HTMLAttributes<HTMLElement> {
-  value?: string;
-  label?: string;
-}
 declare global {
+  module MDC {
+    interface DateFieldProps extends InputFieldProps<DateField> {
+    }
+  }
   module JSX {
     interface IntrinsicElements {
-      'md-datefield': DateFieldProps;
+      'md-datefield': MDC.DateFieldProps;
     }
   }
 }
