@@ -21,7 +21,7 @@ declare global {
   }
   module JSX {
     interface IntrinsicElements {
-      'md-datefield': MDC.TextFieldProps;
+      'md-textfield': MDC.TextFieldProps;
     }
   }
 }

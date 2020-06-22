@@ -5,8 +5,6 @@ import template from './DateField.html';
 @customElement('md-datefield')
 export default class DateField extends InputField {
 
-  private _value = '';
-
   constructor() {
     super();
 

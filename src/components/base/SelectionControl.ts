@@ -10,7 +10,7 @@ export default class SelectionControl extends InputElement {
 
   constructor(type: string) {
     super(type);
-    
+
     new RippleEffect(this);
     this.shadowRoot.appendChild(template.fragment);
     this.addEventListener('click', this.onClick);
@@ -54,7 +54,7 @@ export default class SelectionControl extends InputElement {
 
 declare global {
   module MDC {
-    interface SelectionControlProps<T> extends InteractiveElementProps<T> {
+    interface SelectionControlProps<T> extends InputElementProps<T> {
       checked?: boolean;
     }
   }

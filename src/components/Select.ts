@@ -1,4 +1,4 @@
-import customElement from '../internals/customElement';
+import customElement from '@internals/customElement';
 import InputField from './base/InputField';
 import SelectOption from './SelectOption';
 import template from './Select.html';

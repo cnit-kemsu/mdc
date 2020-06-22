@@ -78,7 +78,7 @@ declare global {
   module MDC {
     interface InputFieldProps<T> extends InputElementProps<T> {
       label?: string;
-      helperText?: string;
+      'helper-text'?: string;
       error?: string;
     }
   }

@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 declare global {
   module JSX {
     interface IntrinsicElements {
-      'md-textfield': any;
       'md-select': any;
       'md-option': any;
     }
