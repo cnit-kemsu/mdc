@@ -5,7 +5,7 @@ const __APPEND_INPUT_ELEMENT__ = window.webmd.appendInputElement;
 
 export default class InputElement extends InteractiveElement {
 
-  private _value: string = null;
+  protected _value: string = null;
   private _name: string;
   protected inputEl: HTMLInputElement = null;
 
@@ -39,12 +39,13 @@ export default class InputElement extends InteractiveElement {
         if (__APPEND_INPUT_ELEMENT__) this.inputEl.name = newValue;
         break;
       case 'value':
-        this._value = newValue;
-        if (__APPEND_INPUT_ELEMENT__) this.inputEl.value = newValue;
+        //this._value = newValue;
+        //if (__APPEND_INPUT_ELEMENT__) this.inputEl.value = newValue;
+        this.value = newValue;
         break;
     }
   }
-  
+
   get name(): string {
     return this._name;
   }

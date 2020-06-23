@@ -10,10 +10,10 @@ export default class Select extends InputField {
   private dropdownEl: HTMLLabelElement;
   private open = false;
 
-  private _value: string = '';
+  //private _value: string = '';
   private focusIndex: number = -1;
   private _selectedOption: SelectOption = null;
-  private _options: SelectOption[];
+  private _options: SelectOption[] = [];
   requireToAdoptOptions: boolean = true;
 
   constructor() {
@@ -24,26 +24,22 @@ export default class Select extends InputField {
     this.dropdownEl = this.shadowRoot.querySelector('.dropdown');
 
     this.addEventListener('keydown', this.handleKeydown);
-    this.addEventListener('keyup', this.handleKeyup);
+    //this.addEventListener('keyup', this.handleKeyup);
     this.addEventListener('click', this.handleClick);
     this.addEventListener('select', this.handleSelect);
 
     const slot: HTMLSlotElement = this.shadowRoot.querySelector('slot');
-    const nodes = slot.assignedNodes().filter(node => node.nodeName === 'MD-OPTION');
-    // @ts-ignore
-    this._options = nodes;
+    // const nodes = slot.assignedNodes().filter(node => node.nodeName === 'MD-OPTION');
+    // // @ts-ignore
+    // this._options = nodes;
 
     slot.addEventListener('slotchange', function(event) {
+      console.log('slotchange');
       //console.log(slot);
       const nodes = slot.assignedNodes().filter(node => node.nodeName === 'MD-OPTION');
       console.log(nodes);
       this._options = nodes;
     });
-  }
-
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    super.attributeChangedCallback(name, oldValue, newValue);
-    if (name === 'disabled') this.valueEl.tabIndex = newValue === null ? 0 : -1;
   }
 
   private incrementFocusIndex(value: number) {
@@ -81,14 +77,14 @@ export default class Select extends InputField {
   private handleSelect(event: Event) {
     event.stopPropagation();
     this.selectedOption = event.target as SelectOption;
-    super.onChange();
+    super.handleChange();
     this.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
   }
 
-  private handleKeyup(event: KeyboardEvent) {
-    if (event.key !== ' ' || event.target !== this) return;
-    this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-  }
+  // protected handleKeyup(event: KeyboardEvent) {
+  //   if (event.target !== this) return;
+  //   super.handleKeyup(event);
+  // }
 
   private handleClick(event: MouseEvent) {
     this.toggleMenu();
@@ -104,11 +100,6 @@ export default class Select extends InputField {
   }
 
   private get options(): SelectOption[] {
-    // if (this.requireToAdoptOptions) {
-    //   this.requireToAdoptOptions = false;
-    //   const elements = this.getElementsByTagName('md-option') as HTMLCollectionOf<SelectOption>;
-    //   this._options = Array.from(elements);
-    // }
     return this._options;
   }
 
@@ -141,6 +132,6 @@ export default class Select extends InputField {
   }
   set value(value: string) {
     this.selectedOption = this.options.find(option => option.value === value);
-    super.onChange();
+    super.handleChange();
   }
 }

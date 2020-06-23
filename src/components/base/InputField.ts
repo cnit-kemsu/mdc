@@ -7,7 +7,6 @@ export default class InputField extends InputElement {
   protected containerEl: HTMLDivElement;
   protected labelEl: HTMLLabelElement;
   protected helperTextEl: HTMLDivElement;
-  protected textInputEl: HTMLInputElement;
 
   constructor() {
     super('text');
@@ -22,10 +21,8 @@ export default class InputField extends InputElement {
     return ['label', 'helper-text', 'error', ...InputElement.observedAttributes];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    super.attributeChangedCallback(name, oldValue, newValue);
     switch (name) {
-      case 'disabled':
-        this.textInputEl.disabled = newValue !== null;
-        break;
       case 'label':
         this.labelEl.innerText = newValue || '';
         break;
@@ -38,7 +35,7 @@ export default class InputField extends InputElement {
     }
   }
 
-  protected onChange() {
+  protected handleChange() {
     const isEmpty = !this.value;
     if (this.isEmpty === isEmpty) return;
     this.isEmpty = isEmpty;
@@ -67,10 +64,12 @@ export default class InputField extends InputElement {
     this.setAttribute('error', value);
   }
 
+  get value(): string {
+    return super.value;
+  }
   set value(value: string) {
     super.value = value;
-    this.textInputEl.value = value;
-    this.onChange();
+    this.handleChange();
   }
 }
 

@@ -1,15 +1,13 @@
 import customElement from '../internals/customElement';
 import InteractiveElement from './base/InteractiveElement';
 import RippleEffect from './base/RippleEffect';
-import Select from './Select';
+//import Select from './Select';
 import template from './SelectOption.html';
-
-const observedAttributes = ['label', 'value'];
 
 @customElement('md-option')
 export default class SelectOption extends InteractiveElement {
 
-  private selectEl: Select;
+  //private selectEl: Select;
   private labelEl: HTMLSpanElement;
   private _value: string = '';
   private _label: string = '';
@@ -18,49 +16,34 @@ export default class SelectOption extends InteractiveElement {
     super();
 
     new RippleEffect(this);
-
     this.shadowRoot.appendChild(template.fragment);
-
     this.labelEl = this.shadowRoot.querySelector('label');
-    
-    this.addEventListener('click', this.onClick);
+    this.addEventListener('click', this.handleClick);
   }
 
   connectedCallback() {
-    this.tabIndex = -1;
+    this.focusableEl.tabIndex = -1;
+  }
 
-    //this.selectEl = this.closest('md-select') as Select;
-    this.selectEl = this.parentNode as Select;
-    this.selectEl.requireToAdoptOptions = true;
-  }
-  disconnectedCallback() {
-    this.selectEl.requireToAdoptOptions = true;
-  }
   static get observedAttributes() {
-    return observedAttributes;
+    return ['label', 'value'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
     switch (name) {
-      case 'value':
-        this._value = newValue;
-        break;
       case 'label':
         this._label = newValue;
         this.labelEl.innerText = newValue;
         break;
+      case 'value':
+        this._value = newValue;
+        break;
     }
   }
 
-  private onClick() {
+  private handleClick(event: Event) {
+    event.stopPropagation();
     this.dispatchEvent(new CustomEvent('select', { bubbles: true, cancelable: true, composed: true }));
-  }
-
-  get value(): string {
-    return this._value;
-  }
-  set value(value: string) {
-    this.setAttribute('value', value);
   }
 
   get label(): string {
@@ -68,5 +51,12 @@ export default class SelectOption extends InteractiveElement {
   }
   set label(value: string) {
     this.setAttribute('label', value);
+  }
+
+  get value(): string {
+    return this._value;
+  }
+  set value(value: string) {
+    this.setAttribute('value', value);
   }
 }

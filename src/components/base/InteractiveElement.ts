@@ -26,7 +26,7 @@ export default class InteractiveElement extends HTMLElement {
     }
   }
 
-  private handleKeyup(event: KeyboardEvent) {
+  protected handleKeyup(event: KeyboardEvent) {
     if (event.key !== ' ') return;
     this.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
   }

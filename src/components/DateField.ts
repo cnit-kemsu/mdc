@@ -1,19 +1,14 @@
 import customElement from '@internals/customElement';
-import InputField from './base/InputField';
+import TextField from './TextField';
 import template from './DateField.html';
 
 @customElement('md-datefield')
-export default class DateField extends InputField {
+export default class DateField extends TextField {
 
-  constructor() {
-    super();
+  handleInput(event: InputEvent) {
+    event.stopPropagation();
 
-    this.containerEl.prepend(template.fragment);
-    this.textInputEl = this.shadowRoot.querySelector('input');
-    this.addEventListener('input', this.onInput);
-  }
-
-  onInput({ inputType, data }: InputEvent) {
+    const { inputType, data } = event;
     const { textInputEl } = this;
     let caretPosition = textInputEl.selectionStart;
 
@@ -23,7 +18,7 @@ export default class DateField extends InputField {
     let lastDigitIndex = value.indexOf('_');
     if (inputType === 'deleteContentBackward' && value[lastDigitIndex - 1] === '-') lastDigitIndex--;
 
-    if (caretPosition > lastDigitIndex) caretPosition = lastDigitIndex;
+    if (lastDigitIndex > 0 && caretPosition > lastDigitIndex) caretPosition = lastDigitIndex;
     else switch (inputType) {
       case 'insertText':
         const charCode = data.charCodeAt(0);
@@ -41,6 +36,8 @@ export default class DateField extends InputField {
     
     textInputEl.selectionStart = caretPosition;
     textInputEl.selectionEnd = caretPosition;
+
+    this.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
   }
 
   formatValue(value: string) {
@@ -51,6 +48,9 @@ export default class DateField extends InputField {
     return `${day}-${month}-${year}`;
   }
 
+  get value(): string {
+    return super.value;
+  }
   set value(value: string) {
     super.value = this.formatValue(value);
   }
