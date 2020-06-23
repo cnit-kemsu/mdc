@@ -85,10 +85,16 @@
       </div>
 
       <div>
-        <form id="form123">
+        <form id="form123" onsubmit="event.preventDefault(); console.log(event.target.elements)">
           <md-radio style="margin: 16px" value="q" name="asd1"></md-radio>
           <md-radio style="margin: 16px" value="b" name="asd1" checked></md-radio>
           <md-radio style="margin: 16px" value="c" name="asd1" checked></md-radio>
+
+          <md-radio style="margin: 16px" value="q" name="asd2"></md-radio>
+          <md-radio style="margin: 16px" value="b" name="asd2" checked></md-radio>
+          <md-radio style="margin: 16px" value="c" name="asd2" checked></md-radio>
+
+          <input type="submit" />
         </form>
       </div>
 

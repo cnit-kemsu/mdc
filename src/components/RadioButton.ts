@@ -49,10 +49,10 @@ export default class RadioButton extends SelectionControl {
     }
   }
 
-  onClick() {
+  handleClick() {
     if (this.checked) return;
     this.checked = true;
-    super.onClick();
+    super.handleClick();
   }
 }
 

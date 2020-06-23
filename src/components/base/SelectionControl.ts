@@ -13,12 +13,7 @@ export default class SelectionControl extends InputElement {
 
     new RippleEffect(this);
     this.shadowRoot.appendChild(template.fragment);
-    this.addEventListener('click', this.onClick);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    if (__APPEND_INPUT_ELEMENT__) this.appendChild(this.inputEl);
+    this.addEventListener('click', this.handleClick);
   }
 
   static get observedAttributes() {
@@ -26,7 +21,6 @@ export default class SelectionControl extends InputElement {
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
-
     switch (name) {
       case 'checked':
         if (newValue === 'false') {
@@ -39,7 +33,7 @@ export default class SelectionControl extends InputElement {
     }
   }
 
-  onClick() {
+  handleClick() {
     this.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
   }
   

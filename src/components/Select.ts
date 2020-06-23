@@ -14,7 +14,6 @@ export default class Select extends InputField {
   private focusIndex: number = -1;
   private _selectedOption: SelectOption = null;
   private _options: SelectOption[] = [];
-  requireToAdoptOptions: boolean = true;
 
   constructor() {
     super();
@@ -76,21 +75,13 @@ export default class Select extends InputField {
 
   private handleSelect(event: Event) {
     event.stopPropagation();
-    this.selectedOption = event.target as SelectOption;
-    super.handleChange();
+    const option = event.target as SelectOption;
+    super.value = option.value;
+    this.selectedOption = option;
     this.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
   }
 
-  // protected handleKeyup(event: KeyboardEvent) {
-  //   if (event.target !== this) return;
-  //   super.handleKeyup(event);
-  // }
-
   private handleClick(event: MouseEvent) {
-    this.toggleMenu();
-  }
-
-  toggleMenu() {
     this.open = !this.open;
     this.dropdownEl.style.setProperty('display', this.open ? 'block' : 'none');
     if (this.open) this._selectedOption?.focus();
@@ -102,36 +93,29 @@ export default class Select extends InputField {
   private get options(): SelectOption[] {
     return this._options;
   }
-
   private set selectedOption(option: SelectOption) {
     const { _selectedOption, options, valueEl } = this;
 
-    if (_selectedOption !== null) {
-      _selectedOption.tabIndex = -1;
-      _selectedOption.removeAttribute('selected');
-    }
+    if (_selectedOption !== null) _selectedOption.selected = false;
 
     if (option === undefined) {
       valueEl.innerHTML = '';
-      this._value = '';
       this._selectedOption = null;
       this.focusIndex = -1;
       return;
     }
 
-    option.tabIndex = 0;
-    option.setAttribute('selected', '');
+    option.selected = true;
     valueEl.innerHTML = option.label;
-    this._value = option.value;
     this._selectedOption = option;
     this.focusIndex = options.indexOf(option);
   }
 
   get value(): string {
-    return this._value;
+    return super.value;
   }
   set value(value: string) {
+    super.value = value;
     this.selectedOption = this.options.find(option => option.value === value);
-    super.handleChange();
   }
 }

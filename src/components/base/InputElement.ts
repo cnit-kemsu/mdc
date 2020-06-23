@@ -14,6 +14,7 @@ export default class InputElement extends InteractiveElement {
 
     if (__APPEND_INPUT_ELEMENT__) {
       const inputEl = document.createElement('input');
+      inputEl.style.display = 'none';
       inputEl.type = type;
       //inputEl.name = this._name;
       //inputEl.value = this._value;
