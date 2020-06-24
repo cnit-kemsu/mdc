@@ -7,6 +7,7 @@ export { default as RadioButton } from './components/RadioButton';
 export { default as TextField } from './components/TextField';
 export { default as IconButton } from './components/IconButton';
 export { default as SelectOption } from './components/SelectOption';
+export { default as Dropdown } from './components/Dropdown';
 export { default as Select } from './components/Select';
 export { default as DateField } from './components/DateField';
 

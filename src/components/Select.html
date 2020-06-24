@@ -1,16 +1,4 @@
 <style>
-  .dropdown {
-    position: absolute;
-    left: 0px;
-    top: 56px;
-    width: 100%;
-    display: none;
-    background-color: white;
-    z-index: 1000;
-    box-shadow: var(--md-dp-8);
-    padding: 8px 0px;
-    border-radius: 4px;
-  }
   .input {
     min-width: 214px;
     cursor: pointer;
@@ -22,6 +10,6 @@
 
 <div class="input value" tabindex="0"></div>
 
-<div class="dropdown">
+<md-dropdown>
   <slot></slot>
-</div>
+</md-dropdown>
