@@ -21,11 +21,11 @@ export default class SelectOption extends InteractiveElement {
   }
 
   connectedCallback() {
-    this.focusableEl.tabIndex = -1;
+    this.tabIndex = -1;
   }
 
   static get observedAttributes() {
-    return ['label', 'value'];
+    return ['label', 'value', 'selected'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     super.attributeChangedCallback(name, oldValue, newValue);
@@ -37,11 +37,16 @@ export default class SelectOption extends InteractiveElement {
       case 'value':
         this._value = newValue;
         break;
+      case 'selected':
+        const selected = newValue !== null;
+        this._selected = selected;
+        this.tabIndex = selected ? 0 : -1;
+        this.dispatchEvent(new CustomEvent('select', { bubbles: true, cancelable: true, composed: true }));
+        break;
     }
   }
 
   private handleClick(event: Event) {
-    event.stopPropagation();
     this.selected = true;
   }
 
@@ -63,14 +68,8 @@ export default class SelectOption extends InteractiveElement {
     return this._selected;
   }
   set selected(value: boolean) {
-    this._selected = value;
-    if (value) {
-      this.focusableEl.tabIndex = 0;
-      this.setAttribute('selected', '');
-      this.dispatchEvent(new CustomEvent('select', { bubbles: true, cancelable: true, composed: true }));
-    } else {
-      this.focusableEl.tabIndex = -1;
-      this.removeAttribute('selected');
-    }
+    if (value === this._selected) return;
+    if (value) this.setAttribute('selected', '');
+    else this.removeAttribute('selected');
   }
 }

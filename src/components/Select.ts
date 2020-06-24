@@ -13,7 +13,7 @@ export default class Select extends InputField {
   //private _value: string = '';
   private focusIndex: number = -1;
   private _selectedOption: SelectOption = null;
-  private _options: SelectOption[] = [];
+  private options: SelectOption[] = [];
 
   constructor() {
     super();
@@ -30,14 +30,14 @@ export default class Select extends InputField {
     const slot: HTMLSlotElement = this.shadowRoot.querySelector('slot');
     // const nodes = slot.assignedNodes().filter(node => node.nodeName === 'MD-OPTION');
     // // @ts-ignore
-    // this._options = nodes;
+    // this.options = nodes;
 
     slot.addEventListener('slotchange', function(event) {
       console.log('slotchange');
       //console.log(slot);
       const nodes = slot.assignedNodes().filter(node => node.nodeName === 'MD-OPTION');
       console.log(nodes);
-      this._options = nodes;
+      this.options = nodes;
     });
   }
 
@@ -73,15 +73,40 @@ export default class Select extends InputField {
     if (key === ' ') event.preventDefault();
   }
 
+  private setSelectedOption(option: SelectOption) {
+    const { _selectedOption, options, valueEl } = this;
+
+    if (option == null) {
+      super.value = null;
+      valueEl.innerHTML = '';
+      this._selectedOption = null;
+      this.focusIndex = -1;
+      return;
+    }
+
+    super.value = option.value;
+    valueEl.innerHTML = option.label;
+    this._selectedOption = option;
+    this.focusIndex = options.indexOf(option);
+
+    if (_selectedOption !== null) _selectedOption.selected = false;
+  }
+
   private handleSelect(event: Event) {
     event.stopPropagation();
     const option = event.target as SelectOption;
-    super.value = option.value;
-    this.selectedOption = option;
-    this.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+    const { _selectedOption } = this;
+
+    if (option.selected) this.setSelectedOption(option);
+    else if (option === _selectedOption) this.setSelectedOption(null);
   }
 
-  private handleClick(event: MouseEvent) {
+  protected handleKeyup(event: KeyboardEvent) {
+    if (event.target !== this) return;
+    super.handleKeyup(event);
+  }
+
+  private handleClick() {
     this.open = !this.open;
     this.dropdownEl.style.setProperty('display', this.open ? 'block' : 'none');
     if (this.open) this._selectedOption?.focus();
@@ -90,32 +115,11 @@ export default class Select extends InputField {
     else this.containerEl.style.removeProperty('--md-background-color');
   }
 
-  private get options(): SelectOption[] {
-    return this._options;
-  }
-  private set selectedOption(option: SelectOption) {
-    const { _selectedOption, options, valueEl } = this;
-
-    if (_selectedOption !== null) _selectedOption.selected = false;
-
-    if (option === undefined) {
-      valueEl.innerHTML = '';
-      this._selectedOption = null;
-      this.focusIndex = -1;
-      return;
-    }
-
-    option.selected = true;
-    valueEl.innerHTML = option.label;
-    this._selectedOption = option;
-    this.focusIndex = options.indexOf(option);
-  }
-
   get value(): string {
     return super.value;
   }
   set value(value: string) {
-    super.value = value;
-    this.selectedOption = this.options.find(option => option.value === value);
+    const option = this.options.find(option => option.value === value);
+    this.setSelectedOption(option);
   }
 }

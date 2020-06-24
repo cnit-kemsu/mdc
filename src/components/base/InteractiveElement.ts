@@ -2,7 +2,7 @@ import template from './InteractiveElement.html';
 
 export default class InteractiveElement extends HTMLElement {
 
-  protected focusableEl: HTMLElement = this;
+  //protected focusableEl: HTMLElement = this;
 
   constructor() {
     super();
@@ -12,7 +12,8 @@ export default class InteractiveElement extends HTMLElement {
   }
 
   connectedCallback() {
-    this.focusableEl.tabIndex = this.disabled ? -1 : 0;
+    //this.focusableEl.tabIndex = this.disabled ? -1 : 0;
+    this.tabIndex = this.disabled ? -1 : 0;
   }
   static get observedAttributes() {
     return ['disabled'];
@@ -21,7 +22,8 @@ export default class InteractiveElement extends HTMLElement {
     switch (name) {
       case 'disabled':
         if (newValue === 'false') this.removeAttribute('disabled');
-        else this.focusableEl.tabIndex = newValue === null ? 0 : -1;
+        //else this.focusableEl.tabIndex = newValue === null ? 0 : -1;
+        else this.tabIndex = newValue === null ? 0 : -1;
         break;
     }
   }
