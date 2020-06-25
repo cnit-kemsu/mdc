@@ -1,6 +1,7 @@
 import customElement from '@internals/customElement';
 import InputField from './base/InputField';
 import './Dropdown';
+import Dropdown from './Dropdown';
 import SelectOption from './SelectOption';
 import template from './Select.html';
 
@@ -8,7 +9,7 @@ import template from './Select.html';
 export default class Select extends InputField {
 
   private valueEl: HTMLDivElement;
-  private dropdownEl: any;
+  private dropdownEl: Dropdown;
   private open = false;
 
   //private _value: string = '';
@@ -22,6 +23,7 @@ export default class Select extends InputField {
     this.containerEl.prepend(template.fragment);
     this.valueEl = this.shadowRoot.querySelector('.value');
     this.dropdownEl = this.shadowRoot.querySelector('md-dropdown');
+    this.dropdownEl.targetElement = this.containerEl;
 
     this.addEventListener('keydown', this.handleKeydown);
     //this.addEventListener('keyup', this.handleKeyup);
