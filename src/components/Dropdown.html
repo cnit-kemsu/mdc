@@ -1,9 +1,6 @@
 <style>
   :host {
     position: absolute;
-    left: 0px;
-    top: 56px;
-    width: 100%;
     display: none;
     background-color: white;
     z-index: 1000;
@@ -12,34 +9,10 @@
     border-radius: 4px;
     user-select: none;
 
-    transform: scale(0);
+    transform-origin: center bottom;
+    transform: scale(0.8);
     opacity: 0;
-    transition: opacity 900ms linear, transform 900ms linear;
-    --fadein: md-fadein ease 1225ms forwards;
-    --fadeout: md-fadeout ease 1225ms forwards;
-  }
-  :host([open]) {
-    display: block;
-    transform: scale(1);
-    opacity: 1;
-  }
-  @keyframes md-fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  @keyframes md-fadeout {
-    from {
-      opacity: 1;
-      display: block;
-    }
-    to {
-      opacity: 0;
-      display: block;
-    }
+    transition: opacity 75ms linear, transform 0ms 75ms;
   }
 </style>
 

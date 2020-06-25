@@ -109,12 +109,9 @@ export default class Select extends InputField {
 
   private handleClick() {
     this.open = !this.open;
-    //this.dropdownEl.style.setProperty('display', this.open ? 'block' : 'none');
-    //if (this.open) this.dropdownEl.classList.add('dropdown-open'); else this.dropdownEl.classList.remove('dropdown-open');
-    console.log(this.dropdownEl);
     this.dropdownEl.open = this.open;
-    //if (this.open) this.dropdownEl.open(); else this.dropdownEl.close();
-    
+    // if (this.open) this.dropdownEl.open(this);
+    // else this.dropdownEl.close();
     if (this.open) this._selectedOption?.focus();
     else this.valueEl.focus();
     if (this.open) this.containerEl.style.setProperty('--md-background-color', '#f5f5f5');
