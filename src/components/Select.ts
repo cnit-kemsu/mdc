@@ -23,7 +23,7 @@ export default class Select extends InputField {
     this.containerEl.prepend(template.fragment);
     this.valueEl = this.shadowRoot.querySelector('.value');
     this.dropdownEl = this.shadowRoot.querySelector('md-dropdown');
-    this.dropdownEl.targetElement = this.containerEl;
+    this.dropdownEl.anchor = this.containerEl;
 
     this.addEventListener('keydown', this.handleKeydown);
     //this.addEventListener('keyup', this.handleKeyup);

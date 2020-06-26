@@ -8,7 +8,12 @@ export default class Dropdown extends HTMLElement {
   private style1: HTMLStyleElement;
   private style2: HTMLStyleElement;
   private timeout: any = null;
-  private _targetElement: HTMLElement = null;
+  private _anchor: HTMLElement = null;
+  private horPos: string = 'auto';
+  private verPos: string = 'auto';
+  private _outside: boolean = false;
+  private horPref: string = 'auto';
+  private verPref: string = 'auto';
 
   constructor() {
     super();
@@ -30,10 +35,14 @@ export default class Dropdown extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['open'];
+    return ['open', 'positioning', 'outside'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     switch (name) {
+      case 'positioning':
+        const [hor, ver] = (newValue || '').split(' ');
+        this.horPos = hor || 'auto';
+        this.verPos = ver || 'auto';
       case 'open':
         const open = newValue !== null;
         this._open = open;
@@ -76,13 +85,45 @@ export default class Dropdown extends HTMLElement {
   }
   appendStyle2() {
     this.shadowRoot.appendChild(this.style2);
+
+    const popoverRect = this.getBoundingClientRect();
+    console.log(popoverRect);
+
+    const anchorRect = this._anchor.getBoundingClientRect();
+    console.log(anchorRect);
+
+    const docHeight = document.documentElement.clientHeight;
+    console.log(docHeight);
+
+    const docWidth = document.documentElement.clientWidth;
+    console.log(docWidth);
+
+    //
+
+    const top = this._outside ? anchorRect.top : anchorRect.bottom;
+    const bottom = this._outside ? anchorRect.bottom : anchorRect.top;
+
+    let bottomOverflow = top + popoverRect.height - docHeight;
+    if (bottomOverflow < 0) bottomOverflow = 0;
+
+    let topOverflow = popoverRect.height - bottom;
+    if (topOverflow < 0) topOverflow = 0;
+
+    const vert = bottomOverflow < topOverflow ? 'top' : 'bottom';
+
+
+    if (bottomOverflow > 0) {
+      //this.style.setProperty('bottom', '56px');
+    } else {
+      //this.style.setProperty('top', '56px');
+    }
   }
 
-  get targetElement(): HTMLElement {
-    return this._targetElement;
+  get anchor(): HTMLElement {
+    return this._anchor;
   }
-  set targetElement(value: HTMLElement) {
-    this._targetElement = value || null;
+  set anchor(value: HTMLElement) {
+    this._anchor = value || null;
   }
 
   get open(): boolean {
