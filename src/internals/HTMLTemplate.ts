@@ -11,11 +11,3 @@ export default class HTMLTemplate {
     return this.templateEl.content.cloneNode(true);
   }
 }
-
-declare module '*.html' {
-  const content: HTMLTemplate;
-}
-
-declare module '*.svg' {
-  const content: HTMLTemplate;
-}

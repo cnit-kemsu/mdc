@@ -19,7 +19,7 @@ function App() {
     <md-button leading-icon="favorite" raised label="Click me" onClick={() => console.log('click')} />
     <md-button trailing-icon="copyright" outlined label="Click me" disabled onClick={() => console.log('click')} />
 
-    <md-checkbox onInput={event => console.log(event.target.checked)} />
+    <md-checkbox checked onInput={event => console.log(event.target.checked)} />
     <md-checkbox disabled onInput={event => console.log(event.target.checked)} />
 
     <md-textfield disabled={false || null} onInput={event => console.log('input', event.target.value)} />
