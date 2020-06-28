@@ -114,8 +114,9 @@ module.exports = class RollupPlugin {
     }
 
     process.on('uncaughtException', function(err) {
-      if (err['plugin'] !== 'typescript') throw err;
+      //if (err['plugin'] !== 'typescript') throw err;
       setError(err);
+      console.log(err);
     });
     
 

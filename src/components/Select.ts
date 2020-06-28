@@ -5,6 +5,10 @@ import Dropdown from './Dropdown';
 import SelectOption from './SelectOption';
 import template from './Select.html';
 
+import IconStore from '../IconStore';
+import ArrowDropDownIcon from '../icons/arrow-drop-down.svg';
+IconStore.set('arrow-drop-down', ArrowDropDownIcon);
+
 @customElement('md-select')
 export default class Select extends InputField {
 

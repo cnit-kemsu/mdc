@@ -27,13 +27,15 @@ export default function htmlTemplateLoader() {
       const ast = this.parse(code);
       let _code = code;
       const addWatchFile = this.addWatchFile;
+      let shift = 0;
+      let templateClassImport = `import HTMLTemplate from '@internals/HTMLTemplate';`;
 
       walk(ast, {
         enter: function(node) {
           if (node.type === 'ImportDeclaration') {
             // @ts-expect-error
             const { specifiers, source, start, end } = node;
-            if (source.value.slice(-5) === '.html') {
+            if (source.value.slice(-5) === '.html' || source.value.slice(-4) === '.svg') {
               const filepath = path.resolve(path.dirname(id), source.value);
               addWatchFile(filepath);
               const dirname = path.dirname(id);
@@ -41,7 +43,9 @@ export default function htmlTemplateLoader() {
               const content = readFileSync(file).toString();
               const minified = minify(content, htmlMinifierOptions);
               const html = `process.env.NODE_ENV === 'production' \n? \`${minified}\` \n: \`${content}\n\``;
-              _code = _code.slice(0, start) + `import HTMLTemplate from '@internals/HTMLTemplate';\n var ${specifiers[0].local.name} = new HTMLTemplate(${html});\n` + _code.slice(end);
+              _code = _code.slice(0, start + shift) + `${templateClassImport}\n var ${specifiers[0].local.name} = new HTMLTemplate(${html});\n` + _code.slice(end + shift);
+              shift = _code.length - code.length;
+              templateClassImport = '';
             }
           }
 				},

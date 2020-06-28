@@ -8,10 +8,11 @@ export default class Dropdown extends HTMLElement {
   private style2: HTMLStyleElement;
   private style3: HTMLStyleElement;
   private timeout: any = null;
-  private _open: boolean = false;
-  private _anchor: HTMLElement = null;
+  
   private _sideward: boolean = false;
-
+  private _anchor: HTMLElement = null;
+  private _open: boolean = false;
+  
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -32,7 +33,7 @@ export default class Dropdown extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['open', 'positioning', 'outside'];
+    return ['open', 'sideward'];
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     switch (name) {
@@ -41,14 +42,17 @@ export default class Dropdown extends HTMLElement {
         this._open = open;
 
         if (open) {
+
           if (this.timeout !== null) {
             clearTimeout(this.timeout);
             this.timeout = null;
-          }
-          else this.shadowRoot.removeChild(this.style1);
+          } else this.shadowRoot.removeChild(this.style1);
+
           this.appendStyle3();
+
           requestAnimationFrame(this.appendStyle2);
-        } else {
+        }
+        else {
           this.shadowRoot.removeChild(this.style2);
           this.timeout = setTimeout(this.appendStyle1, 75);
         }
@@ -66,21 +70,12 @@ export default class Dropdown extends HTMLElement {
   }
   appendStyle3() {
     const { _sideward, _anchor } = this;
-
     const rect = this.getBoundingClientRect();
-    console.log(rect);
-
     const anchorRect = _anchor.getBoundingClientRect();
-    console.log(anchorRect);
-
     const docHeight = document.documentElement.clientHeight;
-    console.log(docHeight);
-
-    const docWidth = document.documentElement.clientWidth;
-    console.log(docWidth);
+    //const docWidth = document.documentElement.clientWidth;
 
     const style3 = document.createElement('style');
-
     if (_sideward) {
     } else {
       let bottomOverflow = anchorRect.bottom + rect.height - docHeight;
@@ -88,11 +83,6 @@ export default class Dropdown extends HTMLElement {
   
       let topOverflow = rect.height - anchorRect.top;
       if (topOverflow < 0) topOverflow = 0;
-
-      console.log('bottomOverflow:', bottomOverflow);
-      console.log('topOverflow:', topOverflow);
-
-      console.log(bottomOverflow > topOverflow ? 'above' : 'below');
   
       style3.innerHTML = ':host{' + (bottomOverflow > topOverflow
       ? `
@@ -107,6 +97,13 @@ export default class Dropdown extends HTMLElement {
 
     this.style3 = style3;
     this.shadowRoot.appendChild(style3);
+  }
+
+  get sideward(): boolean {
+    return this._sideward;
+  }
+  set sideward(value: boolean) {
+    this._sideward = value;
   }
 
   get anchor(): HTMLElement {
