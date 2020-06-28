@@ -4,16 +4,13 @@ import template from './Dropdown.html';
 @customElement('md-dropdown')
 export default class Dropdown extends HTMLElement {
 
-  private _open: boolean = false;
   private style1: HTMLStyleElement;
   private style2: HTMLStyleElement;
+  private style3: HTMLStyleElement;
   private timeout: any = null;
+  private _open: boolean = false;
   private _anchor: HTMLElement = null;
-  private horPos: string = 'auto';
-  private verPos: string = 'auto';
-  private _outside: boolean = false;
-  private horPref: string = 'auto';
-  private verPref: string = 'auto';
+  private _sideward: boolean = false;
 
   constructor() {
     super();
@@ -39,28 +36,9 @@ export default class Dropdown extends HTMLElement {
   }
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     switch (name) {
-      case 'positioning':
-        const [hor, ver] = (newValue || '').split(' ');
-        this.horPos = hor || 'auto';
-        this.verPos = ver || 'auto';
       case 'open':
         const open = newValue !== null;
         this._open = open;
-
-        // const rect
-        // = this.getBoundingClientRect();
-        // console.log(rect);
-        // console.log(document.documentElement.clientHeight);
-
-        // const docHeight = document.documentElement.clientHeight;
-
-        // let bottomOverflow = rect.bottom - docHeight;
-        // if (bottomOverflow < 0) bottomOverflow = 0;
-        // if (bottomOverflow > 0) {
-        //   //this.style.setProperty('bottom', '56px');
-        // } else {
-        //   //this.style.setProperty('top', '56px');
-        // }
 
         if (open) {
           if (this.timeout !== null) {
@@ -68,6 +46,7 @@ export default class Dropdown extends HTMLElement {
             this.timeout = null;
           }
           else this.shadowRoot.removeChild(this.style1);
+          this.appendStyle3();
           requestAnimationFrame(this.appendStyle2);
         } else {
           this.shadowRoot.removeChild(this.style2);
@@ -80,16 +59,18 @@ export default class Dropdown extends HTMLElement {
   appendStyle1() {
     this.shadowRoot.appendChild(this.style1);
     this.timeout = null;
-    //this.style.removeProperty('bottom');
-    //this.style.removeProperty('top');
+    this.shadowRoot.removeChild(this.style3);
   }
   appendStyle2() {
     this.shadowRoot.appendChild(this.style2);
+  }
+  appendStyle3() {
+    const { _sideward, _anchor } = this;
 
-    const popoverRect = this.getBoundingClientRect();
-    console.log(popoverRect);
+    const rect = this.getBoundingClientRect();
+    console.log(rect);
 
-    const anchorRect = this._anchor.getBoundingClientRect();
+    const anchorRect = _anchor.getBoundingClientRect();
     console.log(anchorRect);
 
     const docHeight = document.documentElement.clientHeight;
@@ -98,25 +79,34 @@ export default class Dropdown extends HTMLElement {
     const docWidth = document.documentElement.clientWidth;
     console.log(docWidth);
 
-    //
+    const style3 = document.createElement('style');
 
-    const top = this._outside ? anchorRect.top : anchorRect.bottom;
-    const bottom = this._outside ? anchorRect.bottom : anchorRect.top;
-
-    let bottomOverflow = top + popoverRect.height - docHeight;
-    if (bottomOverflow < 0) bottomOverflow = 0;
-
-    let topOverflow = popoverRect.height - bottom;
-    if (topOverflow < 0) topOverflow = 0;
-
-    const vert = bottomOverflow < topOverflow ? 'top' : 'bottom';
-
-
-    if (bottomOverflow > 0) {
-      //this.style.setProperty('bottom', '56px');
+    if (_sideward) {
     } else {
-      //this.style.setProperty('top', '56px');
+      let bottomOverflow = anchorRect.bottom + rect.height - docHeight;
+      if (bottomOverflow < 0) bottomOverflow = 0;
+  
+      let topOverflow = rect.height - anchorRect.top;
+      if (topOverflow < 0) topOverflow = 0;
+
+      console.log('bottomOverflow:', bottomOverflow);
+      console.log('topOverflow:', topOverflow);
+
+      console.log(bottomOverflow > topOverflow ? 'above' : 'below');
+  
+      style3.innerHTML = ':host{' + (bottomOverflow > topOverflow
+      ? `
+        transform-origin: center bottom;
+        bottom: ${anchorRect.height}px;
+      `
+      : `
+        transform-origin: center top;
+        top: ${anchorRect.height}px;
+      `) + '}';
     }
+
+    this.style3 = style3;
+    this.shadowRoot.appendChild(style3);
   }
 
   get anchor(): HTMLElement {
@@ -135,108 +125,3 @@ export default class Dropdown extends HTMLElement {
     else this.removeAttribute('open');
   }
 }
-
-// import customElement from '@internals/customElement';
-// import template from './Dropdown.html';
-
-// @customElement('md-dropdown')
-// export default class Dropdown extends HTMLElement {
-
-//   private _open: boolean = false;
-//   private style1: HTMLStyleElement;
-//   private style2: HTMLStyleElement;
-
-//   constructor() {
-//     super();
-//     this.attachShadow({ mode: 'open' });
-//     this.shadowRoot.appendChild(template.fragment);
-
-//     const style1 = document.createElement('style');
-//     style1.innerHTML = `:host{display: none;}`;
-//     this.style1 = style1;
-
-//     const style2 = document.createElement('style');
-//     style2.innerHTML = `:host {
-//       transform: scale(1);
-//       opacity: 1;
-//       transition: opacity 30ms linear, transform 120ms ease;
-//     }`;
-//     this.style2 = style2;
-
-//     this.appendStyle2 = this.appendStyle2.bind(this);
-//     this.appendStyle1 = this.appendStyle1.bind(this);
-
-//     this.appendStyle1();
-//   }
-
-//   private opening = false;
-//   static get observedAttributes() {
-//     return ['open'];
-//   }
-//   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-//     switch (name) {
-//       case 'open':
-//         const open = newValue !== null;
-//         if (!this.opening && open && !this._open) {
-//           console.log(1);
-//           this.opening = true;
-//           this.removeAttribute('open');
-//           try {
-//             this.shadowRoot.removeChild(this.style1);
-//           } catch(err) {}
-//         } else if (this.opening) {
-//           console.log(2);
-//           this.opening = false;
-//           this._open = true;
-//           requestAnimationFrame(() => this.setAttribute('open', ''));
-//         } else {
-//           console.log(3);
-//           //this._open = open;
-//           if (open) {
-//             //this.shadowRoot.removeChild(this.style1);
-
-//             //const { top, left, bottom, right }
-//             const rect
-//             = this.getBoundingClientRect();
-//             console.log(rect);
-//             console.log(document.documentElement.clientHeight);
-
-//             const docHeight = document.documentElement.clientHeight;
-
-//             let bottomOverflow = rect.bottom - docHeight;
-//             if (bottomOverflow < 0) bottomOverflow = 0;
-//             if (bottomOverflow > 0) {
-//               //this.style.setProperty('bottom', '56px');
-//             } else {
-//               //this.style.setProperty('top', '56px');
-//             }
-
-//             //requestAnimationFrame(this.appendStyle2);
-//           } else {
-//             this._open = false;
-//             //this.shadowRoot.removeChild(this.style2);
-//             setTimeout(this.appendStyle1, 1075);
-//           }
-//         }
-//         break;
-//     }
-//   }
-
-//   appendStyle2() {
-//     this.shadowRoot.appendChild(this.style2);
-//   }
-//   appendStyle1() {
-//     !this._open && this.shadowRoot.appendChild(this.style1);
-//     //this.style.removeProperty('bottom');
-//     //this.style.removeProperty('top');
-//   }
-
-//   get open(): boolean {
-//     return this._open;
-//   }
-//   set open(value: boolean) {
-//     if (value === this._open) return;
-//     if (value) this.setAttribute('open', '');
-//     else this.removeAttribute('open');
-//   }
-// }
