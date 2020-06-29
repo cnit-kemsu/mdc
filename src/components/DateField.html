@@ -1,5 +1,23 @@
 <style>
-  
+  :host {
+    width: 200px;
+  }
+  .input {
+    padding-right: 52px;
+  }
+  .dropdown {
+    left: 0px;
+    width: 100%;
+  }
+  md-icon-button {
+    cursor: pointer;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+  }
 </style>
 
-<input type="text" class="input" spellcheck="false">
+<md-icon-button store-key="arrow dropdown"></md-icon-button>
+
+<md-date-picker class="dropdown">
+</md-date-picker>

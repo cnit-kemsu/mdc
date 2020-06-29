@@ -44,6 +44,7 @@
   ],
 
   "code-runner.executorMap": {
+    "javascript": "node --harmony",
     "typescript": "node -r ts-node/register"
   }
 }

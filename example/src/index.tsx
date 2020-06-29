@@ -27,7 +27,7 @@ function App() {
 
     <button onClick={() => setShow(!show)}>show/unshow</button>
     <button onClick={() => chval('4')}>chval</button>
-    <md-select label="asd" value="1">
+    <md-select label="tyutyu" value="1">
       <md-option value="1" label="asd" />
       <md-option value={val} label="qwe" />
       {show && <md-option value="3" label="zxc" />}

@@ -7,16 +7,16 @@ import template from './Select.html';
 
 import IconStore from '../IconStore';
 import ArrowDropDownIcon from '../icons/arrow-drop-down.svg';
-IconStore.set('arrow-drop-down', ArrowDropDownIcon);
+IconStore.set('arrow dropdown', ArrowDropDownIcon);
 
 @customElement('md-select')
 export default class Select extends InputField {
 
   private valueEl: HTMLDivElement;
   private dropdownEl: Dropdown;
-  private open = false;
+  private slotEl: HTMLSlotElement;
+  private _open = false;
 
-  //private _value: string = '';
   private focusIndex: number = -1;
   private _selectedOption: SelectOption = null;
   private options: SelectOption[] = [];
@@ -29,23 +29,50 @@ export default class Select extends InputField {
     this.dropdownEl = this.shadowRoot.querySelector('md-dropdown');
     this.dropdownEl.anchor = this.containerEl;
 
+    this.handleSlotChange = this.handleSlotChange.bind(this);
+
     this.addEventListener('keydown', this.handleKeydown);
-    //this.addEventListener('keyup', this.handleKeyup);
     this.addEventListener('click', this.handleClick);
     this.addEventListener('select', this.handleSelect);
 
     const slot: HTMLSlotElement = this.shadowRoot.querySelector('slot');
-    // const nodes = slot.assignedNodes().filter(node => node.nodeName === 'MD-OPTION');
-    // // @ts-ignore
-    // this.options = nodes;
+    slot.addEventListener('slotchange', this.handleSlotChange);
+    this.slotEl = slot;
+  }
 
-    slot.addEventListener('slotchange', function(event) {
-      console.log('slotchange');
-      //console.log(slot);
-      const nodes = slot.assignedNodes().filter(node => node.nodeName === 'MD-OPTION');
-      console.log(nodes);
-      this.options = nodes;
-    });
+  private handleSlotChange() {
+    const nodes = this.slotEl.assignedNodes().filter(node => node.nodeName === 'MD-OPTION') as SelectOption[];
+    this.options = nodes;
+
+    const option = nodes.find(opt => opt.value === this.value);
+    if (option !== undefined) {
+
+      if (this._selectedOption !== option) {
+        if (option.selected) this.setSelectedOption(option);
+        else option.selected = true;
+        super.value = option.value;
+      }
+      const other = nodes.filter(opt => opt !== option && opt.selected);
+      for (const opt of other) opt.selected = false;
+
+    } else {
+
+      const options = nodes.filter(opt => opt.selected);
+      if (options.length > 0) {
+
+        const option = options.pop();
+        this.setSelectedOption(option);
+        super.value = option.value;
+        for (const opt of options) opt.selected = false;
+
+      } else {
+
+        this.setSelectedOption(null);
+        super.value = null;
+
+      }
+
+    }
   }
 
   private incrementFocusIndex(value: number) {
@@ -71,7 +98,7 @@ export default class Select extends InputField {
 
     const increment = key === 'ArrowUp' ? -1 : key === 'ArrowDown' ? 1 : 0;
     if (increment !== 0) {
-      if (!this.open) return;
+      if (!this._open) return;
       event.preventDefault();
       this.incrementFocusIndex(increment);
       return;
@@ -84,14 +111,12 @@ export default class Select extends InputField {
     const { _selectedOption, options, valueEl } = this;
 
     if (option == null) {
-      super.value = null;
       valueEl.innerHTML = '';
       this._selectedOption = null;
       this.focusIndex = -1;
       return;
     }
 
-    super.value = option.value;
     valueEl.innerHTML = option.label;
     this._selectedOption = option;
     this.focusIndex = options.indexOf(option);
@@ -104,8 +129,13 @@ export default class Select extends InputField {
     const option = event.target as SelectOption;
     const { _selectedOption } = this;
 
-    if (option.selected) this.setSelectedOption(option);
-    else if (option === _selectedOption) this.setSelectedOption(null);
+    if (option.selected) {
+      this.setSelectedOption(option);
+      super.value = option.value;
+    } else if (option === _selectedOption) {
+      this.setSelectedOption(null);
+      super.value = null;
+    }
   }
 
   protected handleKeyup(event: KeyboardEvent) {
@@ -114,17 +144,28 @@ export default class Select extends InputField {
   }
 
   private handleClick() {
+    clickawayCallback = null;
     this.open = !this.open;
-    this.dropdownEl.open = this.open;
-
     if (this.open) this._selectedOption?.focus();
     else this.valueEl.focus();
+  }
 
-    if (this.open) this.setAttribute('open', '');
+  get open(): boolean {
+    return this._open;
+  }
+  set open(value: boolean) {
+    this._open = value;
+    this.dropdownEl.open = value;
+
+    if (value) this.setAttribute('open', '');
     else this.removeAttribute('open');
 
-    if (this.open) this.containerEl.style.setProperty('--md-background-color', '#f5f5f5');
+    if (value) this.containerEl.style.setProperty('--md-background-color', '#f5f5f5');
     else this.containerEl.style.removeProperty('--md-background-color');
+
+    if (value) clickawayCallback = (event) => {
+      if (!this.contains(event.target) && this.open) this.open = false;
+    }
   }
 
   get value(): string {
@@ -133,5 +174,18 @@ export default class Select extends InputField {
   set value(value: string) {
     const option = this.options.find(option => option.value === value);
     this.setSelectedOption(option);
+    super.value = value;
   }
 }
+
+let clickawayCallback: (event: any) => void = null;
+function invokeClickawayCallback(event) {
+  const { key } = event;
+  if (event instanceof KeyboardEvent && key !== 'Tab') return;
+  if (clickawayCallback === null) return;
+  clickawayCallback(event);
+  clickawayCallback = null
+};
+addEventListener('mouseup',invokeClickawayCallback);
+addEventListener('keyup', invokeClickawayCallback);
+addEventListener('contextmenu', invokeClickawayCallback);
