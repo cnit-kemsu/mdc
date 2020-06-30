@@ -2,7 +2,17 @@ import customElement from '@internals/customElement';
 import Dropdown from './Dropdown';
 import template from './DatePicker.html';
 
-const language = 'ru';// navigator?.language || 'en-US';
+import Icon from './Icon'; Icon;
+import IconStore from '../IconStore';
+import ChevronLeftIcon from '../icons/chevron-left.svg';
+import ChevronRightIcon from '../icons/chevron-right.svg';
+import KeyboardArrowLeftIcon from '../icons/keyboard-arrow-left.svg';
+IconStore.set('chevron-left', ChevronLeftIcon);
+IconStore.set('chevron-right', ChevronRightIcon);
+IconStore.set('keyboard-arrow-left', KeyboardArrowLeftIcon);
+
+const language = navigator?.language || 'en-US';
+//const language = 'ru';
 
 const months = [];
 for (let i = 1; i <= 12; i++) months.push(
@@ -27,6 +37,10 @@ export default class DatePicker extends Dropdown {
   private month: number = 0;
   private day: number = 0;
   private calendar: HTMLDivElement = null;
+
+  private dropdownBtn: Icon;
+  private prevPageBtn: Icon;
+  private nextPageBtn: Icon;
   
   constructor() {
     super();
@@ -41,6 +55,9 @@ export default class DatePicker extends Dropdown {
     // console.log(this.day);
 
     this.shadowRoot.appendChild(template.fragment);
+    this.dropdownBtn = this.shadowRoot.querySelector('#dropdown-btn');
+    this.dropdownBtn = this.shadowRoot.querySelector('#prev-page-btn');
+    this.dropdownBtn = this.shadowRoot.querySelector('#next-page-btn');
 
     const calendar = document.createElement('div') as HTMLDivElement;
     this.calendar = calendar;
@@ -52,10 +69,10 @@ export default class DatePicker extends Dropdown {
     month.innerHTML = months[this.month];
 
     const days = document.createElement('div') as HTMLDivElement;
+    days.classList.add('days');
     for (const day of daysOfWeek) {
       const dayEl = document.createElement('div') as HTMLDivElement;
-      dayEl.style.setProperty('display', 'inline-block');
-      dayEl.style.setProperty('width', '20px');
+      dayEl.classList.add('day');
       dayEl.innerHTML = day;
       days.appendChild(dayEl);
     }
@@ -66,13 +83,14 @@ export default class DatePicker extends Dropdown {
     const firstDay = new Date(this.year, this.month, 1).getDay() + 1;
     for (let date = 1; date <= totalDays; date++) {
       const dateEl = document.createElement('div') as HTMLDivElement;
+      dateEl.classList.add('date');
       if (date === 1) dateEl.style.setProperty('grid-column-start', firstDay.toString());
       dateEl.innerHTML = date.toString();
       dates.appendChild(dateEl);
     }
 
-    calendar.appendChild(year);
-    calendar.appendChild(month);
+    //calendar.appendChild(year);
+    //calendar.appendChild(month);
     calendar.appendChild(days);
     calendar.appendChild(dates);
 

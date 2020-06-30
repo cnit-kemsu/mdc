@@ -22,7 +22,7 @@ export default class DateField extends TextField {
 
     this.addEventListener('focusout', (event: FocusEvent) => {
       if (!this.contains(<Node>event.relatedTarget)) {
-        if (this.open) this.open = false;
+        //if (this.open) this.open = false;
         console.log('should close');
       }
     });
@@ -116,14 +116,14 @@ export default class DateField extends TextField {
 // addEventListener('keyup', invokeClickawayCallback);
 // addEventListener('contextmenu', invokeClickawayCallback);
 
-// declare global {
-//   module MDC {
-//     interface DateFieldProps extends InputFieldProps<DateField> {
-//     }
-//   }
-//   module JSX {
-//     interface IntrinsicElements {
-//       'md-datefield': MDC.DateFieldProps;
-//     }
-//   }
-// }
+declare global {
+  module MDC {
+    interface DateFieldProps extends InputFieldProps<DateField> {
+    }
+  }
+  module JSX {
+    interface IntrinsicElements {
+      'md-datefield': MDC.DateFieldProps;
+    }
+  }
+}

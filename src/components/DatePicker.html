@@ -1,8 +1,53 @@
 <style>
+  :host {
+    color: var(--md-helper-text-color);
+    font-size: 13px;
+    font-weight: 500;
+
+    border-radius: 2px;
+    user-select: none;
+  }
   .grid {
     display: grid;
-    grid-template-columns: repeat(7, 20px);
-    margin: auto;
-    width: 145px;
+    grid-template-columns: repeat(7, 32px);
+    padding: 0px 16px 8px 16px;
+  }
+  #top-bar {
+    padding: 16px 8px 12px 24px;
+    fill: var(--md-helper-text-color);
+    display: flex;
+    align-items: center;
+  }
+  #month-year {
+    font-size: 14.5px;
+    margin-right: 4px;
+  }
+  #prev-page-btn {
+    margin-left: auto;
+    margin-right: 24px;
+  }
+  .days {
+    padding: 6px 0px 6px 0px;
+    display: inline-flex;
+    align-items: center;
+    color: var(--md-disabled-text-color);
+  }
+  .day {
+    width: 32px;
+    text-align: center;
+  }
+  .date {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>
+
+<div id="top-bar">
+  <label id="month-year">September 2018</label>
+  <md-icon id="dropdown-btn" store-key="arrow dropdown"></md-icon>
+  <md-icon id="prev-page-btn" store-key="keyboard-arrow-left"></md-icon>
+  <md-icon id="next-page-btn" store-key="chevron-right"></md-icon>
+</div>
