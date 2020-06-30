@@ -3,6 +3,10 @@ import TextField from './TextField';
 import template from './DateField.html';
 import DatePicker from './DatePicker';DatePicker;
 
+import IconStore from '../IconStore';
+import CalendarIcon from '../icons/calendar-today.svg';
+IconStore.set('calendar-today', CalendarIcon);
+
 @customElement('md-datefield')
 export default class DateField extends TextField {
 
@@ -13,8 +17,15 @@ export default class DateField extends TextField {
 
     this.dropdownEl = this.shadowRoot.querySelector('md-date-picker');
     this.dropdownEl.anchor = this.containerEl;
-    const button = this.shadowRoot.querySelector('md-icon-button');
+    const button = this.shadowRoot.querySelector('md-icon');
     button.addEventListener('click', this.handleIconClick.bind(this));
+
+    this.addEventListener('focusout', (event: FocusEvent) => {
+      if (!this.contains(<Node>event.relatedTarget)) {
+        if (this.open) this.open = false;
+        console.log('should close');
+      }
+    });
   }
 
   handleInput(event: InputEvent) {
@@ -68,7 +79,7 @@ export default class DateField extends TextField {
   }
 
   private handleIconClick() {
-    clickawayCallback = null;
+    //clickawayCallback = null;
     this.open = !this.open;
   }
 
@@ -87,32 +98,32 @@ export default class DateField extends TextField {
     if (value) this.containerEl.style.setProperty('--md-background-color', '#f5f5f5');
     else this.containerEl.style.removeProperty('--md-background-color');
 
-    if (value) clickawayCallback = (event) => {
-      if (!this.contains(event.target) && this.open) this.open = false;
-    }
+    // if (value) clickawayCallback = (event) => {
+    //   if (!this.contains(event.target) && this.open) this.open = false;
+    // }
   }
 }
 
-let clickawayCallback: (event: any) => void = null;
-function invokeClickawayCallback(event) {
-  const { key } = event;
-  if (event instanceof KeyboardEvent && key !== 'Tab') return;
-  if (clickawayCallback === null) return;
-  clickawayCallback(event);
-  clickawayCallback = null
-};
-addEventListener('mouseup',invokeClickawayCallback);
-addEventListener('keyup', invokeClickawayCallback);
-addEventListener('contextmenu', invokeClickawayCallback);
+// let clickawayCallback: (event: any) => void = null;
+// function invokeClickawayCallback(event) {
+//   const { key } = event;
+//   if (event instanceof KeyboardEvent && key !== 'Tab') return;
+//   if (clickawayCallback === null) return;
+//   clickawayCallback(event);
+//   clickawayCallback = null
+// };
+// addEventListener('mouseup',invokeClickawayCallback);
+// addEventListener('keyup', invokeClickawayCallback);
+// addEventListener('contextmenu', invokeClickawayCallback);
 
-declare global {
-  module MDC {
-    interface DateFieldProps extends InputFieldProps<DateField> {
-    }
-  }
-  module JSX {
-    interface IntrinsicElements {
-      'md-datefield': MDC.DateFieldProps;
-    }
-  }
-}
+// declare global {
+//   module MDC {
+//     interface DateFieldProps extends InputFieldProps<DateField> {
+//     }
+//   }
+//   module JSX {
+//     interface IntrinsicElements {
+//       'md-datefield': MDC.DateFieldProps;
+//     }
+//   }
+// }

@@ -38,6 +38,15 @@ export default class Select extends InputField {
     const slot: HTMLSlotElement = this.shadowRoot.querySelector('slot');
     slot.addEventListener('slotchange', this.handleSlotChange);
     this.slotEl = slot;
+
+    //this.addEventListener('focusin', (event) => console.log('focusin', event));
+    //this.addEventListener('focusout', (event) => console.log('focusout', event));
+    this.addEventListener('focusout', (event: FocusEvent) => {
+      if (!this.contains(<Node>event.relatedTarget)) {
+        if (this.open) this.open = false;
+        console.log('should close');
+      }
+    });
   }
 
   private handleSlotChange() {
@@ -144,7 +153,7 @@ export default class Select extends InputField {
   }
 
   private handleClick() {
-    clickawayCallback = null;
+    //clickawayCallback = null;
     this.open = !this.open;
     if (this.open) this._selectedOption?.focus();
     else this.valueEl.focus();
@@ -163,9 +172,9 @@ export default class Select extends InputField {
     if (value) this.containerEl.style.setProperty('--md-background-color', '#f5f5f5');
     else this.containerEl.style.removeProperty('--md-background-color');
 
-    if (value) clickawayCallback = (event) => {
-      if (!this.contains(event.target) && this.open) this.open = false;
-    }
+    // if (value) clickawayCallback = (event) => {
+    //   if (!this.contains(event.target) && this.open) this.open = false;
+    // }
   }
 
   get value(): string {
@@ -178,14 +187,14 @@ export default class Select extends InputField {
   }
 }
 
-let clickawayCallback: (event: any) => void = null;
-function invokeClickawayCallback(event) {
-  const { key } = event;
-  if (event instanceof KeyboardEvent && key !== 'Tab') return;
-  if (clickawayCallback === null) return;
-  clickawayCallback(event);
-  clickawayCallback = null
-};
-addEventListener('mouseup',invokeClickawayCallback);
-addEventListener('keyup', invokeClickawayCallback);
-addEventListener('contextmenu', invokeClickawayCallback);
+// let clickawayCallback: (event: any) => void = null;
+// function invokeClickawayCallback(event) {
+//   const { key } = event;
+//   if (event instanceof KeyboardEvent && key !== 'Tab') return;
+//   if (clickawayCallback === null) return;
+//   clickawayCallback(event);
+//   clickawayCallback = null
+// };
+// addEventListener('mouseup',invokeClickawayCallback);
+// addEventListener('keyup', invokeClickawayCallback);
+// addEventListener('contextmenu', invokeClickawayCallback);
