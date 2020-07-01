@@ -11,7 +11,7 @@
     "declaration": true,
     "allowJs": true,
 
-    "lib": ["es2020", "es2019", "es2018", "DOM"],
+    "lib": ["es2020", "es2019", "es2018", "DOM", "DOM.Iterable"],
 
     "baseUrl": ".",
     "paths": {

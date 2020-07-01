@@ -1,15 +1,18 @@
 <style>
   :host {
+    --size: 24px;
     display: inline-block;
-    width: 24px;
-    height: 24px;
-  }
-  :host(:not([store-key])) {
-    display: none;
+    width: var(--size);
+    height: var(--size);
   }
   svg {
     width: inherit;
     height: inherit;
     fill: inherit;
   }
+  slot {
+    display: none;
+  }
 </style>
+
+<slot></slot>

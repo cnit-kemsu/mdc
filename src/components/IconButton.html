@@ -1,5 +1,6 @@
 <style>
   :host {
+    --size: 48px;
     position: relative;
     display: inline-block;
     vertical-align: top;
@@ -7,8 +8,8 @@
     box-sizing: border-box;
     user-select: none;
 
-    width: 48px;
-    height: 48px;
+    width: var(--size);
+    height: var(--size);;
     padding: 12px;
     border-radius: 50px;
 
@@ -33,6 +34,11 @@
   :host([disabled]) md-icon {
     fill: var(--md-disabled-text-color);
   }
+  slot {
+    display: none;
+  }
 </style>
+
+<slot></slot>
 
 <md-icon></md-icon>

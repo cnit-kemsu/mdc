@@ -36,12 +36,18 @@ export default class Button extends InteractiveElement {
         this.labelEl.innerText = newValue;
         break;
       case 'leading-icon':
+        const { leadingIconEl } = this;
         if (newValue !== null && this.hasAttribute('leading-icon')) this.removeAttribute('trailing-icon');
-        this.leadingIconEl.storeKey = newValue;
+        leadingIconEl.innerText = newValue;
+        if (newValue !== null) leadingIconEl.style.removeProperty('display');
+        else leadingIconEl.style.setProperty('display', 'none');
         break;
       case 'trailing-icon':
+        const { trailingIconEl } = this;
         if (newValue !== null && this.hasAttribute('trailing-icon')) this.removeAttribute('leading-icon');
-        this.trailingIconEl.storeKey = newValue;
+        trailingIconEl.innerText = newValue;
+        if (newValue !== null) trailingIconEl.style.removeProperty('display');
+        else trailingIconEl.style.setProperty('display', 'none');
         break;
     }
   }
