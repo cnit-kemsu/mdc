@@ -3,22 +3,6 @@ import IconStore from '../IconStore';
 import innerTextToStoreKey from '@internals/innerTextToStoreKey';
 import template from './Icon.html';
 
-// const mutationObserverConfig = { childList: true, subtree: true, characterData: true };
-// const textNodeDataChangeCallback = function (mutationsList: MutationRecord[]) {
-//   for (const { type, target } of mutationsList) {
-//     if (type === 'characterData') {
-//       target.parentNode['storeKey'] = target['data'];
-//     }
-//   }
-// };
-// const observer = new MutationObserver(textNodeDataChangeCallback);
-
-// const onlyEmptyCharacters = /^[\s↵]*$/;
-// function excludeEmptyTextNode(node: Node) {
-//   if (node instanceof Text) return !onlyEmptyCharacters.test(node.data);
-//   return true;
-// }
-
 @customElement('md-icon')
 export default class Icon extends HTMLElement {
 
@@ -28,29 +12,11 @@ export default class Icon extends HTMLElement {
   constructor() {
     super();
 
-    //this.handleSlotChange = this.handleSlotChange.bind(this);
-
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.fragment);
 
     innerTextToStoreKey(this);
-    //const slotEl: HTMLSlotElement = this.shadowRoot.querySelector('slot');
-    //slotEl.addEventListener('slotchange', this.handleSlotChange);
   }
-
-  // handleSlotChange() {
-  //   const nodes = [...this.childNodes].filter(excludeEmptyTextNode);
-  //   let firstNode = nodes[0] || null;
-
-  //   if (firstNode === null) {
-  //     this.storeKey = '';
-  //     return;
-  //   }
-  //   if (nodes.length > 1 || !(firstNode instanceof Text)) throw new TypeError(`An instance of Icon can contain only one child node, and it must be an instance of Text.`);
-
-  //   this.storeKey  = firstNode.data;
-  //   observer.observe(firstNode, mutationObserverConfig);
-  // }
 
   get storeKey(): string {
     return this._storeKey;
