@@ -7,27 +7,37 @@
     border-radius: 2px;
     user-select: none;
   }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(7, 32px);
-    padding: 0px 16px 8px 16px;
-  }
+
   #top-bar {
     padding: 16px 8px 12px 24px;
     fill: var(--md-helper-text-color);
     display: flex;
     align-items: center;
   }
+
   #month {
-    font-size: 14.5px;
+    font-size: 14px;
     margin-right: 4px;
+  }
+
+  md-icon-button {
+    --size: 24px;
+  }
+  #dropdown-btn {
+    padding: 0px;
   }
   #prev-month-btn {
     margin-left: auto;
     margin-right: 24px;
   }
+  #prev-month-btn, #next-month-btn {
+    --icon-size: 18px;
+    padding: 3px;
+  }
+  
   .days {
-    padding: 6px 0px 6px 0px;
+    padding: 4px 0px 8px 0px;
+    /* padding: 6px 0px 6px 0px; */
     display: inline-flex;
     align-items: center;
     color: var(--md-disabled-text-color);
@@ -35,6 +45,12 @@
   .day {
     width: 32px;
     text-align: center;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+    padding: 0px 16px 8px 16px;
   }
   .date {
     width: 32px;
@@ -47,7 +63,7 @@
 
 <div id="top-bar">
   <label id="month">September 2018</label>
-  <md-icon id="dropdown-btn">arrow_drop_down</md-icon>
-  <md-icon id="prev-month-btn">chevron_left</md-icon>
-  <md-icon id="next-month-btn">chevron_right</md-icon>
+  <md-icon-button id="dropdown-btn">arrow_drop_down</md-icon-button>
+  <md-icon-button id="prev-month-btn">chevron_left</md-icon-button>
+  <md-icon-button id="next-month-btn">chevron_right</md-icon-button>
 </div>

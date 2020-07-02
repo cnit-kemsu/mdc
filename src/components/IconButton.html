@@ -20,21 +20,26 @@
     --md-overlay-hover-opacity: 0.04;
     --md-overlay-focus-opacity: 0.12;
     --md-overlay-pressed-opacity: 0.12;
+
+    /* fill: var(--md-current-color); */
+    fill: inherit;
   }
   :host(:not([disabled])) {
     cursor: pointer;
   }
   :host([disabled]) {
-    color: var(--md-disabled-text-color);
+    /* color: var(--md-disabled-text-color); */
     pointer-events: none;
+
+    fill: var(--md-disabled-text-color);
   }
   
   md-icon {
     --size: var(--icon-size);
-    fill: var(--md-current-color);
+    /* fill: var(--md-current-color); */
   }
   :host([disabled]) md-icon {
-    fill: var(--md-disabled-text-color);
+    /* fill: var(--md-disabled-text-color); */
   }
   slot {
     display: none;
