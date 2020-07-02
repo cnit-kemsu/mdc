@@ -1,13 +1,10 @@
 import customElement from '@internals/customElement';
-import IconStore from '../IconStore';
 import InputField from './base/InputField';
 import './Dropdown';
 import Dropdown from './Dropdown';
 import SelectOption from './SelectOption';
 import template from './Select.html';
-import ArrowDropDownIcon from '../icons/arrow_drop_down.svg';
-
-IconStore.set('arrow_drop_down', ArrowDropDownIcon);
+import '../icons/arrow_drop_down.svg';
 
 @customElement('md-select')
 export default class Select extends InputField {
@@ -153,7 +150,6 @@ export default class Select extends InputField {
   }
 
   private handleClick() {
-    //clickawayCallback = null;
     this.open = !this.open;
     if (this.open) this._selectedOption?.focus();
     else this.valueEl.focus();
@@ -171,10 +167,6 @@ export default class Select extends InputField {
 
     if (value) this.containerEl.style.setProperty('--md-background-color', '#f5f5f5');
     else this.containerEl.style.removeProperty('--md-background-color');
-
-    // if (value) clickawayCallback = (event) => {
-    //   if (!this.contains(event.target) && this.open) this.open = false;
-    // }
   }
 
   get value(): string {
@@ -186,15 +178,3 @@ export default class Select extends InputField {
     super.value = value;
   }
 }
-
-// let clickawayCallback: (event: any) => void = null;
-// function invokeClickawayCallback(event) {
-//   const { key } = event;
-//   if (event instanceof KeyboardEvent && key !== 'Tab') return;
-//   if (clickawayCallback === null) return;
-//   clickawayCallback(event);
-//   clickawayCallback = null
-// };
-// addEventListener('mouseup',invokeClickawayCallback);
-// addEventListener('keyup', invokeClickawayCallback);
-// addEventListener('contextmenu', invokeClickawayCallback);

@@ -22,7 +22,6 @@ function excludeEmptyTextNode(node: Node) {
 
 function handleSlotChange(element: HTMLElement) {
   const nodes = [...element.childNodes].filter(excludeEmptyTextNode);
-  console.log(nodes);
   let firstNode = nodes[0] || null;
 
   if (firstNode === null) {

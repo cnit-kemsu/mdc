@@ -7,6 +7,8 @@ export default {
 
   preserveModules: true,
 
+  treeshake: false,
+
   output: {
     dir: 'dist',
     format: 'cjs'

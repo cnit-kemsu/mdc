@@ -1,39 +1,17 @@
 import customElement from '@internals/customElement';
-import IconStore from '../IconStore';
+import { months, daysOfWeek, getTotalDaysInMonth, getFirstDayOfWeek } from '@internals/dateUtils';
 import Icon from './Icon'; Icon;
 import Dropdown from './Dropdown';
 import template from './DatePicker.html';
-import ChevronLeftIcon from '../icons/chevron_left.svg';
-import ChevronRightIcon from '../icons/chevron_right.svg';
+import '../icons/chevron_left.svg';
+import '../icons/chevron_right.svg';
 
-IconStore.set('chevron_left', ChevronLeftIcon);
-IconStore.set('chevron_right', ChevronRightIcon);
-
-const language = navigator?.language || 'en-US';
-//const language = 'ru';
-
-const months = [];
-for (let i = 1; i <= 12; i++) months.push(
-  new Date(0, i, 0).toLocaleDateString(language, { month: 'long' })
-);
-//console.log(months);
-
-const daysOfWeek = [];
-for (let i = 0; i <= 6; i++) daysOfWeek.push(
-  new Date(null, null, i).toLocaleDateString(language, { weekday: "long" })[0]
-);
-//console.log(daysOfWeek);
-
-function getTotalDaysInMonth(year, month) {
-  return new Date(year, month, 0).getDate();
-}
-
-@customElement('md-date-picker')
+@customElement('md-datepicker')
 export default class DatePicker extends Dropdown {
 
-  private year: number = 0;
-  private month: number = 0;
-  private day: number = 0;
+  private year: number;
+  private month: number;
+  private day: number;
   private calendar: HTMLDivElement = null;
 
   private dropdownBtn: Icon;
@@ -66,19 +44,10 @@ export default class DatePicker extends Dropdown {
     const month = document.createElement('div') as HTMLDivElement;
     month.innerHTML = months[this.month];
 
-    const days = document.createElement('div') as HTMLDivElement;
-    days.classList.add('days');
-    for (const day of daysOfWeek) {
-      const dayEl = document.createElement('div') as HTMLDivElement;
-      dayEl.classList.add('day');
-      dayEl.innerHTML = day;
-      days.appendChild(dayEl);
-    }
-
     const dates = document.createElement('div') as HTMLDivElement;
     dates.classList.add('grid');
     const totalDays = getTotalDaysInMonth(this.year, this.month);
-    const firstDay = new Date(this.year, this.month, 1).getDay() + 1;
+    const firstDay = getFirstDayOfWeek(this.year, this.month);
     for (let date = 1; date <= totalDays; date++) {
       const dateEl = document.createElement('div') as HTMLDivElement;
       dateEl.classList.add('date');
@@ -89,9 +58,18 @@ export default class DatePicker extends Dropdown {
 
     //calendar.appendChild(year);
     //calendar.appendChild(month);
-    calendar.appendChild(days);
     calendar.appendChild(dates);
 
     this.shadowRoot.appendChild(calendar);
+  }
+
+  connectedCallback() {
+    const daysOfWeekEl = this.shadowRoot.querySelector('#days-of-week');
+    for (const day of daysOfWeek) {
+      const dayEl = document.createElement('div') as HTMLDivElement;
+      dayEl.classList.add('day');
+      dayEl.innerHTML = day;
+      daysOfWeekEl.appendChild(dayEl);
+    }
   }
 }

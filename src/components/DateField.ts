@@ -1,11 +1,8 @@
 import customElement from '@internals/customElement';
-import IconStore from '../IconStore';
 import TextField from './TextField';
 import template from './DateField.html';
-import DatePicker from './DatePicker';DatePicker;
-import CalendarIcon from '../icons/calendar_today.svg';
-
-IconStore.set('calendar_today', CalendarIcon);
+import DatePicker from './DatePicker'; DatePicker;
+import '../icons/calendar_today.svg';
 
 @customElement('md-datefield')
 export default class DateField extends TextField {
@@ -15,7 +12,7 @@ export default class DateField extends TextField {
 
     this.containerEl.appendChild(template.fragment);
 
-    this.dropdownEl = this.shadowRoot.querySelector('md-date-picker');
+    this.dropdownEl = this.shadowRoot.querySelector('md-datepicker');
     this.dropdownEl.anchor = this.containerEl;
     const button = this.shadowRoot.querySelector('md-icon');
     button.addEventListener('click', this.handleIconClick.bind(this));
@@ -79,7 +76,6 @@ export default class DateField extends TextField {
   }
 
   private handleIconClick() {
-    //clickawayCallback = null;
     this.open = !this.open;
   }
 
@@ -97,24 +93,8 @@ export default class DateField extends TextField {
 
     if (value) this.containerEl.style.setProperty('--md-background-color', '#f5f5f5');
     else this.containerEl.style.removeProperty('--md-background-color');
-
-    // if (value) clickawayCallback = (event) => {
-    //   if (!this.contains(event.target) && this.open) this.open = false;
-    // }
   }
 }
-
-// let clickawayCallback: (event: any) => void = null;
-// function invokeClickawayCallback(event) {
-//   const { key } = event;
-//   if (event instanceof KeyboardEvent && key !== 'Tab') return;
-//   if (clickawayCallback === null) return;
-//   clickawayCallback(event);
-//   clickawayCallback = null
-// };
-// addEventListener('mouseup',invokeClickawayCallback);
-// addEventListener('keyup', invokeClickawayCallback);
-// addEventListener('contextmenu', invokeClickawayCallback);
 
 declare global {
   module MDC {
