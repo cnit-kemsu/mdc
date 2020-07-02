@@ -34,7 +34,7 @@ export default class Icon extends HTMLElement {
   }
 }
 
-interface IconProps extends React.HTMLAttributes<HTMLElement> {
+interface IconProps extends React.HTMLAttributes<IconProps> {
   children?: string;
 }
 declare global {

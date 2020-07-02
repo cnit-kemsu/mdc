@@ -26,3 +26,16 @@ export default class IconButton extends InteractiveElement {
     this.iconEl.storeKey = value;
   }
 }
+
+declare global {
+  module MDC {
+    interface IconButtonProps extends InteractiveElementProps<IconButton> {
+      children?: string;
+    }
+  }
+  module JSX {
+    interface IntrinsicElements {
+      'md-icon-button': MDC.IconButtonProps;
+    }
+  }
+}

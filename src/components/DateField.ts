@@ -1,11 +1,11 @@
 import customElement from '@internals/customElement';
+import IconStore from '../IconStore';
 import TextField from './TextField';
 import template from './DateField.html';
 import DatePicker from './DatePicker';DatePicker;
+import CalendarIcon from '../icons/calendar_today.svg';
 
-import IconStore from '../IconStore';
-import CalendarIcon from '../icons/calendar-today.svg';
-IconStore.set('calendar-today', CalendarIcon);
+IconStore.set('calendar_today', CalendarIcon);
 
 @customElement('md-datefield')
 export default class DateField extends TextField {

@@ -1,15 +1,13 @@
 import customElement from '@internals/customElement';
+import IconStore from '../IconStore';
+import Icon from './Icon'; Icon;
 import Dropdown from './Dropdown';
 import template from './DatePicker.html';
+import ChevronLeftIcon from '../icons/chevron_left.svg';
+import ChevronRightIcon from '../icons/chevron_right.svg';
 
-import Icon from './Icon'; Icon;
-import IconStore from '../IconStore';
-import ChevronLeftIcon from '../icons/chevron-left.svg';
-import ChevronRightIcon from '../icons/chevron-right.svg';
-import KeyboardArrowLeftIcon from '../icons/keyboard-arrow-left.svg';
-IconStore.set('chevron-left', ChevronLeftIcon);
-IconStore.set('chevron-right', ChevronRightIcon);
-IconStore.set('keyboard-arrow-left', KeyboardArrowLeftIcon);
+IconStore.set('chevron_left', ChevronLeftIcon);
+IconStore.set('chevron_right', ChevronRightIcon);
 
 const language = navigator?.language || 'en-US';
 //const language = 'ru';
@@ -39,8 +37,8 @@ export default class DatePicker extends Dropdown {
   private calendar: HTMLDivElement = null;
 
   private dropdownBtn: Icon;
-  private prevPageBtn: Icon;
-  private nextPageBtn: Icon;
+  private prevMonthBtn: Icon;
+  private nextMonthBtn: Icon;
   
   constructor() {
     super();

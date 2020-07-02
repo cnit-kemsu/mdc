@@ -1,13 +1,13 @@
 import customElement from '@internals/customElement';
+import IconStore from '../IconStore';
 import InputField from './base/InputField';
 import './Dropdown';
 import Dropdown from './Dropdown';
 import SelectOption from './SelectOption';
 import template from './Select.html';
+import ArrowDropDownIcon from '../icons/arrow_drop_down.svg';
 
-import IconStore from '../IconStore';
-import ArrowDropDownIcon from '../icons/arrow-drop-down.svg';
-IconStore.set('arrow dropdown', ArrowDropDownIcon);
+IconStore.set('arrow_drop_down', ArrowDropDownIcon);
 
 @customElement('md-select')
 export default class Select extends InputField {
