@@ -1,4 +1,4 @@
-import IconStore from '@webmd/IconStore';
+import IconStore from '@material/IconStore';
 
 (function (files: __WebpackModuleApi.RequireContext) {
   for (const key of files.keys()) {
@@ -8,13 +8,13 @@ import IconStore from '@webmd/IconStore';
   }
 }(require.context('./icons', false, /.svg/, 'sync')))
 
-import '@webmd/styles';
-import '@webmd/components/Icon';
-import '@webmd/components/SelectOption';
-import '@webmd/components/Button';
-import '@webmd/components/Checkbox';
-import '@webmd/components/RadioButton';
-import '@webmd/components/TextField';
-import '@webmd/components/IconButton';
-import '@webmd/components/Select';
-import '@webmd/components/DateField';
+import '@material/styles';
+import '@material/components/Icon';
+import '@material/components/SelectOption';
+import '@material/components/Button';
+import '@material/components/Checkbox';
+import '@material/components/RadioButton';
+import '@material/components/TextField';
+import '@material/components/IconButton';
+import '@material/components/Select';
+import '@material/components/DateField';

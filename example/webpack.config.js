@@ -51,8 +51,8 @@ module.exports = {
       template: './src/index.html'
     }),
     // new DefinePlugin({
-    //   'window.webmd.appendInputElement': true,
-    //   'window.webmd.implicitUncheck': true
+    //   'window.material.appendInputElement': true,
+    //   'window.material.implicitUncheck': true
     // }),
     new RollupPlugin()
   ],

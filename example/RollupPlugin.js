@@ -106,7 +106,7 @@ module.exports = class RollupPlugin {
     
 
     function writeChunks(chunks) {
-      for (const chunk of chunks) virtualModulesPlugin.writeModule('./node_modules/@webmd/' + chunk.fileName, chunk['code']);
+      for (const chunk of chunks) virtualModulesPlugin.writeModule('./node_modules/@material/' + chunk.fileName, chunk['code']);
     }
     function setError(err) {
       timings.lastError = new Date();
