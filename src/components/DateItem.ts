@@ -2,7 +2,7 @@ import customElement from '@internals/customElement';
 import InteractiveElement from './base/InteractiveElement';
 import template from './DateItem.html';
 
-@customElement('md-dateitem')
+@customElement('m-dateitem')
 export default class DateItem extends InteractiveElement {
   
   constructor() {

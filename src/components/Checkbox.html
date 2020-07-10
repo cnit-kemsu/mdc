@@ -17,8 +17,8 @@
     transition: background-color 180ms ease-in-out, border-color 180ms ease-in-out;
   }
   :host([checked]) .box {
-    border-color: var(--md-current-color);
-    background-color: var(--md-current-color);
+    border-color: var(--m-current-color);
+    background-color: var(--m-current-color);
   }
 
   /* disabled */
@@ -40,18 +40,18 @@
   path {
     opacity: 0;
     fill: none;
-    stroke: var(--md-on-current-color);
+    stroke: var(--m-on-current-color);
     stroke-width: 3.12px;
     stroke-dasharray: 30px;
-    animation: var(--md-path-animation);
-    --md-path-check: md-path-check 180ms ease-in-out forwards;
-    --md-path-uncheck: md-path-uncheck 90ms ease-in-out forwards;
+    animation: var(--m-path-animation);
+    --m-path-check: m-path-check 180ms ease-in-out forwards;
+    --m-path-uncheck: m-path-uncheck 90ms ease-in-out forwards;
   }
   :host([checked]) path {
     opacity: 1;
   }
 
-  @keyframes md-path-check {
+  @keyframes m-path-check {
     from {
       stroke-dashoffset: 30px;
     }
@@ -59,7 +59,7 @@
       stroke-dashoffset: 0px;
     }
   }
-  @keyframes md-path-uncheck {
+  @keyframes m-path-uncheck {
     from {
       opacity: 1;
       stroke-dashoffset: 0px;

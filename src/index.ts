@@ -13,10 +13,10 @@ export { default as DateField } from './components/DateField';
 
 declare global {
   interface Window {
-    webmd: {
+    material: {
       /** Determines whether an input element should be appended to custom elements as a child node for use with form elements. */
       appendInputElement?: boolean,
-      /** Determines whether to set the 'checked' value of md-radio element to false if another md-radio element with the same name of the same form element is selected. */
+      /** Determines whether to set the 'checked' value of m-radio element to false if another m-radio element with the same name of the same form element is selected. */
       implicitUncheck?: boolean
     }
   }

@@ -16,7 +16,7 @@ for (const day of daysOfWeek) {
   daysOfWeekTemplate.content.appendChild(dayEl);
 }
 
-@customElement('md-datepicker')
+@customElement('m-datepicker')
 export default class DatePicker extends Dropdown {
 
   private year: number;
@@ -70,7 +70,7 @@ export default class DatePicker extends Dropdown {
     const totalDays = getTotalDaysInMonth(this.year, this.month);
     const firstDay = getFirstDayOfWeek(this.year, this.month);
     for (let date = 1; date <= totalDays; date++) {
-      const dateEl = document.createElement('md-dateitem') as HTMLDivElement;
+      const dateEl = document.createElement('m-dateitem') as HTMLDivElement;
       dateEl.classList.add('date');
       if (date === 1) dateEl.style.setProperty('grid-column-start', firstDay.toString());
       dateEl.innerHTML = date.toString();

@@ -2,56 +2,56 @@
   :host {
     /* -webkit-tap-highlight-color: #0000; */
 
-    /* --md-overlay-opacity: 0; */
-    --md-overlay-opacity: var(--md-overlay-initial-opacity, 0);
-    --md-overlay-current-opacity: var(--md-overlay-opacity);
+    /* --m-overlay-opacity: 0; */
+    --m-overlay-opacity: var(--m-overlay-initial-opacity, 0);
+    --m-overlay-current-opacity: var(--m-overlay-opacity);
     
-    /* --md-ripple-transform-duration: 225ms;
-    --md-ripple-fadein-duration: 75ms;
-    --md-ripple-fadeout-duration: 150ms;
-    --md-ripple-spread: ripple-transform ease var(--md-ripple-transform-duration) forwards, ripple-fadein ease var(--md-ripple-fadein-duration) forwards;
-    --md-ripple-fade: ripple-fadeout ease var(--md-ripple-fadeout-duration) forwards; */
-    --md-ripple-spread: md-ripple-transform ease 225ms forwards, md-ripple-fadein ease 75ms forwards;
-    --md-ripple-fade: md-ripple-fadeout ease 150ms forwards;
+    /* --m-ripple-transform-duration: 225ms;
+    --m-ripple-fadein-duration: 75ms;
+    --m-ripple-fadeout-duration: 150ms;
+    --m-ripple-spread: ripple-transform ease var(--m-ripple-transform-duration) forwards, ripple-fadein ease var(--m-ripple-fadein-duration) forwards;
+    --m-ripple-fade: ripple-fadeout ease var(--m-ripple-fadeout-duration) forwards; */
+    --m-ripple-spread: m-ripple-transform ease 225ms forwards, m-ripple-fadein ease 75ms forwards;
+    --m-ripple-fade: m-ripple-fadeout ease 150ms forwards;
 
-    /* --md-overlay-transition: opacity 15ms linear;
-    --md-overlay-transition-current: var(--md-overlay-transition); */
+    /* --m-overlay-transition: opacity 15ms linear;
+    --m-overlay-transition-current: var(--m-overlay-transition); */
     cursor: pointer;
   }
   :host(:hover) {
-    --md-overlay-opacity: var(--md-overlay-hover-opacity);
+    --m-overlay-opacity: var(--m-overlay-hover-opacity);
   }
   :host(:focus-within) {
-    --md-overlay-opacity:  var(--md-overlay-focus-opacity);
+    --m-overlay-opacity:  var(--m-overlay-focus-opacity);
   }
-  :host([disabled]) md-overlay {
+  :host([disabled]) m-overlay {
     display: none;
   }
 
-  @keyframes md-ripple-transform {
+  @keyframes m-ripple-transform {
     from {
-      transform: translate(var(--md-ripple-start-x), var(--md-ripple-start-y)) scale(0.5);
+      transform: translate(var(--m-ripple-start-x), var(--m-ripple-start-y)) scale(0.5);
     }
     to {
       transform: translate(0, 0) scale(1);
     }
   }
-  @keyframes md-ripple-fadein {
+  @keyframes m-ripple-fadein {
     from {
       opacity: 0;
     }
     to {
-      opacity: var(--md-overlay-pressed-opacity);
+      opacity: var(--m-overlay-pressed-opacity);
     }
   }
-  @keyframes md-ripple-fadeout {
+  @keyframes m-ripple-fadeout {
     from {
-      opacity: var(--md-overlay-pressed-opacity);
+      opacity: var(--m-overlay-pressed-opacity);
     }
     to {
-      opacity: calc((var(--md-overlay-opacity) - var(--md-overlay-current-opacity)) / (1 - var(--md-overlay-current-opacity)));
+      opacity: calc((var(--m-overlay-opacity) - var(--m-overlay-current-opacity)) / (1 - var(--m-overlay-current-opacity)));
     }
   }
 </style>
 
-<md-ripple-overlay></md-ripple-overlay>
+<m-ripple-overlay></m-ripple-overlay>

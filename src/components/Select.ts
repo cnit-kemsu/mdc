@@ -6,7 +6,7 @@ import SelectOption from './SelectOption';
 import template from './Select.html';
 import '../icons/arrow_drop_down.svg';
 
-@customElement('md-select')
+@customElement('m-select')
 export default class Select extends InputField {
 
   private valueEl: HTMLDivElement;
@@ -23,7 +23,7 @@ export default class Select extends InputField {
 
     this.containerEl.prepend(template.fragment);
     this.valueEl = this.shadowRoot.querySelector('.value');
-    this.dropdownEl = this.shadowRoot.querySelector('md-dropdown');
+    this.dropdownEl = this.shadowRoot.querySelector('m-dropdown');
     this.dropdownEl.anchor = this.containerEl;
 
     this.handleSlotChange = this.handleSlotChange.bind(this);
@@ -47,7 +47,7 @@ export default class Select extends InputField {
   }
 
   private handleSlotChange() {
-    const nodes = this.slotEl.assignedNodes().filter(node => node.nodeName === 'MD-OPTION') as SelectOption[];
+    const nodes = this.slotEl.assignedNodes().filter(node => node.nodeName === 'M-OPTION') as SelectOption[];
     this.options = nodes;
 
     const option = nodes.find(opt => opt.value === this.value);
@@ -165,8 +165,8 @@ export default class Select extends InputField {
     if (value) this.setAttribute('open', '');
     else this.removeAttribute('open');
 
-    if (value) this.containerEl.style.setProperty('--md-background-color', '#f5f5f5');
-    else this.containerEl.style.removeProperty('--md-background-color');
+    if (value) this.containerEl.style.setProperty('--m-background-color', '#f5f5f5');
+    else this.containerEl.style.removeProperty('--m-background-color');
   }
 
   get value(): string {
@@ -176,5 +176,17 @@ export default class Select extends InputField {
     const option = this.options.find(option => option.value === value);
     this.setSelectedOption(option);
     super.value = value;
+  }
+}
+
+declare global {
+  module Material {
+    interface SelectProps extends InputFieldProps<Select> {
+    }
+  }
+  module JSX {
+    interface IntrinsicElements {
+      'm-select': Material.SelectProps;
+    }
   }
 }

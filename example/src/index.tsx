@@ -1,38 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-declare global {
-  module JSX {
-    interface IntrinsicElements {
-      'md-select': any;
-      'md-option': any;
-    }
-  }
-}
-
 function App() {
 
-  const [show, setShow] = React.useState(false);
-  const [val, chval] = React.useState('2');
+  const [show, toggleTirdOption] = React.useState(false);
+  const [val, changeSecondOptionValue] = React.useState('2');
 
-  return <div style={{ padding: '20px' }}>
-    <md-button leading-icon="favorite" raised label="Click me" onClick={() => console.log('click')} />
-    <md-button trailing-icon="copyright" outlined label="Click me" disabled onClick={() => console.log('click')} />
+  return <div style={{ paddingTop: '50px', paddingBottom: '50px', textAlign: 'center', borderBottom: '2px solid var(--m-secondary-color)' }}>
+    <m-button leading-icon="favorite" raised label="Click me" onClick={() => console.log('click')} />
+    <m-button trailing-icon="copyright" outlined label="Click me" disabled onClick={() => console.log('click')} />
 
-    <md-checkbox checked onInput={event => console.log(event.target.checked)} />
-    <md-checkbox disabled onInput={event => console.log(event.target.checked)} />
+    <br />
 
-    <md-textfield disabled={false || null} onInput={event => console.log('input', event.target.value)} />
-    <button disabled={false}>asd</button>
+    <m-checkbox checked onInput={event => console.log(event.target.checked)} />
+    <m-checkbox disabled onInput={event => console.log(event.target.checked)} />
 
-    <button onClick={() => setShow(!show)}>show/unshow</button>
-    <button onClick={() => chval('4')}>chval</button>
-    <md-select label="tyutyu" value="1">
-      <md-option value="1" label="asd" />
-      <md-option value={val} label="qwe" />
-      {show && <md-option value="3" label="zxc" />}
-    </md-select>
-    <md-datefield></md-datefield>
+    <br />
+
+    <m-textfield disabled={false || null} onInput={event => console.log('input:', event.target.value)} />
+
+    <br />
+
+    <button onClick={() => toggleTirdOption(!show)}>add/remove third option</button>
+    <button onClick={() => changeSecondOptionValue('a')}>chval</button>
+
+    <br />
+
+    <m-select label="Choose" value="1">
+      <m-option value="1" label="option 1" />
+      <m-option value={val} label="option 2" />
+      {show && <m-option value="b" label="option 3" />}
+    </m-select>
+
+    <br />
+
+    <m-datefield></m-datefield>
   </div>;
 }
 
@@ -41,4 +43,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-require('./webmd.config');
+require('./material.config');

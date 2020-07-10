@@ -43,7 +43,7 @@ export default class InteractiveElement extends HTMLElement {
 }
 
 declare global {
-  module MDC {
+  module Material {
     interface InteractiveElementProps<T> extends React.HTMLAttributes<T> {
       disabled?: boolean;
     }

@@ -1,7 +1,7 @@
 import '@internals/initOptions';
 import InteractiveElement from './InteractiveElement';
 
-const __APPEND_INPUT_ELEMENT__ = window.webmd.appendInputElement;
+const __APPEND_INPUT_ELEMENT__ = window.material.appendInputElement;
 
 export default class InputElement extends InteractiveElement {
 
@@ -64,7 +64,7 @@ export default class InputElement extends InteractiveElement {
 }
 
 declare global {
-  module MDC {
+  module Material {
     interface FormEvent<T> extends React.FormEvent<T> {
       target: T & EventTarget;
     }

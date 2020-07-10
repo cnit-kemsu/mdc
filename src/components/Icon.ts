@@ -3,7 +3,7 @@ import IconStore from '../IconStore';
 import innerTextToStoreKey from '@internals/innerTextToStoreKey';
 import template from './Icon.html';
 
-@customElement('md-icon')
+@customElement('m-icon')
 export default class Icon extends HTMLElement {
 
   private _storeKey: string = '';
@@ -40,7 +40,7 @@ interface IconProps extends React.HTMLAttributes<IconProps> {
 declare global {
   module JSX {
     interface IntrinsicElements {
-      'md-icon': IconProps;
+      'm-icon': IconProps;
     }
   }
 }

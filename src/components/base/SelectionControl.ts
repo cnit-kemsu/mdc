@@ -2,7 +2,7 @@ import InputElement from './InputElement';
 import RippleEffect from './RippleEffect';
 import template from './SelectionControl.html';
 
-const __APPEND_INPUT_ELEMENT__ = window.webmd.appendInputElement;
+const __APPEND_INPUT_ELEMENT__ = window.material.appendInputElement;
 
 export default class SelectionControl extends InputElement {
 
@@ -47,7 +47,7 @@ export default class SelectionControl extends InputElement {
 }
 
 declare global {
-  module MDC {
+  module Material {
     interface SelectionControlProps<T> extends InputElementProps<T> {
       checked?: boolean;
     }

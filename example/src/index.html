@@ -4,149 +4,124 @@
     <meta charset="utf-8"/>
     <title>Material Design Components Example</title>
     <style>
-      md-checkbox, md-radio {
-        --md-current-color: var(--md-secondary-color);
+
+      button, m-button, m-icon, m-icon-button, m-checkbox, m-radio, m-textfield, m-datefield, m-select {
+        margin: 8px;
       }
+
+      .elblock {
+        padding: 8px;
+      }
+
+      m-checkbox, m-radio {
+        --m-current-color: var(--m-secondary-color);
+      }
+
     </style>
   </head>
   <body>
 
     <div id="root"></div>
 
-    <div style="width: 100%; height: 100%; text-align: center; position: absolute; padding-top: 25%;">
+    <div style="padding-top: 50px; text-align: center;">
 
-      <div>
-        asdasdasdsa
-        asdasdasdsaa
-        SADASDASDASD
-        asdsa qwqweqw qwerwqe
+      <div class="elblock">
+        Some important text...
+        <br/>
+        more important text...
       </div>
 
-      <div>
-        <md-button style="margin: 16px" label="Создать"></md-button>
-        <md-button style="margin: 16px" outlined label="Создать"></md-button>
-        <md-button style="margin: 16px" raised label="Создать"></md-button>
+      <div class="elblock">
+        <m-button label="Создать"></m-button>
+        <m-button outlined label="Создать"></m-button>
+        <m-button raised label="Создать"></m-button>
       </div>
 
-      <div id="qwe123">
-          <input type="radio" value="a" name="asd4" checked>
-          <input type="radio" value="b" name="asd4" checked>
-          <input type="radio" value="c" name="asd4">
-          <div>
-            <input type="radio" value="a" name="asd3">
-            <input type="radio" value="b" name="asd3">
-            <input type="radio" value="c" name="asd3">
-          </div>
-          <div>
-            <input type="radio" value="a" name="asd3">
-            <input type="radio" value="b" name="asd3">
-            <input type="radio" value="c" name="asd3">
-            <input type="date" value="c" name="asd233">
-          </div>
+      <div class="elblock">
+        <m-button leading-icon="favorite" trailing-icon="favorite" label="Создать"></m-button>
+        <m-button leading-icon="copyright" outlined label="Создать"></m-button>
+        <m-button leading-icon="favorite" raised label="Создать"></m-button>
       </div>
 
-      <div>
-        <md-button leading-icon="favorite" trailing-icon="favorite" style="margin: 16px" label="Создать"></md-button>
-        <md-button leading-icon="copyright" style="margin: 16px" outlined label="Создать"></md-button>
-        <md-button leading-icon="favorite" style="margin: 16px" raised label="Создать"></md-button>
+      <div class="elblock">
+        <m-button trailing-icon="favorite" disabled label="Создать"></m-button>
+        <m-button trailing-icon="favorite" disabled outlined label="Создать"></m-button>
+        <m-button trailing-icon="favorite" disabled raised label="Создать"></m-button>
       </div>
 
-      <div>
-        <md-button disabled style="margin: 16px;" label="Создать"></md-button>
-        <md-button disabled style="margin: 16px" outlined label="Создать"></md-button>
-        <md-button disabled style="margin: 16px" raised label="Создать"></md-button>
+      <div class="elblock">
+        <m-checkbox disabled name="chkb1"></m-checkbox>
+        <m-checkbox disabled checked name="chkb2"></m-checkbox>
+        <m-checkbox checked  name="chkb2"></m-checkbox>
+        <m-checkbox value="1" name="chkb3"></m-checkbox>
       </div>
 
-      <div>
-        <md-button trailing-icon="favorite" disabled style="margin: 16px;" label="Создать"></md-button>
-        <md-button trailing-icon="favorite" disabled style="margin: 16px" outlined label="Создать"></md-button>
-        <md-button trailing-icon="favorite" disabled style="margin: 16px" raised label="Создать"></md-button>
+      <div class="elblock">
+        <m-radio value="1" name="radio1" disabled></m-radio>
+        <m-radio value="2" name="radio1" checked disabled></m-radio>
+        <m-radio value="1" name="radio2" checked></m-radio>
+        <m-radio value="2" name="radio2"></m-radio>
+        <m-radio value="3" name="radio2"></m-radio>
       </div>
 
-      <div>
-        <md-checkbox disabled style="margin: 16px" name="asd0"></md-checkbox>
-        <md-checkbox disabled checked id="123" style="margin: 16px" name="asd1"></md-checkbox>
-        <md-checkbox checked id="123" style="margin: 16px" name="asd1"></md-checkbox>
-        <md-checkbox style="margin: 16px" value="123" name="asd2"></md-checkbox>
+      <div class="elblock">
+        <m-radio value="a" name="radio3"></m-radio>
+        <m-radio value="b" name="radio3" checked></m-radio>
+        <m-radio value="c" name="radio3" checked></m-radio>
       </div>
 
-      <div>
-        <md-radio style="margin: 16px" value="q" name="qwe" disabled></md-radio>
-        <md-radio style="margin: 16px" value="b" name="qwe" checked disabled></md-radio>
-        <md-radio style="margin: 16px" value="q" name="asd" checked></md-radio>
-        <md-radio style="margin: 16px" value="b" name="asd"></md-radio>
-        <md-radio style="margin: 16px" value="c" name="asd"></md-radio>
-      </div>
-
-      <div>
-        <md-radio style="margin: 16px" value="q" name="asd1"></md-radio>
-        <md-radio style="margin: 16px" value="b" name="asd1" checked></md-radio>
-        <md-radio style="margin: 16px" value="c" name="asd1" checked></md-radio>
-      </div>
-
-      <div>
-        <form id="form123" onsubmit="event.preventDefault(); console.log(event.target.elements)">
-          <md-radio style="margin: 16px" value="q" name="asd1"></md-radio>
-          <md-radio style="margin: 16px" value="b" name="asd1" checked></md-radio>
-          <md-radio style="margin: 16px" value="c" name="asd1" checked></md-radio>
-
-          <md-radio style="margin: 16px" value="q" name="asd2"></md-radio>
-          <md-radio style="margin: 16px" value="b" name="asd2" checked></md-radio>
-          <md-radio style="margin: 16px" value="c" name="asd2" checked></md-radio>
-
+      <!-- <div class="elblock">
+        <form onsubmit="event.preventDefault(); console.log(event.target.elements)">
           <input type="submit" />
         </form>
+      </div> -->
+
+      <div class="elblock">
+        <m-textfield value="John" label="Name"></m-textfield>
+        <m-textfield value="Cooper" label="Name" disabled></m-textfield>
+        <m-textfield label="Name" helper-text="Helper message"></m-textfield>
+        
       </div>
 
-      <div>
-        <md-textfield value="23-11-2008" label="Label" helper-text="Helper message"></md-textfield>
-        <md-textfield label="Label" value="asdasd" disabled helper-text="Helper message"></md-textfield>
-        <md-textfield label="Label" disabled helper-text="Helper message" error="Error message"></md-textfield>
-        <md-textfield label="Label" error="Error message"></md-textfield>
+      <div class="elblock">
+        <m-textfield label="Name" disabled helper-text="Helper message"></m-textfield>
+        <m-textfield label="Name" disabled helper-text="Helper message" error="Error message"></m-textfield>
+        <m-textfield label="Name" error="Error message"></m-textfield>
       </div>
 
-      <div>
-        <md-textfield label="Name" id="textfield"></md-textfield>
-        <md-textfield label="Name" disabled id="textfield1"></md-textfield>
-        <md-textfield label="Name" id="textfield"></md-textfield>
-        <md-textfield label="Name" id="textfield"></md-textfield>
+      <div class="elblock">
+        <m-icon>favorite</m-icon>
+        <m-icon>copyright</m-icon>
       </div>
 
-      <div>
-        <md-icon>favorite</md-icon>
+      <div class="elblock">
+        <m-icon-button>favorite</m-icon-button>
+        <m-icon-button>copyright</m-icon-button>
+        <m-icon-button disabled>favorite</m-icon-button>
       </div>
 
-      <div>
-        <md-icon-button style="margin: 16px">favorite</md-icon-button>
-        <md-icon-button style="margin: 16px">copyright</md-icon-button>
-        <md-icon-button disabled style="margin: 16px">favorite</md-icon-button>
+      <div class="elblock">
+
+        <m-select label="Choose" value="2">
+          <m-option value="" label=""></m-option>
+          <m-option value="1" label="Option 1"></m-option>
+          <m-option value="2" label="Option 2"></m-option>
+          <m-option value="3" label="Option 3"></m-option>
+        </m-select>
+
+        <m-select label="Choose">
+          <m-option value="a" label="Option 4"></m-option>
+          <m-option value="b" label="Option 5"></m-option>
+          <m-option value="c" label="Option 6"></m-option>
+        </m-select>
       </div>
 
-      <div>
-        <md-select label="Fruit" value="opt2">
-          <md-option value="" label=""></md-option>
-          <md-option value="opt1" label="Option 1"></md-option>
-          <md-option value="opt2" label="Option 2"></md-option>
-          <md-option selected value="opt3" label="Option 3"></md-option>
-        </md-select>
-      </div>
-      <div>
-        <md-select label="Fruit">
-          <md-option value="opt1" label="Option 4"></md-option>
-          <md-option selected value="opt2" label="Option 5"></md-option>
-          <md-option selected value="opt3" label="Option 6"></md-option>
-        </md-select>
-      </div>
-
-      <div>
-        <md-datefield value="23-11-2008" label="Date"></md-datefield>
-        <md-datefield label="Date"></md-datefield>
+      <div class="elblock">
+        <m-datefield value="01-07-2020" label="Date"></m-datefield>
+        <m-datefield label="Date"></m-datefield>
       </div>
       
     </div>
-
-    
-
     
   </body>
 </html>

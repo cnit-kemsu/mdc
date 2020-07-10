@@ -5,7 +5,7 @@ import Icon from './Icon';
 import innerTextToStoreKey from '@internals/innerTextToStoreKey';
 import template from './IconButton.html';
 
-@customElement('md-icon-button')
+@customElement('m-icon-button')
 export default class IconButton extends InteractiveElement {
   
   private iconEl : Icon;
@@ -14,7 +14,7 @@ export default class IconButton extends InteractiveElement {
     super();
     new RippleEffect(this);
     this.shadowRoot.appendChild(template.fragment);
-    this.iconEl = this.shadowRoot.querySelector('md-icon');
+    this.iconEl = this.shadowRoot.querySelector('m-icon');
 
     innerTextToStoreKey(this);
   }
@@ -28,14 +28,14 @@ export default class IconButton extends InteractiveElement {
 }
 
 declare global {
-  module MDC {
+  module Material {
     interface IconButtonProps extends InteractiveElementProps<IconButton> {
       children?: string;
     }
   }
   module JSX {
     interface IntrinsicElements {
-      'md-icon-button': MDC.IconButtonProps;
+      'm-icon-button': Material.IconButtonProps;
     }
   }
 }

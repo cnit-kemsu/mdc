@@ -4,7 +4,7 @@ import template from './DateField.html';
 import DatePicker from './DatePicker'; DatePicker;
 import '../icons/calendar_today.svg';
 
-@customElement('md-datefield')
+@customElement('m-datefield')
 export default class DateField extends TextField {
 
   constructor() {
@@ -12,9 +12,9 @@ export default class DateField extends TextField {
 
     this.containerEl.appendChild(template.fragment);
 
-    this.dropdownEl = this.shadowRoot.querySelector('md-datepicker');
+    this.dropdownEl = this.shadowRoot.querySelector('m-datepicker');
     this.dropdownEl.anchor = this.containerEl;
-    const button = this.shadowRoot.querySelector('md-icon');
+    const button = this.shadowRoot.querySelector('m-icon');
     button.addEventListener('click', this.handleIconClick.bind(this));
 
     this.addEventListener('focusout', (event: FocusEvent) => {
@@ -91,19 +91,19 @@ export default class DateField extends TextField {
     if (value) this.setAttribute('open', '');
     else this.removeAttribute('open');
 
-    if (value) this.containerEl.style.setProperty('--md-background-color', '#f5f5f5');
-    else this.containerEl.style.removeProperty('--md-background-color');
+    if (value) this.containerEl.style.setProperty('--m-background-color', '#f5f5f5');
+    else this.containerEl.style.removeProperty('--m-background-color');
   }
 }
 
 declare global {
-  module MDC {
+  module Material {
     interface DateFieldProps extends InputFieldProps<DateField> {
     }
   }
   module JSX {
     interface IntrinsicElements {
-      'md-datefield': MDC.DateFieldProps;
+      'm-datefield': Material.DateFieldProps;
     }
   }
 }

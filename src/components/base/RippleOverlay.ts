@@ -2,7 +2,7 @@ import customElement from '@internals/customElement';
 import Overlay from './Overlay';
 import template from './RippleOverlay.html';
 
-@customElement('md-ripple-overlay')
+@customElement('m-ripple-overlay')
 export default class RippleOverlay extends Overlay {
   constructor() {
     super();

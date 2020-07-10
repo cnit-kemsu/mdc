@@ -1,7 +1,7 @@
 import customElement from '@internals/customElement';
 import template from './Dropdown.html';
 
-@customElement('md-dropdown')
+@customElement('m-dropdown')
 export default class Dropdown extends HTMLElement {
 
   private style1: HTMLStyleElement;

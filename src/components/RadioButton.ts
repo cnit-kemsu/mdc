@@ -3,9 +3,9 @@ import { _RadioNodeList, joinRadioNodeList } from '@internals/RadioNodeList';
 import SelectionControl from './base/SelectionControl';
 import template from './RadioButton.html';
 
-const __IMLICIT_UNCHECK__ = window.webmd.implicitUncheck;
+const __IMLICIT_UNCHECK__ = window.material.implicitUncheck;
 
-@customElement('md-radio')
+@customElement('m-radio')
 export default class RadioButton extends SelectionControl {
 
   private radioNodeList: _RadioNodeList = null;
@@ -57,13 +57,13 @@ export default class RadioButton extends SelectionControl {
 }
 
 declare global {
-  module MDC {
+  module Material {
     interface RadioButtonProps extends SelectionControlProps<RadioButton> {
     }
   }
   module JSX {
     interface IntrinsicElements {
-      'md-radio': MDC.RadioButtonProps;
+      'm-radio': Material.RadioButtonProps;
     }
   }
 }

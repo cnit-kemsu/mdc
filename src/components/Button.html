@@ -17,29 +17,29 @@
     min-width: 64px;
     height: 36px;
     border-radius: 4px;
-    color: var(--md-text-color);
+    color: var(--m-text-color);
   }
 
   /* text or outlined variant */
   :host(:not([raised])) {
-    --md-text-color: var(--md-current-color);
-    --md-overlay-color: var(--md-current-color);
-    --md-overlay-hover-opacity: 0.04;
-    --md-overlay-focus-opacity: 0.12;
-    --md-overlay-pressed-opacity: 0.12;
+    --m-text-color: var(--m-current-color);
+    --m-overlay-color: var(--m-current-color);
+    --m-overlay-hover-opacity: 0.04;
+    --m-overlay-focus-opacity: 0.12;
+    --m-overlay-pressed-opacity: 0.12;
   }
   
   /* text variant */
   :host(:not([raised]):not([outlined])) {
     padding: 0px 8px;
-    --md-icon-border-side-margin: 0px;
+    --m-icon-border-side-margin: 0px;
   }
 
   /* outlined variant */
   :host([outlined]) {
     padding: 0px 15px;
-    border: 1px solid var(--md-current-color);
-    --md-icon-border-side-margin: -4px;
+    border: 1px solid var(--m-current-color);
+    --m-icon-border-side-margin: -4px;
   }
   /* @-moz-document url-prefix() {
     :host([outlined]) {
@@ -47,40 +47,40 @@
     }
   } */
   :host([outlined][disabled]) {
-    border-color: var(--md-disabled-text-color);
+    border-color: var(--m-disabled-text-color);
   }
   
   /* raised variant */
   :host([raised]) {
     padding: 0px 16px;
-    box-shadow: var(--md-elevation);
-    transition: var(--md-shadow-transition);
-    background-color: var(--md-current-color);
-    --md-text-color: var(--md-on-current-color);
-    --md-overlay-color: var(--md-on-current-color);
-    --md-overlay-hover-opacity: 0.08;
-    --md-overlay-focus-opacity: 0.24;
-    --md-overlay-pressed-opacity: 0.24;
-    --md-elevation: var(--md-dp-2);
-    --md-icon-border-side-margin: -4px;
+    box-shadow: var(--m-elevation);
+    transition: var(--m-shadow-transition);
+    background-color: var(--m-current-color);
+    --m-text-color: var(--m-on-current-color);
+    --m-overlay-color: var(--m-on-current-color);
+    --m-overlay-hover-opacity: 0.08;
+    --m-overlay-focus-opacity: 0.24;
+    --m-overlay-pressed-opacity: 0.24;
+    --m-elevation: var(--m-dp-2);
+    --m-icon-border-side-margin: -4px;
   }
   :host([raised]:hover) {
-    --md-elevation: var(--md-dp-4);
+    --m-elevation: var(--m-dp-4);
   }
   :host([raised]:focus-within) {
-    --md-elevation: var(--md-dp-4);
+    --m-elevation: var(--m-dp-4);
   }
   :host([raised]:active) {
-    --md-elevation: var(--md-dp-8);
+    --m-elevation: var(--m-dp-8);
   }
   :host([raised][disabled]) {
-    background-color: var(--md-disabled-color);
-    --md-elevation: none;
+    background-color: var(--m-disabled-color);
+    --m-elevation: none;
   }
 
   /* disabled */
   :host([disabled]) {
-    --md-text-color: var(--md-disabled-text-color);
+    --m-text-color: var(--m-disabled-text-color);
   }
 
   /* label */
@@ -89,21 +89,21 @@
   }
   
   /* icon */
-  md-icon {
+  m-icon {
     width: 18px;
     height: 18px;
-    fill: var(--md-text-color);
+    fill: var(--m-text-color);
   }
   .leading-icon {
     margin-right: 8px;
-    margin-left: var(--md-icon-border-side-margin);
+    margin-left: var(--m-icon-border-side-margin);
   }
   .trailing-icon {
     margin-left: 8px;
-    margin-right: var(--md-icon-border-side-margin);
+    margin-right: var(--m-icon-border-side-margin);
   }
 </style>
 
-<md-icon class="leading-icon" style="display: none;"></md-icon>
+<m-icon class="leading-icon" style="display: none;"></m-icon>
 <label></label>
-<md-icon class="trailing-icon" style="display: none;"></md-icon>
+<m-icon class="trailing-icon" style="display: none;"></m-icon>

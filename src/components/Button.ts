@@ -4,7 +4,7 @@ import RippleEffect from './base/RippleEffect';
 import Icon from './Icon';
 import template from './Button.html';
 
-@customElement('md-button')
+@customElement('m-button')
 export default class Button extends InteractiveElement {
 
   private labelEl: HTMLLabelElement;
@@ -75,7 +75,7 @@ export default class Button extends InteractiveElement {
 }
 
 declare global {
-  module MDC {
+  module Material {
     interface ButtonProps extends InteractiveElementProps<Button> {
       raised?: boolean;
       outlined?: boolean;
@@ -86,7 +86,7 @@ declare global {
   }
   module JSX {
     interface IntrinsicElements {
-      'md-button': MDC.ButtonProps;
+      'm-button': Material.ButtonProps;
     }
   }
 }

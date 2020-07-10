@@ -1,4 +1,4 @@
-window.webmd = {
+window.material = {
   appendInputElement: true,
   implicitUncheck: true
 };

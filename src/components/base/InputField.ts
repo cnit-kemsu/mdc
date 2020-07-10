@@ -39,8 +39,8 @@ export default class InputField extends InputElement {
     const isEmpty = !this.value;
     if (this.isEmpty === isEmpty) return;
     this.isEmpty = isEmpty;
-    if (isEmpty) this.labelEl.style.removeProperty('--md-label-transform');
-    else this.labelEl.style.setProperty('--md-label-transform', 'var(--md-label-elevated)');
+    if (isEmpty) this.labelEl.style.removeProperty('--m-label-transform');
+    else this.labelEl.style.setProperty('--m-label-transform', 'var(--m-label-elevated)');
   }
 
   get label(): string {
@@ -74,7 +74,7 @@ export default class InputField extends InputElement {
 }
 
 declare global {
-  module MDC {
+  module Material {
     interface InputFieldProps<T> extends InputElementProps<T> {
       label?: string;
       'helper-text'?: string;

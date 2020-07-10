@@ -7,7 +7,7 @@
     justify-content: left;
     padding-right: 52px;
 
-    fill: var(--md-current-color);
+    fill: var(--m-current-color);
   }
   .dropdown {
     left: 0px;
@@ -17,21 +17,21 @@
     border-radius: 4px;
     user-select: none;
   }
-  md-icon {
+  m-icon {
     cursor: pointer;
     position: absolute;
     right: 8px;
     top: 16px;
     transition: transform 150ms ease;
   }
-  :host([open]) md-icon {
+  :host([open]) m-icon {
     transform: rotate(180deg) translateY(-5px);
   }
 </style>
 
 <div class="input value" tabindex="0"></div>
-<md-icon>arrow_drop_down</md-icon>
+<m-icon>arrow_drop_down</m-icon>
 
-<md-dropdown class="dropdown">
+<m-dropdown class="dropdown">
   <slot></slot>
-</md-dropdown>
+</m-dropdown>

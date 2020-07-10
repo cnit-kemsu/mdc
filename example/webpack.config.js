@@ -1,5 +1,5 @@
 const path = require('path');
-const { DefinePlugin } = require('webpack');
+//const { DefinePlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const RollupPlugin = require('./RollupPlugin');
 
@@ -15,8 +15,8 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x?)$/,
-        use: 'ts-loader',
         include: /src/,
+        use: 'ts-loader',
         // use: {
         //   //loader: 'ts-loader?configFile=tsconfig.json',
         //   loader: 'ts-loader',

@@ -2,7 +2,7 @@ import customElement from '@internals/customElement';
 import InputField from './base/InputField';
 import template from './TextField.html';
 
-@customElement('md-textfield')
+@customElement('m-textfield')
 export default class TextField extends InputField {
 
   protected textInputEl: HTMLInputElement;
@@ -38,13 +38,13 @@ export default class TextField extends InputField {
 }
 
 declare global {
-  module MDC {
+  module Material {
     interface TextFieldProps extends InputFieldProps<TextField> {
     }
   }
   module JSX {
     interface IntrinsicElements {
-      'md-textfield': MDC.TextFieldProps;
+      'm-textfield': Material.TextFieldProps;
     }
   }
 }

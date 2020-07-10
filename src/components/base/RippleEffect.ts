@@ -37,7 +37,7 @@ export default class RippleEffect {
     this.targetEl = targetEl;
     targetEl.shadowRoot.appendChild(template.fragment);
 
-    const overlay = targetEl.shadowRoot.querySelector('md-ripple-overlay') as HTMLElement;
+    const overlay = targetEl.shadowRoot.querySelector('m-ripple-overlay') as HTMLElement;
     const overlayStyle = overlay.style;
     this.setOverlayStyleProp = overlayStyle.setProperty.bind(overlayStyle);
     this.removeOverlayStyleProp = overlayStyle.removeProperty.bind(overlayStyle);
@@ -59,13 +59,13 @@ export default class RippleEffect {
   }
   private ripple_onPhase3Complete() {
     this.ripplePhase = 0;
-    this.removeOverlayStyleProp('--md-ripple-animation');
+    this.removeOverlayStyleProp('--m-ripple-animation');
     
-    this.setOverlayStyleProp('--md-overlay-current-opacity', 'var(--md-overlay-opacity)');
+    this.setOverlayStyleProp('--m-overlay-current-opacity', 'var(--m-overlay-opacity)');
   }
   private ripple_startPhase3() {
     this.ripplePhase = 3;
-    this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-fade)');
+    this.setOverlayStyleProp('--m-ripple-animation', 'var(--m-ripple-fade)');
     // this.currentTimeout = <any>setTimeout(this.ripple_onPhase3Complete, this.duration_phase3);
     this.currentTimeout = <any>setTimeout(this.ripple_onPhase3Complete, 150);
   }
@@ -77,14 +77,14 @@ export default class RippleEffect {
     const overlayCurrentStyle = this.getOverlayComputedStyle();
 
     // this.duration_phase1 = Math.max(
-    //   parseInt(overlayCurrentStyle.getPropertyValue('--md-ripple-transform-duration')),
-    //   parseInt(overlayCurrentStyle.getPropertyValue('--md-ripple-fadein-duration'))
+    //   parseInt(overlayCurrentStyle.getPropertyValue('--m-ripple-transform-duration')),
+    //   parseInt(overlayCurrentStyle.getPropertyValue('--m-ripple-fadein-duration'))
     // );
-    // this.duration_phase3 = parseInt(overlayCurrentStyle.getPropertyValue('--md-ripple-fadeout-duration'));
+    // this.duration_phase3 = parseInt(overlayCurrentStyle.getPropertyValue('--m-ripple-fadeout-duration'));
 
-    this.setOverlayStyleProp('--md-overlay-current-opacity', overlayCurrentStyle.getPropertyValue('--md-overlay-opacity'));
+    this.setOverlayStyleProp('--m-overlay-current-opacity', overlayCurrentStyle.getPropertyValue('--m-overlay-opacity'));
 
-    this.setOverlayStyleProp('--md-ripple-animation', 'var(--md-ripple-spread)');
+    this.setOverlayStyleProp('--m-ripple-animation', 'var(--m-ripple-spread)');
     // this.currentTimeout = <any>setTimeout(this.ripple_onPhase1Complete, this.duration_phase1);
     this.currentTimeout = <any>setTimeout(this.ripple_onPhase1Complete, 225);
   }
@@ -98,19 +98,19 @@ export default class RippleEffect {
       sizeSnapshot.height = clientHeight;
       // Math.round
       const rippleSize = Math.sqrt(clientWidth * clientWidth + clientHeight * clientHeight);
-      this.setOverlayStyleProp('--md-ripple-size', rippleSize + 'px');
-      this.setOverlayStyleProp('--md-ripple-left', (clientWidth - rippleSize) / 2 + 'px');
-      this.setOverlayStyleProp('--md-ripple-top', (clientHeight - rippleSize) / 2 + 'px');
+      this.setOverlayStyleProp('--m-ripple-size', rippleSize + 'px');
+      this.setOverlayStyleProp('--m-ripple-left', (clientWidth - rippleSize) / 2 + 'px');
+      this.setOverlayStyleProp('--m-ripple-top', (clientHeight - rippleSize) / 2 + 'px');
     }
     
     const startX = pressX === -1 ? 0 : pressX - clientWidth / 2;
     const startY = pressY === -1 ? 0 : pressY - clientHeight / 2;
-    this.setOverlayStyleProp('--md-ripple-start-x', startX + 'px');
-    this.setOverlayStyleProp('--md-ripple-start-y', startY + 'px');
+    this.setOverlayStyleProp('--m-ripple-start-x', startX + 'px');
+    this.setOverlayStyleProp('--m-ripple-start-y', startY + 'px');
 
     if (this.ripplePhase === 1) {
       clearTimeout(this.currentTimeout);
-      this.removeOverlayStyleProp('--md-ripple-animation');
+      this.removeOverlayStyleProp('--m-ripple-animation');
       requestAnimationFrame(this.ripple_startPhase1);
     } else {
       if (this.ripplePhase === 3) clearTimeout(this.currentTimeout);

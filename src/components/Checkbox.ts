@@ -2,7 +2,7 @@ import customElement from '../internals/customElement';
 import SelectionControl from './base/SelectionControl';
 import template from './Checkbox.html';
 
-@customElement('md-checkbox')
+@customElement('m-checkbox')
 export default class Checkbox extends SelectionControl {
 
   private pathEl: SVGPathElement;
@@ -15,20 +15,20 @@ export default class Checkbox extends SelectionControl {
 
   handleClick() {
     this.checked = !this.checked;
-    if (this.checked) this.pathEl.style.setProperty('--md-path-animation', 'var(--md-path-check)');
-    else this.pathEl.style.setProperty('--md-path-animation', 'var(--md-path-uncheck)');
+    if (this.checked) this.pathEl.style.setProperty('--m-path-animation', 'var(--m-path-check)');
+    else this.pathEl.style.setProperty('--m-path-animation', 'var(--m-path-uncheck)');
     super.handleClick();
   }
 }
 
 declare global {
-  module MDC {
+  module Material {
     interface CheckboxProps extends SelectionControlProps<Checkbox> {
     }
   }
   module JSX {
     interface IntrinsicElements {
-      'md-checkbox': MDC.CheckboxProps;
+      'm-checkbox': Material.CheckboxProps;
     }
   }
 }

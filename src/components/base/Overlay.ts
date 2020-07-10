@@ -1,7 +1,7 @@
 import customElement from '@internals/customElement';
 import template from './Overlay.html';
 
-@customElement('md-overlay')
+@customElement('m-overlay')
 export default class Overlay extends HTMLElement {
   constructor() {
     super();

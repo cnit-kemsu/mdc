@@ -2,8 +2,9 @@ import customElement from '../internals/customElement';
 import InteractiveElement from './base/InteractiveElement';
 import RippleEffect from './base/RippleEffect';
 import template from './SelectOption.html';
+import Select from './Select';
 
-@customElement('md-option')
+@customElement('m-option')
 export default class SelectOption extends InteractiveElement {
 
   private labelEl: HTMLSpanElement;
@@ -71,5 +72,19 @@ export default class SelectOption extends InteractiveElement {
     if (value === this._selected) return;
     if (value) this.setAttribute('selected', '');
     else this.removeAttribute('selected');
+  }
+}
+
+declare global {
+  module Material {
+    interface SelectOptionProps extends InteractiveElementProps<SelectOption> {
+      value?: string;
+      label?: string;
+    }
+  }
+  module JSX {
+    interface IntrinsicElements {
+      'm-option': Material.SelectOptionProps;
+    }
   }
 }
